@@ -27,6 +27,10 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => res.sendFile(join(__dirname, '..', 'dist', 'index.html')));
 }
 
-runMigrations();
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+runMigrations().then(() => {
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}).catch(err => {
+  console.error('Migration failed:', err);
+  process.exit(1);
+});

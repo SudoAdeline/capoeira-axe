@@ -1,23 +1,16 @@
 import { Router } from 'express';
-import { getDb, saveDb } from '../db.js';
+import { query } from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
 
-function rowToObj(rows) {
-  if (!rows.length || !rows[0].values.length) return null;
-  const cols = rows[0].columns;
-  const vals = rows[0].values[0];
-  return Object.fromEntries(cols.map((c, i) => [c, vals[i]]));
-}
-
 // GET /api/data
 router.get('/', requireAuth, async (req, res) => {
   try {
-    const db = await getDb();
-    const row = rowToObj(db.exec('SELECT * FROM user_data WHERE user_id = ?', [req.user.userId]));
-    if (!row) return res.json({});
+    const result = await query('SELECT * FROM user_data WHERE user_id = $1', [req.user.userId]);
+    if (!result.rows.length) return res.json({});
 
+    const row = result.rows[0];
     res.json({
       completed: JSON.parse(row.completed || '{}'),
       customSkills: JSON.parse(row.custom_skills || '{}'),
@@ -36,18 +29,17 @@ router.get('/', requireAuth, async (req, res) => {
 // PUT /api/data
 router.put('/', requireAuth, async (req, res) => {
   try {
-    const db = await getDb();
     const { completed, customSkills, cords, songs, events, attending, preferences } = req.body;
 
-    const existing = rowToObj(db.exec('SELECT user_id FROM user_data WHERE user_id = ?', [req.user.userId]));
+    const existing = await query('SELECT user_id FROM user_data WHERE user_id = $1', [req.user.userId]);
 
-    if (existing) {
-      db.run(`
+    if (existing.rows.length) {
+      await query(`
         UPDATE user_data SET
-          completed = ?, custom_skills = ?, cords = ?, songs = ?,
-          events = ?, attending = ?, preferences = ?,
-          updated_at = datetime('now')
-        WHERE user_id = ?
+          completed = $1, custom_skills = $2, cords = $3, songs = $4,
+          events = $5, attending = $6, preferences = $7,
+          updated_at = now()
+        WHERE user_id = $8
       `, [
         JSON.stringify(completed || {}),
         JSON.stringify(customSkills || {}),
@@ -59,9 +51,9 @@ router.put('/', requireAuth, async (req, res) => {
         req.user.userId
       ]);
     } else {
-      db.run(`
+      await query(`
         INSERT INTO user_data (user_id, completed, custom_skills, cords, songs, events, attending, preferences)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       `, [
         req.user.userId,
         JSON.stringify(completed || {}),
@@ -74,7 +66,6 @@ router.put('/', requireAuth, async (req, res) => {
       ]);
     }
 
-    saveDb();
     res.json({ ok: true });
   } catch (err) {
     console.error('Save data error:', err);

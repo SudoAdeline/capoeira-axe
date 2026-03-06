@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import Stripe from 'stripe';
-import { getDb, saveDb } from '../db.js';
+import { query } from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
@@ -14,18 +14,11 @@ router.use((req, res, next) => {
   next();
 });
 
-function rowToObj(rows) {
-  if (!rows.length || !rows[0].values.length) return null;
-  const cols = rows[0].columns;
-  const vals = rows[0].values[0];
-  return Object.fromEntries(cols.map((c, i) => [c, vals[i]]));
-}
-
 // Create a Stripe Checkout Session
 router.post('/create-checkout', requireAuth, async (req, res) => {
   try {
-    const db = await getDb();
-    const user = rowToObj(db.exec('SELECT * FROM users WHERE id = ?', [req.user.userId]));
+    const result = await query('SELECT * FROM users WHERE id = $1', [req.user.userId]);
+    const user = result.rows[0];
     const { priceId } = req.body;
 
     if (!priceId) return res.status(400).json({ error: 'priceId required' });
@@ -38,8 +31,7 @@ router.post('/create-checkout', requireAuth, async (req, res) => {
         metadata: { userId: String(user.id) }
       });
       customerId = customer.id;
-      db.run('UPDATE users SET stripe_customer_id = ? WHERE id = ?', [customerId, user.id]);
-      saveDb();
+      await query('UPDATE users SET stripe_customer_id = $1 WHERE id = $2', [customerId, user.id]);
     }
 
     const session = await stripe.checkout.sessions.create({
@@ -70,22 +62,18 @@ router.post('/webhook', async (req, res) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  const db = await getDb();
-
   switch (event.type) {
     case 'checkout.session.completed': {
       const session = event.data.object;
       const userId = session.metadata.userId;
       const subscriptionId = session.subscription;
-      db.run('UPDATE users SET is_premium = 1, stripe_subscription_id = ? WHERE id = ?', [subscriptionId, userId]);
-      saveDb();
+      await query('UPDATE users SET is_premium = true, stripe_subscription_id = $1 WHERE id = $2', [subscriptionId, userId]);
       console.log(`User ${userId} upgraded to premium`);
       break;
     }
     case 'customer.subscription.deleted': {
       const sub = event.data.object;
-      db.run('UPDATE users SET is_premium = 0, stripe_subscription_id = NULL WHERE stripe_subscription_id = ?', [sub.id]);
-      saveDb();
+      await query('UPDATE users SET is_premium = false, stripe_subscription_id = NULL WHERE stripe_subscription_id = $1', [sub.id]);
       console.log(`Subscription ${sub.id} cancelled`);
       break;
     }
@@ -102,8 +90,8 @@ router.post('/webhook', async (req, res) => {
 // Create Stripe Customer Portal session
 router.post('/portal', requireAuth, async (req, res) => {
   try {
-    const db = await getDb();
-    const user = rowToObj(db.exec('SELECT stripe_customer_id FROM users WHERE id = ?', [req.user.userId]));
+    const result = await query('SELECT stripe_customer_id FROM users WHERE id = $1', [req.user.userId]);
+    const user = result.rows[0];
     if (!user || !user.stripe_customer_id) return res.status(400).json({ error: 'No subscription found' });
 
     const session = await stripe.billingPortal.sessions.create({

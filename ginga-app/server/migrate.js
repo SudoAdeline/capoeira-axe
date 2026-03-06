@@ -1,23 +1,21 @@
-import { getDb, saveDb } from './db.js';
+import { query } from './db.js';
 
 export async function runMigrations() {
-  const db = await getDb();
-
-  db.run(`
+  await query(`
     CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id SERIAL PRIMARY KEY,
       name TEXT NOT NULL DEFAULT '',
       email TEXT UNIQUE NOT NULL,
       password_hash TEXT NOT NULL,
-      is_premium INTEGER DEFAULT 0,
+      is_premium BOOLEAN DEFAULT false,
       stripe_customer_id TEXT,
       stripe_subscription_id TEXT,
-      first_login TEXT DEFAULT (datetime('now')),
-      created_at TEXT DEFAULT (datetime('now'))
+      first_login TIMESTAMPTZ DEFAULT now(),
+      created_at TIMESTAMPTZ DEFAULT now()
     )
   `);
 
-  db.run(`
+  await query(`
     CREATE TABLE IF NOT EXISTS user_data (
       user_id INTEGER PRIMARY KEY REFERENCES users(id),
       completed TEXT DEFAULT '{}',
@@ -27,14 +25,7 @@ export async function runMigrations() {
       events TEXT DEFAULT '[]',
       attending TEXT DEFAULT '{}',
       preferences TEXT DEFAULT '{}',
-      updated_at TEXT DEFAULT (datetime('now'))
+      updated_at TIMESTAMPTZ DEFAULT now()
     )
   `);
-
-  // Add name column to existing databases
-  try {
-    db.run('ALTER TABLE users ADD COLUMN name TEXT NOT NULL DEFAULT ""');
-  } catch { /* column already exists */ }
-
-  saveDb();
 }
