@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function InstallPrompt({ colors: c }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showIOSGuide, setShowIOSGuide] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -17,16 +17,27 @@ export default function InstallPrompt({ colors: c }) {
       setDeferredPrompt(e);
     };
     window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+
+    // Show the modal after a short delay so it feels intentional
+    const timer = setTimeout(() => {
+      if (!localStorage.getItem("axe_install_dismissed")) {
+        setShowModal(true);
+      }
+    }, 2000);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+      clearTimeout(timer);
+    };
   }, [isStandalone]);
 
   if (isStandalone || dismissed || localStorage.getItem("axe_install_dismissed")) return null;
-
-  // Nothing to show if not iOS and no deferred prompt
+  if (!showModal) return null;
   if (!isIOS && !deferredPrompt) return null;
 
   const dismiss = () => {
     setDismissed(true);
+    setShowModal(false);
     localStorage.setItem("axe_install_dismissed", "1");
   };
 
@@ -36,127 +47,137 @@ export default function InstallPrompt({ colors: c }) {
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === "accepted") dismiss();
       setDeferredPrompt(null);
-    } else if (isIOS) {
-      setShowIOSGuide(true);
     }
   };
 
   return (
-    <>
-      <div style={{
-        background: `${c.gold}15`,
-        border: `1px solid ${c.gold}33`,
-        borderRadius: 12,
-        padding: "12px 16px",
-        marginBottom: 16,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 12,
-        fontFamily: "'DM Sans', sans-serif",
-        fontSize: "0.85rem",
-        color: c.text,
-        animation: "fadeUp 0.4s ease both",
-      }}>
-        <span style={{ flex: 1 }}>
-          Install AXE on your phone for the full experience
-        </span>
-        <button
-          onClick={handleInstall}
-          style={{
-            background: c.gold,
-            color: "#fff",
-            border: "none",
-            borderRadius: 8,
-            padding: "8px 16px",
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 600,
-            fontSize: "0.8rem",
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {isIOS ? "How?" : "Install"}
-        </button>
-        <button onClick={dismiss} style={{
-          background: "none",
-          border: "none",
-          color: c.textMuted,
-          cursor: "pointer",
-          fontSize: "1.1rem",
-          padding: "0 2px",
-          lineHeight: 1,
-        }}>&times;</button>
-      </div>
-
-      {showIOSGuide && (
-        <div
-          onClick={() => setShowIOSGuide(false)}
-          style={{
-            position: "fixed", inset: 0, zIndex: 1000,
-            background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)",
-            display: "flex", alignItems: "flex-end", justifyContent: "center",
-            padding: 24, animation: "fadeUp 0.2s ease both",
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              background: c.bgCard || "#2A1A10",
-              border: `1px solid ${c.border}`,
-              borderRadius: 16,
-              padding: "28px 24px",
-              width: "100%",
-              maxWidth: 400,
-              animation: "fadeUp 0.3s ease both",
-            }}
-          >
-            <h3 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: "1.4rem",
-              letterSpacing: "0.04em",
-              color: c.text,
-              margin: "0 0 16px",
-            }}>Install on iPhone / iPad</h3>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "0.9rem",
-              color: c.textMuted,
-              lineHeight: 1.7,
-            }}>
-              <p style={{ marginBottom: 12 }}>
-                <strong style={{ color: c.text }}>1.</strong> Tap the{" "}
-                <strong style={{ color: c.text }}>Share</strong> button{" "}
-                <span style={{ fontSize: "1.1em" }}>(&#x2191;)</span> at the bottom of Safari
-              </p>
-              <p style={{ marginBottom: 12 }}>
-                <strong style={{ color: c.text }}>2.</strong> Scroll down and tap{" "}
-                <strong style={{ color: c.text }}>"Add to Home Screen"</strong>
-              </p>
-              <p style={{ marginBottom: 12 }}>
-                <strong style={{ color: c.text }}>3.</strong> Tap{" "}
-                <strong style={{ color: c.text }}>"Add"</strong> — done! Open it from your home screen.
-              </p>
-            </div>
-            <button
-              onClick={() => setShowIOSGuide(false)}
-              style={{
-                marginTop: 16,
-                width: "100%",
-                padding: "12px",
-                background: c.gold,
-                color: "#fff",
-                border: "none",
-                borderRadius: 10,
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 600,
-                fontSize: "0.9rem",
-                cursor: "pointer",
-              }}
-            >Got it</button>
-          </div>
+    <div
+      onClick={dismiss}
+      style={{
+        position: "fixed", inset: 0, zIndex: 9999,
+        background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: 24,
+        animation: "fadeUp 0.3s ease both",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "linear-gradient(145deg, #2A1A10, #1A0F08)",
+          border: `1px solid ${c.gold}44`,
+          borderRadius: 20,
+          padding: "40px 32px",
+          width: "100%",
+          maxWidth: 380,
+          textAlign: "center",
+          animation: "fadeUp 0.4s ease both 0.1s",
+          boxShadow: `0 24px 80px rgba(0,0,0,0.6), 0 0 60px ${c.gold}15`,
+        }}
+      >
+        {/* App icon */}
+        <div style={{
+          width: 72, height: 72, margin: "0 auto 20px",
+          borderRadius: 16,
+          background: `linear-gradient(135deg, #E8652B, #D4A843)`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: "2rem",
+          boxShadow: `0 8px 32px rgba(232,101,43,0.3)`,
+        }}>
+          <span style={{
+            fontFamily: "'Helvetica Neue','Arial Black',Arial,sans-serif",
+            fontWeight: 900, fontSize: "1.4rem", color: "#fff",
+            letterSpacing: "0.05em",
+          }}>AXE</span>
         </div>
-      )}
-    </>
+
+        <h2 style={{
+          fontFamily: "'Bebas Neue', sans-serif",
+          fontSize: "1.8rem",
+          letterSpacing: "0.06em",
+          color: c.text || "#F5E6D3",
+          margin: "0 0 8px",
+        }}>Get the App</h2>
+
+        <p style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "0.92rem",
+          color: c.textMuted || "#8B7355",
+          lineHeight: 1.6,
+          margin: "0 0 28px",
+        }}>
+          {isIOS
+            ? "Add AXE to your home screen for instant access — works offline, feels native."
+            : "Install AXE on your device. One tap, instant access, works offline."
+          }
+        </p>
+
+        {isIOS ? (
+          <div style={{
+            textAlign: "left",
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.9rem",
+            color: c.textMuted || "#8B7355",
+            lineHeight: 1.8,
+            marginBottom: 24,
+            background: "rgba(255,255,255,0.04)",
+            borderRadius: 12,
+            padding: "18px 20px",
+          }}>
+            <p style={{ marginBottom: 10 }}>
+              <strong style={{ color: c.text || "#F5E6D3" }}>1.</strong>{" "}
+              Tap <strong style={{ color: c.text || "#F5E6D3" }}>Share</strong>{" "}
+              <span style={{ fontSize: "1.1em" }}>(&#x2191;)</span> in Safari
+            </p>
+            <p style={{ marginBottom: 10 }}>
+              <strong style={{ color: c.text || "#F5E6D3" }}>2.</strong>{" "}
+              Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add to Home Screen"</strong>
+            </p>
+            <p>
+              <strong style={{ color: c.text || "#F5E6D3" }}>3.</strong>{" "}
+              Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add"</strong> — done!
+            </p>
+          </div>
+        ) : null}
+
+        <button
+          onClick={isIOS ? dismiss : handleInstall}
+          style={{
+            width: "100%",
+            padding: "16px 24px",
+            background: `linear-gradient(135deg, #E8652B, #D4A843)`,
+            border: "none",
+            borderRadius: 12,
+            color: "#fff",
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 700,
+            fontSize: "1rem",
+            cursor: "pointer",
+            letterSpacing: "0.02em",
+            boxShadow: "0 4px 20px rgba(232,101,43,0.3)",
+            transition: "transform 0.2s, box-shadow 0.2s",
+          }}
+          onMouseEnter={e => { e.target.style.transform = "scale(1.03)"; e.target.style.boxShadow = "0 6px 28px rgba(232,101,43,0.4)"; }}
+          onMouseLeave={e => { e.target.style.transform = "scale(1)"; e.target.style.boxShadow = "0 4px 20px rgba(232,101,43,0.3)"; }}
+        >
+          {isIOS ? "Got it" : "Install Now"}
+        </button>
+
+        <button
+          onClick={dismiss}
+          style={{
+            marginTop: 14,
+            background: "none",
+            border: "none",
+            color: c.textMuted || "#8B7355",
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.82rem",
+            cursor: "pointer",
+            padding: "8px",
+            opacity: 0.7,
+          }}
+        >Maybe later</button>
+      </div>
+    </div>
   );
 }
