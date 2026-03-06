@@ -1,53 +1,135 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="bg" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#FF8C42"/>
-      <stop offset="100%" stop-color="#C93D1A"/>
+    <radialGradient id="bg" cx="35%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#2A1608"/>
+      <stop offset="100%" stop-color="#0D0704"/>
     </radialGradient>
-    <linearGradient id="shine" x1="0" y1="0" x2="0.3" y2="1">
-      <stop offset="0%" stop-color="#fff" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    <radialGradient id="glow" cx="50%" cy="45%" r="40%">
+      <stop offset="0%" stop-color="#E8652B" stop-opacity="0.25"/>
+      <stop offset="70%" stop-color="#E8652B" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#E8652B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFD166"/>
+      <stop offset="50%" stop-color="#E8652B"/>
+      <stop offset="100%" stop-color="#C93D1A"/>
     </linearGradient>
-    <!-- subtle texture pattern -->
-    <filter id="grain">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="noise"/>
-      <feColorMatrix type="saturate" values="0" in="noise" result="mono"/>
-      <feBlend in="SourceGraphic" in2="mono" mode="soft-light"/>
+    <linearGradient id="kickTrail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E8652B" stop-opacity="0"/>
+      <stop offset="40%" stop-color="#FF8C42" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FFD166" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="groundGlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D4A843" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#D4A843" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#D4A843" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur1">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <filter id="blur2">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+    <filter id="blur3">
+      <feGaussianBlur stdDeviation="3"/>
     </filter>
   </defs>
 
-  <!-- Background rounded square -->
-  <rect width="512" height="512" rx="108" ry="108" fill="url(#bg)"/>
-  <rect width="512" height="512" rx="108" ry="108" fill="url(#shine)"/>
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#bg)"/>
 
-  <!-- Capoeira silhouette — Meia Lua de Compasso (iconic spinning kick) -->
-  <g transform="translate(256,260) scale(2.8)" filter="url(#grain)">
-    <!-- Head -->
-    <circle cx="-60" cy="18" r="16" fill="#fff" opacity="0.95"/>
-    <!-- Supporting arm to ground -->
-    <line x1="-50" y1="8" x2="-72" y2="42" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity="0.95"/>
-    <!-- Hand on ground -->
-    <circle cx="-74" cy="44" r="5" fill="#fff" opacity="0.95"/>
-    <!-- Torso -->
-    <line x1="-48" y1="10" x2="-20" y2="-12" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity="0.95"/>
-    <!-- Spinning kick leg — the iconic arc -->
-    <path d="M-20,-12 Q10,-50 65,-55" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.95"/>
-    <!-- Kick foot -->
-    <circle cx="67" cy="-56" r="6" fill="#FFD166" opacity="0.95"/>
-    <!-- Supporting leg (bent) -->
-    <path d="M-20,-12 Q-30,10 -40,30 Q-44,38 -38,42" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.95"/>
-    <!-- Foot on ground -->
-    <ellipse cx="-36" cy="44" rx="8" ry="4" fill="#fff" opacity="0.95"/>
-    <!-- Trailing arm (free arm, flowing back) -->
-    <path d="M-34,0 Q-50,-20 -68,-14" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.9"/>
+  <!-- Ambient glow behind figure -->
+  <ellipse cx="256" cy="240" rx="180" ry="160" fill="url(#glow)"/>
+
+  <!-- Ground reflection line -->
+  <line x1="100" y1="380" x2="412" y2="380" stroke="url(#groundGlow)" stroke-width="1.5"/>
+
+  <!-- Dust particles from movement -->
+  <circle cx="150" cy="360" r="2" fill="#D4A843" opacity="0.3"/>
+  <circle cx="180" cy="370" r="1.5" fill="#D4A843" opacity="0.2"/>
+  <circle cx="130" cy="350" r="1" fill="#FFD166" opacity="0.25"/>
+  <circle cx="200" cy="365" r="1.8" fill="#E8652B" opacity="0.15"/>
+  <circle cx="165" cy="345" r="1.2" fill="#FFD166" opacity="0.2"/>
+
+  <!-- === CAPOEIRA FIGURE — Au (cartwheel) transitioning to kick === -->
+  <!-- This captures the moment of explosive rotation -->
+
+  <!-- Motion blur / ghost trail (the "where they were") -->
+  <g opacity="0.12" filter="url(#blur1)">
+    <circle cx="210" cy="230" r="18" fill="#E8652B"/>
+    <line x1="220" y1="222" x2="250" y2="195" stroke="#E8652B" stroke-width="10" stroke-linecap="round"/>
+    <line x1="250" y1="195" x2="240" y2="310" stroke="#E8652B" stroke-width="9" stroke-linecap="round"/>
   </g>
 
-  <!-- Motion arc / energy trail -->
-  <path d="M380,90 Q320,60 270,80 Q220,100 200,140" stroke="#FFD166" stroke-width="4" fill="none" opacity="0.5" stroke-linecap="round"/>
-  <path d="M400,110 Q340,75 280,98 Q230,118 210,155" stroke="#FFD166" stroke-width="2.5" fill="none" opacity="0.35" stroke-linecap="round"/>
+  <!-- Energy arc — the kick's path through space -->
+  <path d="M340,140 Q390,180 380,240 Q370,290 330,320"
+        stroke="url(#kickTrail)" stroke-width="8" fill="none" stroke-linecap="round"
+        opacity="0.7" filter="url(#blur3)"/>
+  <path d="M345,135 Q395,178 385,240 Q374,295 332,325"
+        stroke="#FFD166" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
 
-  <!-- AXÉ text -->
-  <text x="256" y="440" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="72" fill="#fff" letter-spacing="18" opacity="0.95">AXÉ</text>
-  <!-- Subtle underline accent -->
-  <line x1="170" y1="455" x2="342" y2="455" stroke="#FFD166" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <!-- Spark particles along kick arc -->
+  <circle cx="370" cy="175" r="3" fill="#FFD166" opacity="0.8"/>
+  <circle cx="385" cy="215" r="2.5" fill="#FFD166" opacity="0.6"/>
+  <circle cx="378" cy="260" r="2" fill="#FF8C42" opacity="0.5"/>
+  <circle cx="355" cy="300" r="2.5" fill="#E8652B" opacity="0.4"/>
+
+  <!-- Small energy sparks radiating out -->
+  <line x1="370" y1="172" x2="382" y2="162" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  <line x1="388" y1="212" x2="400" y2="206" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="380" y1="258" x2="392" y2="256" stroke="#FF8C42" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- THE FIGURE — mid-rotation, one hand planted -->
+  <g>
+    <!-- Supporting hand on ground — planted firm -->
+    <circle cx="195" cy="340" r="7" fill="#D4A843" opacity="0.9"/>
+    <!-- Small impact ring around hand -->
+    <circle cx="195" cy="340" r="14" fill="none" stroke="#D4A843" stroke-width="1" opacity="0.3"/>
+
+    <!-- Supporting arm -->
+    <line x1="195" y1="333" x2="220" y2="280" stroke="url(#bodyGrad)" stroke-width="11" stroke-linecap="round"/>
+
+    <!-- Head — inverted, looking through legs -->
+    <circle cx="205" cy="295" r="20" fill="#FFD166" opacity="0.95"/>
+    <!-- Face direction hint -->
+    <circle cx="212" cy="290" r="3" fill="#1A0F08" opacity="0.5"/>
+
+    <!-- Torso — diagonal, rotating -->
+    <line x1="222" y1="275" x2="275" y2="220" stroke="url(#bodyGrad)" stroke-width="13" stroke-linecap="round"/>
+
+    <!-- Kicking leg — the star of the show, sweeping arc -->
+    <path d="M275,220 Q320,175 350,150" stroke="#E8652B" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <!-- Kicking foot — blazing -->
+    <circle cx="352" cy="147" r="10" fill="#FFD166"/>
+    <!-- Foot glow -->
+    <circle cx="352" cy="147" r="18" fill="#FFD166" opacity="0.15" filter="url(#blur3)"/>
+
+    <!-- Trailing leg — bent, following rotation -->
+    <path d="M275,220 Q260,260 240,290 Q230,310 225,330" stroke="url(#bodyGrad)" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <!-- Trailing foot -->
+    <circle cx="224" cy="333" r="6" fill="#D4A843" opacity="0.8"/>
+
+    <!-- Free arm — sweeping behind for momentum -->
+    <path d="M240,265 Q200,240 170,255 Q155,265 148,280" stroke="url(#bodyGrad)" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <!-- Free hand -->
+    <circle cx="146" cy="283" r="5.5" fill="#D4A843" opacity="0.85"/>
+  </g>
+
+  <!-- Berimbau string suggestion — subtle cultural element -->
+  <path d="M80,100 Q85,250 90,390" stroke="#D4A843" stroke-width="1.5" fill="none" opacity="0.2"/>
+  <circle cx="88" cy="385" r="12" fill="none" stroke="#D4A843" stroke-width="1" opacity="0.15"/>
+  <!-- Baqueta hint -->
+  <line x1="78" y1="95" x2="95" y2="105" stroke="#D4A843" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
+
+  <!-- AXÉ text — gold on dark, spaced out, confident -->
+  <text x="256" y="448" text-anchor="middle"
+        font-family="'Helvetica Neue','Arial Black',Arial,sans-serif"
+        font-weight="900" font-size="62" fill="#D4A843"
+        letter-spacing="24" opacity="0.95">AXÉ</text>
+
+  <!-- Thin gold line under text -->
+  <line x1="178" y1="462" x2="334" y2="462" stroke="#D4A843" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- Subtle top-left corner shine -->
+  <path d="M0,112 Q0,0 112,0 L180,0 Q60,10 30,80 Z" fill="#fff" opacity="0.04" clip-path="inset(0 round 112px)"/>
 </svg>
