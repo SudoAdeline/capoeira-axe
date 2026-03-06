@@ -33,7 +33,6 @@ export default function InstallPrompt({ colors: c }) {
 
   if (isStandalone || dismissed || localStorage.getItem("axe_install_dismissed")) return null;
   if (!showModal) return null;
-  if (!isIOS && !deferredPrompt) return null;
 
   const dismiss = () => {
     setDismissed(true);
@@ -112,7 +111,7 @@ export default function InstallPrompt({ colors: c }) {
           }
         </p>
 
-        {isIOS ? (
+        {!deferredPrompt && (
           <div style={{
             textAlign: "left",
             fontFamily: "'DM Sans', sans-serif",
@@ -124,24 +123,44 @@ export default function InstallPrompt({ colors: c }) {
             borderRadius: 12,
             padding: "18px 20px",
           }}>
-            <p style={{ marginBottom: 10 }}>
-              <strong style={{ color: c.text || "#F5E6D3" }}>1.</strong>{" "}
-              Tap <strong style={{ color: c.text || "#F5E6D3" }}>Share</strong>{" "}
-              <span style={{ fontSize: "1.1em" }}>(&#x2191;)</span> in Safari
-            </p>
-            <p style={{ marginBottom: 10 }}>
-              <strong style={{ color: c.text || "#F5E6D3" }}>2.</strong>{" "}
-              Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add to Home Screen"</strong>
-            </p>
-            <p>
-              <strong style={{ color: c.text || "#F5E6D3" }}>3.</strong>{" "}
-              Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add"</strong> — done!
-            </p>
+            {isIOS ? (
+              <>
+                <p style={{ marginBottom: 10 }}>
+                  <strong style={{ color: c.text || "#F5E6D3" }}>1.</strong>{" "}
+                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>Share</strong>{" "}
+                  <span style={{ fontSize: "1.1em" }}>(&#x2191;)</span> at the bottom of Safari
+                </p>
+                <p style={{ marginBottom: 10 }}>
+                  <strong style={{ color: c.text || "#F5E6D3" }}>2.</strong>{" "}
+                  Scroll down and tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add to Home Screen"</strong>
+                </p>
+                <p>
+                  <strong style={{ color: c.text || "#F5E6D3" }}>3.</strong>{" "}
+                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add"</strong> — that's it! Open AXE from your home screen.
+                </p>
+              </>
+            ) : (
+              <>
+                <p style={{ marginBottom: 10 }}>
+                  <strong style={{ color: c.text || "#F5E6D3" }}>1.</strong>{" "}
+                  Tap the <strong style={{ color: c.text || "#F5E6D3" }}>menu</strong>{" "}
+                  <span style={{ fontSize: "1.1em" }}>(&#x22EE;)</span> in your browser
+                </p>
+                <p style={{ marginBottom: 10 }}>
+                  <strong style={{ color: c.text || "#F5E6D3" }}>2.</strong>{" "}
+                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add to Home Screen"</strong> or <strong style={{ color: c.text || "#F5E6D3" }}>"Install App"</strong>
+                </p>
+                <p>
+                  <strong style={{ color: c.text || "#F5E6D3" }}>3.</strong>{" "}
+                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Install"</strong> — done! Open AXE from your home screen.
+                </p>
+              </>
+            )}
           </div>
-        ) : null}
+        )}
 
         <button
-          onClick={isIOS ? dismiss : handleInstall}
+          onClick={deferredPrompt ? handleInstall : dismiss}
           style={{
             width: "100%",
             padding: "16px 24px",
@@ -160,7 +179,7 @@ export default function InstallPrompt({ colors: c }) {
           onMouseEnter={e => { e.target.style.transform = "scale(1.03)"; e.target.style.boxShadow = "0 6px 28px rgba(232,101,43,0.4)"; }}
           onMouseLeave={e => { e.target.style.transform = "scale(1)"; e.target.style.boxShadow = "0 4px 20px rgba(232,101,43,0.3)"; }}
         >
-          {isIOS ? "Got it" : "Install Now"}
+          {deferredPrompt ? "Install Now" : "Got it"}
         </button>
 
         <button
