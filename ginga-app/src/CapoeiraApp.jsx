@@ -2006,7 +2006,7 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
                 <span style={{ color: "#8B5FA8" }}>🎶</span> Favorite Songs
               </h2>
               <button
-                onClick={() => setShowSongModal(true)}
+                onClick={() => isPremium ? setShowSongModal(true) : setShowUpgrade(true)}
                 style={{
                   background: `#8B5FA822`, border: `1px solid #8B5FA855`,
                   borderRadius: 6, padding: "6px 14px", cursor: "pointer",
@@ -2018,7 +2018,7 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
                 onMouseEnter={e => { e.currentTarget.style.background = "#8B5FA833"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "#8B5FA822"; }}
               >
-                <span>+</span> Add Song
+                {isPremium ? <><span>+</span> Add Song</> : <><span>🔒</span> Add Song</>}
               </button>
             </div>
 
