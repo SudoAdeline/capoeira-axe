@@ -4,7 +4,15 @@ import { getDb, saveDb } from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY)
+  : null;
+
+// Block all Stripe routes if not configured
+router.use((req, res, next) => {
+  if (!stripe) return res.status(503).json({ error: 'Payments not configured yet' });
+  next();
+});
 
 function rowToObj(rows) {
   if (!rows.length || !rows[0].values.length) return null;
