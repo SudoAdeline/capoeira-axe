@@ -5,7 +5,11 @@ export default function InstallPrompt({ colors: c }) {
   const [showModal, setShowModal] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua);
+  const isSafari = isIOS || (/Safari/.test(ua) && !/Chrome/.test(ua));
+  const isSamsung = /SamsungBrowser/.test(ua);
+  const isFirefox = /Firefox/.test(ua);
   const isStandalone = window.matchMedia("(display-mode: standalone)").matches
     || navigator.standalone === true;
 
@@ -18,7 +22,6 @@ export default function InstallPrompt({ colors: c }) {
     };
     window.addEventListener("beforeinstallprompt", handler);
 
-    // Show the modal after a short delay so it feels intentional
     const timer = setTimeout(() => {
       if (!localStorage.getItem("axe_install_dismissed")) {
         setShowModal(true);
@@ -49,24 +52,86 @@ export default function InstallPrompt({ colors: c }) {
     }
   };
 
+  // Pick the right instructions for this browser
+  const getSteps = () => {
+    if (isIOS) {
+      return [
+        <>Tap the <strong>Share</strong> button <span style={{ fontSize: "1.2em" }}>⬆</span> at the bottom of your screen</>,
+        <>Scroll the menu and tap <strong>"Add to Home Screen"</strong> <span style={{ fontSize: "1.1em" }}>➕</span></>,
+        <>Tap <strong>"Add"</strong> in the top right — AXÉ is now on your home screen!</>,
+      ];
+    }
+    if (isSamsung) {
+      return [
+        <>Tap the <strong>menu icon</strong> <span style={{ fontSize: "1.1em" }}>☰</span> (bottom right)</>,
+        <>Tap <strong>"Add page to"</strong> then <strong>"Home screen"</strong></>,
+        <>Tap <strong>"Add"</strong> — AXÉ is now on your home screen!</>,
+      ];
+    }
+    if (isFirefox) {
+      return [
+        <>Tap the <strong>three dots</strong> <span style={{ fontSize: "1.1em" }}>⋮</span> menu (top or bottom right)</>,
+        <>Tap <strong>"Install"</strong> or <strong>"Add to Home Screen"</strong></>,
+        <>Confirm — AXÉ is now on your home screen!</>,
+      ];
+    }
+    // Chrome / Edge / default Android
+    return [
+      <>Tap the <strong>three dots</strong> <span style={{ fontSize: "1.1em" }}>⋮</span> menu (top right corner)</>,
+      <>Tap <strong>"Add to Home Screen"</strong> or <strong>"Install app"</strong></>,
+      <>Tap <strong>"Install"</strong> — AXÉ is now on your home screen!</>,
+    ];
+  };
+
+  const steps = getSteps();
+  const showNativeInstall = !!deferredPrompt;
+
+  const stepStyle = {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 12,
+    marginBottom: 16,
+  };
+
+  const numStyle = {
+    flexShrink: 0,
+    width: 28, height: 28,
+    borderRadius: "50%",
+    background: "linear-gradient(135deg, #E8652B, #D4A843)",
+    color: "#fff",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    fontWeight: 700, fontSize: "0.82rem",
+    fontFamily: "'DM Sans', sans-serif",
+  };
+
+  const textStyle = {
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "0.92rem",
+    color: c.textMuted || "#8B7355",
+    lineHeight: 1.5,
+    paddingTop: 3,
+  };
+
+  const strongStyle = { color: c.text || "#F5E6D3" };
+
   return (
     <div
       onClick={dismiss}
       style={{
         position: "fixed", inset: 0, zIndex: 9999,
-        background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)",
+        background: "rgba(0,0,0,0.8)", backdropFilter: "blur(10px)",
         display: "flex", alignItems: "center", justifyContent: "center",
-        padding: 24,
+        padding: 20,
         animation: "fadeUp 0.3s ease both",
       }}
     >
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "linear-gradient(145deg, #2A1A10, #1A0F08)",
+          background: "linear-gradient(160deg, #2A1A10, #1A0F08)",
           border: `1px solid ${c.gold}44`,
-          borderRadius: 20,
-          padding: "40px 32px",
+          borderRadius: 22,
+          padding: "36px 28px 28px",
           width: "100%",
           maxWidth: 380,
           textAlign: "center",
@@ -76,124 +141,117 @@ export default function InstallPrompt({ colors: c }) {
       >
         {/* App icon */}
         <div style={{
-          width: 72, height: 72, margin: "0 auto 20px",
+          width: 68, height: 68, margin: "0 auto 18px",
           borderRadius: 16,
-          background: `linear-gradient(135deg, #E8652B, #D4A843)`,
+          background: "linear-gradient(135deg, #E8652B, #D4A843)",
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: "2rem",
-          boxShadow: `0 8px 32px rgba(232,101,43,0.3)`,
+          boxShadow: "0 8px 32px rgba(232,101,43,0.3)",
         }}>
           <span style={{
             fontFamily: "'Helvetica Neue','Arial Black',Arial,sans-serif",
-            fontWeight: 900, fontSize: "1.4rem", color: "#fff",
+            fontWeight: 900, fontSize: "1.3rem", color: "#fff",
             letterSpacing: "0.05em",
           }}>AXÉ</span>
         </div>
 
         <h2 style={{
           fontFamily: "'Bebas Neue', sans-serif",
-          fontSize: "1.8rem",
+          fontSize: "1.7rem",
           letterSpacing: "0.06em",
           color: c.text || "#F5E6D3",
-          margin: "0 0 8px",
-        }}>Get the App</h2>
+          margin: "0 0 6px",
+        }}>Install AXÉ</h2>
 
         <p style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: "0.92rem",
+          fontSize: "0.85rem",
           color: c.textMuted || "#8B7355",
-          lineHeight: 1.6,
-          margin: "0 0 28px",
+          lineHeight: 1.5,
+          margin: "0 0 24px",
         }}>
-          {isIOS
-            ? "Add AXÉ to your home screen for instant access — works offline, feels native."
-            : "Install AXÉ on your device. One tap, instant access, works offline."
-          }
+          Add it to your home screen — opens instantly, works offline, feels like a real app.
         </p>
 
-        {!deferredPrompt && (
+        {showNativeInstall ? (
+          <>
+            <button
+              onClick={handleInstall}
+              style={{
+                width: "100%",
+                padding: "16px 24px",
+                background: "linear-gradient(135deg, #E8652B, #D4A843)",
+                border: "none",
+                borderRadius: 12,
+                color: "#fff",
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 700,
+                fontSize: "1rem",
+                cursor: "pointer",
+                boxShadow: "0 4px 20px rgba(232,101,43,0.3)",
+                transition: "transform 0.2s",
+              }}
+              onMouseEnter={e => e.target.style.transform = "scale(1.03)"}
+              onMouseLeave={e => e.target.style.transform = "scale(1)"}
+            >
+              Install Now
+            </button>
+          </>
+        ) : (
           <div style={{
             textAlign: "left",
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "0.9rem",
-            color: c.textMuted || "#8B7355",
-            lineHeight: 1.8,
-            marginBottom: 24,
-            background: "rgba(255,255,255,0.04)",
-            borderRadius: 12,
-            padding: "18px 20px",
+            marginBottom: 20,
+            background: "rgba(255,255,255,0.03)",
+            borderRadius: 14,
+            padding: "20px 18px 8px",
           }}>
-            {isIOS ? (
-              <>
-                <p style={{ marginBottom: 10 }}>
-                  <strong style={{ color: c.text || "#F5E6D3" }}>1.</strong>{" "}
-                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>Share</strong>{" "}
-                  <span style={{ fontSize: "1.1em" }}>(&#x2191;)</span> at the bottom of Safari
-                </p>
-                <p style={{ marginBottom: 10 }}>
-                  <strong style={{ color: c.text || "#F5E6D3" }}>2.</strong>{" "}
-                  Scroll down and tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add to Home Screen"</strong>
-                </p>
-                <p>
-                  <strong style={{ color: c.text || "#F5E6D3" }}>3.</strong>{" "}
-                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add"</strong> — that's it! Open AXÉ from your home screen.
-                </p>
-              </>
-            ) : (
-              <>
-                <p style={{ marginBottom: 10 }}>
-                  <strong style={{ color: c.text || "#F5E6D3" }}>1.</strong>{" "}
-                  Tap the <strong style={{ color: c.text || "#F5E6D3" }}>menu</strong>{" "}
-                  <span style={{ fontSize: "1.1em" }}>(&#x22EE;)</span> in your browser
-                </p>
-                <p style={{ marginBottom: 10 }}>
-                  <strong style={{ color: c.text || "#F5E6D3" }}>2.</strong>{" "}
-                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add to Home Screen"</strong> or <strong style={{ color: c.text || "#F5E6D3" }}>"Install App"</strong>
-                </p>
-                <p>
-                  <strong style={{ color: c.text || "#F5E6D3" }}>3.</strong>{" "}
-                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Install"</strong> — done! Open AXÉ from your home screen.
-                </p>
-              </>
-            )}
+            {steps.map((step, i) => (
+              <div key={i} style={stepStyle}>
+                <div style={numStyle}>{i + 1}</div>
+                <div style={{ ...textStyle, "& strong": strongStyle }}>
+                  {/* Clone step content to apply strong styling */}
+                  <span>{step}</span>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
-        <button
-          onClick={deferredPrompt ? handleInstall : dismiss}
-          style={{
-            width: "100%",
-            padding: "16px 24px",
-            background: `linear-gradient(135deg, #E8652B, #D4A843)`,
-            border: "none",
-            borderRadius: 12,
-            color: "#fff",
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 700,
-            fontSize: "1rem",
-            cursor: "pointer",
-            letterSpacing: "0.02em",
-            boxShadow: "0 4px 20px rgba(232,101,43,0.3)",
-            transition: "transform 0.2s, box-shadow 0.2s",
-          }}
-          onMouseEnter={e => { e.target.style.transform = "scale(1.03)"; e.target.style.boxShadow = "0 6px 28px rgba(232,101,43,0.4)"; }}
-          onMouseLeave={e => { e.target.style.transform = "scale(1)"; e.target.style.boxShadow = "0 4px 20px rgba(232,101,43,0.3)"; }}
-        >
-          {deferredPrompt ? "Install Now" : "Got it"}
-        </button>
+        {!showNativeInstall && (
+          <button
+            onClick={dismiss}
+            style={{
+              width: "100%",
+              padding: "14px 24px",
+              background: "linear-gradient(135deg, #E8652B, #D4A843)",
+              border: "none",
+              borderRadius: 12,
+              color: "#fff",
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 700,
+              fontSize: "0.95rem",
+              cursor: "pointer",
+              boxShadow: "0 4px 20px rgba(232,101,43,0.3)",
+              transition: "transform 0.2s",
+            }}
+            onMouseEnter={e => e.target.style.transform = "scale(1.03)"}
+            onMouseLeave={e => e.target.style.transform = "scale(1)"}
+          >
+            Got it
+          </button>
+        )}
 
         <button
           onClick={dismiss}
           style={{
-            marginTop: 14,
+            marginTop: 12,
             background: "none",
             border: "none",
             color: c.textMuted || "#8B7355",
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: "0.82rem",
+            fontSize: "0.8rem",
             cursor: "pointer",
             padding: "8px",
-            opacity: 0.7,
+            opacity: 0.6,
           }}
         >Maybe later</button>
       </div>
