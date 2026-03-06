@@ -1,89 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="bg" cx="40%" cy="35%" r="70%">
+    <radialGradient id="bg" cx="50%" cy="45%" r="65%">
       <stop offset="0%" stop-color="#1F1209"/>
       <stop offset="100%" stop-color="#0A0604"/>
     </radialGradient>
-    <linearGradient id="stroke1" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="textGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#FFD166"/>
-      <stop offset="100%" stop-color="#E8652B"/>
-    </linearGradient>
-    <linearGradient id="stroke2" x1="1" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#E8652B"/>
+      <stop offset="50%" stop-color="#E8652B"/>
       <stop offset="100%" stop-color="#C93D1A"/>
     </linearGradient>
-    <linearGradient id="stroke3" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0%" stop-color="#D4A843"/>
-      <stop offset="60%" stop-color="#FFD166"/>
-    </linearGradient>
-    <linearGradient id="stroke4" x1="0.2" y1="0" x2="0.8" y2="1">
-      <stop offset="0%" stop-color="#FF8C42" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#E8652B" stop-opacity="0.4"/>
-    </linearGradient>
     <filter id="glow">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feGaussianBlur stdDeviation="12" result="blur"/>
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <filter id="softglow">
-      <feGaussianBlur stdDeviation="8"/>
+      <feGaussianBlur stdDeviation="20"/>
     </filter>
   </defs>
 
   <!-- Background -->
   <rect width="512" height="512" rx="112" ry="112" fill="url(#bg)"/>
 
-  <!-- Ambient warmth -->
-  <ellipse cx="256" cy="220" rx="200" ry="180" fill="#E8652B" opacity="0.06"/>
+  <!-- Warm ambient glow behind text -->
+  <ellipse cx="256" cy="240" rx="160" ry="120" fill="#E8652B" opacity="0.08" filter="url(#softglow)"/>
 
-  <!-- === BRUSH STROKES — dynamic, expressive, movement === -->
+  <!-- Main text — AXÉ large and bold -->
+  <text x="256" y="280" text-anchor="middle"
+        font-family="'Helvetica Neue','Arial Black',Impact,sans-serif"
+        font-weight="900" font-size="160" fill="url(#textGrad)"
+        letter-spacing="12" filter="url(#glow)">AXÉ</text>
 
-  <!-- Big sweeping stroke — the main energy arc -->
-  <path d="M100,340 Q140,280 200,230 Q260,180 310,160 Q360,140 400,155"
-        stroke="url(#stroke1)" stroke-width="28" fill="none"
-        stroke-linecap="round" stroke-linejoin="round"
-        opacity="0.9" filter="url(#glow)"/>
+  <!-- Subtitle -->
+  <text x="256" y="340" text-anchor="middle"
+        font-family="'Helvetica Neue',Arial,sans-serif"
+        font-weight="300" font-size="28" fill="#D4A843"
+        letter-spacing="14" opacity="0.6">CAPOEIRA</text>
 
-  <!-- Second stroke — crossing over, creating tension -->
-  <path d="M380,320 Q340,260 280,220 Q220,180 160,170 Q120,165 95,185"
-        stroke="url(#stroke2)" stroke-width="22" fill="none"
-        stroke-linecap="round" stroke-linejoin="round"
-        opacity="0.85"/>
-
-  <!-- Third stroke — quick upward slash, like a kick -->
-  <path d="M170,350 Q200,300 240,250 Q270,210 310,130"
-        stroke="url(#stroke3)" stroke-width="16" fill="none"
-        stroke-linecap="round" stroke-linejoin="round"
-        opacity="0.75" filter="url(#glow)"/>
-
-  <!-- Thin accent strokes — splatter energy -->
-  <path d="M130,300 Q160,260 210,240"
-        stroke="#FFD166" stroke-width="5" fill="none"
-        stroke-linecap="round" opacity="0.5"/>
-  <path d="M320,170 Q350,190 370,230"
-        stroke="#FF8C42" stroke-width="4" fill="none"
-        stroke-linecap="round" opacity="0.45"/>
-  <path d="M250,160 Q265,140 290,128"
-        stroke="#D4A843" stroke-width="3" fill="none"
-        stroke-linecap="round" opacity="0.4"/>
-
-  <!-- Paint splatter dots -->
-  <circle cx="405" cy="150" r="6" fill="#FFD166" opacity="0.7"/>
-  <circle cx="90" cy="190" r="4" fill="#E8652B" opacity="0.6"/>
-  <circle cx="315" cy="125" r="3.5" fill="#D4A843" opacity="0.5"/>
-  <circle cx="175" cy="165" r="5" fill="#FF8C42" opacity="0.45"/>
-  <circle cx="395" cy="175" r="3" fill="#FFD166" opacity="0.4"/>
-  <circle cx="110" cy="330" r="4.5" fill="#D4A843" opacity="0.35"/>
-  <circle cx="365" cy="310" r="3" fill="#E8652B" opacity="0.4"/>
-
-  <!-- Glow behind text -->
-  <ellipse cx="256" cy="430" rx="120" ry="30" fill="#D4A843" opacity="0.06" filter="url(#softglow)"/>
-
-  <!-- AXÉ text -->
-  <text x="256" y="448" text-anchor="middle"
-        font-family="'Helvetica Neue','Arial Black',Arial,sans-serif"
-        font-weight="900" font-size="64" fill="#D4A843"
-        letter-spacing="22" opacity="0.95">AXÉ</text>
-
-  <!-- Thin accent line under text -->
-  <line x1="180" y1="463" x2="332" y2="463" stroke="#D4A843" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <!-- Thin gold accent line -->
+  <line x1="156" y1="360" x2="356" y2="360" stroke="#D4A843" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
 </svg>
