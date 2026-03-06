@@ -61,7 +61,6 @@ const PATHS = {
             description: "Everything starts here. The ginga is your signature, your rhythm, your deception. It's not just a stance — it's a conversation. A good ginga makes you unpredictable, a bad one makes you a target.",
             cues: ["Back leg steps behind at 45° — not straight back", "Opposite arm protects face, other arm guards body", "Stay on the balls of your feet — never flat-footed", "Make it YOUR ginga — let your body find its own cadence"],
             milestone: "Smooth, rhythmic ginga for 3 min with natural quebradas (rhythm breaks) mixed in",
-            duration: "Ongoing — never stop refining"
           },
           {
             name: "Bênção",
@@ -69,7 +68,6 @@ const PATHS = {
             description: "The most fundamental kick. A straight push kick aimed at the chest or stomach. It's the 'jab' of capoeira — fast, direct, and always a threat.",
             cues: ["Chamber the knee high before extending", "Push through with the ball of the foot or whole sole", "Hips face forward — power comes from hip extension", "Retract fast — a slow bênção gets you swept"],
             milestone: "Clean bênção from ginga to both sides, chest height, with control",
-            duration: "2-3 weeks"
           },
           {
             name: "Meia Lua de Frente",
@@ -77,7 +75,6 @@ const PATHS = {
             description: "A crescent kick sweeping inward. Your first circular kick. The leg draws a half-moon arc from outside to inside, striking with the instep or shin.",
             cues: ["Keep the kicking leg mostly straight", "Arc comes from the hip — let it swing like a pendulum", "Supporting foot pivots slightly", "Return to ginga position — don't let the kick carry you off balance"],
             milestone: "Fluid meia lua de frente from ginga, both sides, head height",
-            duration: "2-3 weeks"
           },
           {
             name: "Martelo",
@@ -85,7 +82,6 @@ const PATHS = {
             description: "The power kick. A roundhouse delivered with the instep or shin. Chamber, pivot, and unleash. This is the kick that ends games.",
             cues: ["Chamber the knee high, pointing at your target", "Pivot hard on the support foot — hips must turn over", "Strike with instep (for range) or shin (for power)", "Snap it back — don't leave your leg hanging out there"],
             milestone: "Fast, snapping martelo to head height from both sides",
-            duration: "3-4 weeks"
           }
         ]
       },
@@ -99,7 +95,6 @@ const PATHS = {
             description: "Step across the body, then release the front leg in an outward crescent. The first spinning/stepping kick. Deceptive because the step looks like a retreat.",
             cues: ["Cross-step deep behind your front leg", "Let the torso wind up during the step", "Release the kick with the hip — leg follows naturally", "Eyes track the target through the turn"],
             milestone: "Smooth queixada from ginga into both directions with flow",
-            duration: "3-4 weeks"
           },
           {
             name: "Armada",
@@ -107,7 +102,6 @@ const PATHS = {
             description: "The classic capoeira spinning kick. Full 360° rotation with the leg sweeping at head height. Beautiful, powerful, and iconic.",
             cues: ["Spot your target — look over your shoulder as you spin", "The power comes from hip rotation, not the leg", "Keep the kicking leg mostly straight for range", "Land back in ginga — control the momentum"],
             milestone: "Clean armada with full rotation and control, landing balanced",
-            duration: "4-6 weeks"
           },
           {
             name: "Meia Lua de Compasso",
@@ -115,7 +109,6 @@ const PATHS = {
             description: "THE signature capoeira kick. Step across, plant both hands, and sweep the leg in a massive arc. One hand on the ground, your body forms a compass. Devastating reach and power.",
             cues: ["Step across at 45°, plant one or both hands firmly", "Look through your legs at your target", "The kick sweeps at head height — hip drives the arc", "Keep the supporting hand active — you may need to adjust"],
             milestone: "Controlled compasso from ginga, both sides, touching the ground with one hand only",
-            duration: "4-8 weeks"
           },
           {
             name: "Gancho",
@@ -123,7 +116,6 @@ const PATHS = {
             description: "A hook kick, often following armada or compasso. The leg extends then snaps back with the heel as the striking surface. Catches people who duck under spinning kicks.",
             cues: ["Usually follows a spinning kick that misses", "Extend the leg straight, then snap-hook the heel back", "The target is usually the face or back of the head", "Don't telegraph — let it flow from the previous movement"],
             milestone: "Gancho as a follow-up to armada, landing clean",
-            duration: "4-6 weeks"
           }
         ]
       },
@@ -137,7 +129,6 @@ const PATHS = {
             description: "A roundhouse kick thrown from a crouched or ground position. Unexpected and devastating because it comes from below.",
             cues: ["Drop low first — cocorinha or negativa position", "Explode upward, pivoting on the support foot", "Strike at head height even though you started low", "This is pure surprise — timing is everything"],
             milestone: "Explosive martelo do chão from negativa, both sides",
-            duration: "4-6 weeks"
           },
           {
             name: "Chapa",
@@ -145,7 +136,6 @@ const PATHS = {
             description: "A powerful side kick or back kick using the sole of the foot. Can be thrown standing, from the ground, or from handstand. The stopping power is immense.",
             cues: ["Chamber, rotate hips sideways, extend through the heel/sole", "Can be thrown forward, sideways, or backward", "From the ground: cocorinha → explode into side kick", "Keep core tight — the power comes from the hip, not the knee"],
             milestone: "Chapa from standing AND from ground position, strong and controlled",
-            duration: "3-5 weeks"
           },
           {
             name: "Martelo Cruzado",
@@ -153,7 +143,6 @@ const PATHS = {
             description: "A martelo thrown with the rear leg, crossing over. Generates huge power because of the extra rotation. Unexpected angle.",
             cues: ["Step across like queixada, but chamber for roundhouse", "Extra hip rotation creates devastating power", "Don't over-rotate — control your landing", "Great follow-up after a feinted queixada"],
             milestone: "Martelo cruzado with power and landing in ginga",
-            duration: "4-6 weeks"
           },
           {
             name: "Ponteira",
@@ -161,7 +150,6 @@ const PATHS = {
             description: "A fast front snap kick using the ball of the foot or toes. Quick jab to the face or body. Less power than bênção, but much faster.",
             cues: ["Snap from the knee — minimal wind-up", "Ball of the foot or toes as striking surface", "Think 'flick' not 'push'", "Retract immediately — in and out"],
             milestone: "Lightning-fast ponteira from ginga, catching the rhythm break",
-            duration: "3-4 weeks"
           }
         ]
       },
@@ -175,7 +163,6 @@ const PATHS = {
             description: "A jumping, spinning kick that corkscrews through the air. One of capoeira's most spectacular kicks. The body twists as you jump and kick simultaneously.",
             cues: ["Wind up with a turning step — same as armada entry", "Jump off both feet as you spin", "The kick fires at the peak of the jump", "Land on the kicking leg — absorb with bent knee"],
             milestone: "Parafuso with good height and clean landing",
-            duration: "2-4 months"
           },
           {
             name: "Armada Dupla",
@@ -183,7 +170,6 @@ const PATHS = {
             description: "A jumping double kick — two armadas in the air. Both legs fire in succession while airborne. Incredibly athletic and crowd-pleasing.",
             cues: ["Jump high — you need airtime for both kicks", "First kick with lead leg, second with rear", "Scissor the legs — one fires as the other retracts", "Land controlled — don't sacrifice balance for height"],
             milestone: "Both kicks connecting at target height, clean landing",
-            duration: "3-6 months"
           },
           {
             name: "Meia Lua Solta / Parafuso de Lado",
@@ -191,7 +177,6 @@ const PATHS = {
             description: "An aerial kick from compasso position — both hands release from the ground. You're airborne in a horizontal spin. Pure malícia and athleticism.",
             cues: ["Enter like compasso, but push off with hands", "Body goes horizontal as you spin", "Kick connects at peak of the rotation", "Land on both feet or transition to the ground"],
             milestone: "Airborne horizontal spin kick with controlled landing",
-            duration: "3-6 months"
           },
           {
             name: "S-Dobrado",
@@ -199,7 +184,6 @@ const PATHS = {
             description: "A no-hand aerial that traces an S-shape. Both legs sweep through the air in a butterfly motion. One of the most beautiful movements in capoeira.",
             cues: ["Swing arms for momentum as you jump", "First leg kicks up, body follows, second leg sweeps over", "Keep looking forward — don't tuck the chin", "Think 'sweeping' not 'flipping' — it's horizontal rotation"],
             milestone: "Clean s-dobrado with both legs sweeping at head height",
-            duration: "4-8 months"
           }
         ]
       }
@@ -225,7 +209,6 @@ const PATHS = {
             description: "The most fundamental acrobatic movement. But in capoeira, always face your opponent — you don't just flip over blindly. The aú is mobility, escape, and setup all in one.",
             cues: ["Head stays turned toward your opponent throughout", "Hands go down one at a time — not together", "Legs pass overhead, slightly bent or straight", "Land light, ready to ginga or attack"],
             milestone: "Fluid aú in both directions while watching a partner",
-            duration: "2-3 weeks"
           },
           {
             name: "Rolê",
@@ -233,7 +216,6 @@ const PATHS = {
             description: "A low spin on the ground used to reposition, escape, or transition. You stay close to the floor, weight on hands and one foot, spinning to a new position.",
             cues: ["Start from negativa or cocorinha", "Weight on both hands, one foot — other leg sweeps", "Stay LOW — your head should barely rise", "Always watch your opponent through the movement"],
             milestone: "Smooth rolê in both directions, transitioning into ginga or negativa",
-            duration: "2-3 weeks"
           },
           {
             name: "Queda de Rins",
@@ -241,7 +223,6 @@ const PATHS = {
             description: "Balance on your hands with your hip resting on one elbow. Legs can be tucked, split, or extended. The foundation of many ground floreios.",
             cues: ["Hands and head form a tripod on the floor", "Twist hips and rest one hip on the same-side elbow", "Slowly lift legs off the ground", "Build hold time — strength and balance develop together"],
             milestone: "Hold 15 seconds with legs extended, both sides",
-            duration: "3-4 weeks"
           },
           {
             name: "Bananeira (Handstand)",
@@ -249,7 +230,6 @@ const PATHS = {
             description: "The capoeira handstand. Unlike gymnastic handstands, you may have a slight arch — it looks different and that's okay. Used for mobility, pauses, and kicks.",
             cues: ["Kick up and hold — don't worry about perfect straight line", "Hands shoulder-width, fingers spread", "Slight arch is natural in capoeira — embrace it", "Practice against a wall first, then freestanding"],
             milestone: "Freestanding bananeira hold, 10 seconds",
-            duration: "4-8 weeks"
           }
         ]
       },
@@ -263,7 +243,6 @@ const PATHS = {
             description: "From standing, reach one hand back and flip over backward. Not a full back handspring — one hand leads. It's the monkey flip, and it's the gateway to aerial acrobatics.",
             cues: ["Look back over your shoulder, reach one hand to the ground", "Push off the legs and let the hips go over", "Second hand can touch or not (macaco sem mão = no hands)", "Land on both feet, facing where you started"],
             milestone: "Clean macaco from standing, both sides",
-            duration: "4-8 weeks"
           },
           {
             name: "Aú Batido",
@@ -271,7 +250,6 @@ const PATHS = {
             description: "A cartwheel interrupted by a kick in the air. Mid-aú, one leg fires a chapa while you're inverted. Attack from an unexpected angle.",
             cues: ["Start a normal aú", "At the top, fire one leg outward as a chapa/kick", "The other leg continues over", "Land facing your opponent with momentum absorbed"],
             milestone: "Aú batido with a convincing kick, both directions",
-            duration: "4-6 weeks"
           },
           {
             name: "Aú Sem Mão",
@@ -279,7 +257,6 @@ const PATHS = {
             description: "A cartwheel without hands touching the ground. The classic aerial. Requires explosive leg drive and commitment.",
             cues: ["Swing arms hard for momentum", "Drive the lead leg UP aggressively", "Commit — half-attempts are more dangerous than full ones", "Land on one foot, then the other"],
             milestone: "Consistent aú sem mão landing on both feet",
-            duration: "2-4 months"
           },
           {
             name: "Pião de Mão",
@@ -287,7 +264,6 @@ const PATHS = {
             description: "A one-handed spin while in a handstand or queda de rins-like position. The legs spin around while one or both hands are on the ground.",
             cues: ["Start from queda de rins or bananeira", "Whip the legs to initiate the spin", "Shift weight to one hand", "Use momentum — don't muscle it"],
             milestone: "Full 360° spin on one hand, landing controlled",
-            duration: "2-3 months"
           }
         ]
       },
@@ -301,7 +277,6 @@ const PATHS = {
             description: "The standing back flip. In capoeira, timing matters — you don't just throw mortals randomly. It should flow from the game or punctuate a moment.",
             cues: ["Jump UP not back — height is safety", "Tuck knees to chest aggressively at the peak", "Spot the ground before you land", "Land on the balls of your feet, knees absorbing"],
             milestone: "Consistent standing back flip from flat ground",
-            duration: "2-4 months"
           },
           {
             name: "Mortal de Frente (Front Flip)",
@@ -309,7 +284,6 @@ const PATHS = {
             description: "Standing front flip. Less common than back flip in the roda but impressive and useful for entering or dramatic emphasis.",
             cues: ["Swing arms up for height", "Tuck chin, drive knees to chest", "Rotate around your center — don't dive forward", "Spot the landing — open up from the tuck before contact"],
             milestone: "Clean standing front tuck from flat ground",
-            duration: "2-4 months"
           },
           {
             name: "Aú de Coluna (Back Walkover)",
@@ -317,7 +291,6 @@ const PATHS = {
             description: "A slow, arching back walkover through handstand. Requires good backbend flexibility. Elegant and controlled.",
             cues: ["Reach back, bridge through handstand", "Pass through bananeira position with an arched back", "Legs go one at a time — slow and controlled", "Requires solid back and shoulder flexibility"],
             milestone: "Smooth back walkover from standing",
-            duration: "2-4 months"
           },
           {
             name: "Reversão",
@@ -325,7 +298,6 @@ const PATHS = {
             description: "From your back, explode up to standing in one motion. Getting up off the ground with style and speed.",
             cues: ["Roll back slightly to load the spring", "Throw arms and legs simultaneously", "Hip thrust provides the lift", "Land with feet under you, ready to ginga"],
             milestone: "Kip-up from flat on back to standing, no hesitation",
-            duration: "3-6 weeks"
           }
         ]
       },
@@ -339,7 +311,6 @@ const PATHS = {
             description: "A twisting aerial that corkscrews through the air. Can be done as kick or as pure floreio. One of the most impressive movements in capoeira.",
             cues: ["Wind up with a strong step and arm swing", "Jump and twist simultaneously", "The body corkscrews — legs follow the torso", "Land facing the direction you started — complete the rotation"],
             milestone: "Full parafuso with clean rotation and landing",
-            duration: "3-6 months"
           },
           {
             name: "Mortal de Costas com Pirueta",
@@ -347,7 +318,6 @@ const PATHS = {
             description: "A back flip with a full 360° twist added. Combines height, rotation, and spatial awareness.",
             cues: ["Get maximum height first — twist comes second", "Initiate twist with shoulders and head turn", "Spot your landing through the twist", "Master the backflip completely before adding twist"],
             milestone: "Back full with consistent landing",
-            duration: "4-8 months"
           },
           {
             name: "Folha Seca",
@@ -355,7 +325,6 @@ const PATHS = {
             description: "A falling leaf — a no-hand trick where the body arcs backward and the legs sweep overhead like a leaf falling from a tree. Hypnotic and beautiful.",
             cues: ["Similar to a gainer from standing", "Arch back and let the legs sweep over", "Arms stay wide like a falling leaf", "Landing requires spotting the ground through the arch"],
             milestone: "Controlled folha seca with soft landing",
-            duration: "4-8 months"
           },
           {
             name: "Aú Chibata",
@@ -363,7 +332,6 @@ const PATHS = {
             description: "A fast, low cartwheel that whips through with incredible speed, often incorporating a kick. The body barely goes vertical — it's a horizontal whip.",
             cues: ["Stay low — don't go fully vertical", "Speed is everything — drive through fast", "Can include a kick mid-rotation", "Land ready to continue the flow"],
             milestone: "Fast aú chibata transitioning immediately into a kick or ginga",
-            duration: "2-4 months"
           }
         ]
       }
@@ -389,7 +357,6 @@ const PATHS = {
             description: "The most basic esquiva (dodge). A deep squat with one arm protecting the face. Simple, effective, and fundamental to every game.",
             cues: ["Drop straight down — fast", "One hand protects the face, other can touch the ground", "Feet flat if possible — stay stable", "Eyes on your opponent — always"],
             milestone: "Instant cocorinha reaction to kicks from both sides",
-            duration: "1-2 weeks"
           },
           {
             name: "Esquiva Lateral",
@@ -397,7 +364,6 @@ const PATHS = {
             description: "Dodge to the side by dropping low and leaning away from the kick. One hand on the ground for support.",
             cues: ["Drop low and lean to one side", "Supporting hand plants on the ground", "Other arm protects the head", "Weight stays centered — don't fall over"],
             milestone: "Fluid esquiva lateral to both sides from ginga",
-            duration: "2-3 weeks"
           },
           {
             name: "Negativa",
@@ -405,7 +371,6 @@ const PATHS = {
             description: "Drop one leg extended, sit on the opposite heel, one hand on the floor, other hand protecting face. This is where you reload — many attacks and transitions start from here.",
             cues: ["Extended leg stays slightly bent — not locked", "Sit deep on the support heel", "Support hand same side as extended leg", "Guard hand up — always protecting"],
             milestone: "Comfortable negativa on both sides, flowing into rolê or attack",
-            duration: "2-3 weeks"
           },
           {
             name: "Resistência",
@@ -413,7 +378,6 @@ const PATHS = {
             description: "A back-leaning escape where you bridge backward, often one hand on the ground. Used to dodge low attacks or set up counterattacks.",
             cues: ["Lean back from the waist, one hand reaches behind to the ground", "Legs stay bent, feet planted", "Hips stay forward if possible", "From here you can kick, sweep, or roll out"],
             milestone: "Quick resistência from standing, both sides, returning to ginga",
-            duration: "2-3 weeks"
           }
         ]
       },
@@ -427,7 +391,6 @@ const PATHS = {
             description: "THE capoeira sweep. Hook your foot behind your opponent's supporting ankle and pull. Timing is everything — sweep when they're committed to a kick.",
             cues: ["Time it when their weight is on one foot", "Hook behind the ankle with your instep", "Pull toward you as you push their upper body the other way", "Follow through — half-rasteiras just annoy people"],
             milestone: "Successful rasteira on a training partner during a game",
-            duration: "4-8 weeks"
           },
           {
             name: "Banda",
@@ -435,7 +398,6 @@ const PATHS = {
             description: "Step behind your opponent's leg and trip them using your body momentum. Less of a sweep, more of a block-and-push.",
             cues: ["Step your leg behind their supporting leg", "Block their ankle or calf", "Simultaneously push with your hand or body", "Works best when they're stepping forward"],
             milestone: "Clean banda from ginga, setting up with a fake kick first",
-            duration: "3-6 weeks"
           },
           {
             name: "Vingativa",
@@ -443,7 +405,6 @@ const PATHS = {
             description: "A takedown where you enter close, hook behind their leg, and push with your shoulder or chest. Named 'revenge' for a reason.",
             cues: ["Close the distance fast — enter after dodging a kick", "Hook behind their knee with your leg", "Push their upper body with your shoulder/chest", "They go down, you stay up"],
             milestone: "Vingativa from esquiva, flowing from defense to takedown",
-            duration: "4-6 weeks"
           },
           {
             name: "Tesoura",
@@ -451,7 +412,6 @@ const PATHS = {
             description: "A scissor takedown using your legs to trap your opponent's leg or body. Can be done from the ground or while jumping. Spectacular and effective.",
             cues: ["Jump or drop, wrapping legs around opponent's leg", "One leg in front, one behind — scissor action", "Twist or squeeze to bring them down", "Advanced: flying tesoura from aú"],
             milestone: "Tesoura from the ground, successfully trapping a partner",
-            duration: "2-3 months"
           }
         ]
       },
@@ -465,7 +425,6 @@ const PATHS = {
             description: "Ritualized movements in the roda — you 'call' your opponent close, creating a dialogue. Tests trust, awareness, and understanding of capoeira traditions.",
             cues: ["Open your arms and step forward", "Your opponent mirrors and approaches", "Walk together in close proximity", "Be ready — attacks can come during or after chamada"],
             milestone: "Execute and respond to chamadas in a roda with awareness",
-            duration: "4-8 weeks"
           },
           {
             name: "Troca de Negativa",
@@ -473,7 +432,6 @@ const PATHS = {
             description: "A hop that switches your negativa from one side to the other. Quick, low, and disorienting. Repositions you and creates attack opportunities.",
             cues: ["From negativa, hop and switch the extended leg", "Guard hand switches too", "Stay as low as possible during the switch", "Use it to dodge a sweep or reposition"],
             milestone: "Rapid troca switching 3-4 times while maintaining low position",
-            duration: "3-4 weeks"
           },
           {
             name: "Rasteira de Mão",
@@ -481,7 +439,6 @@ const PATHS = {
             description: "A sweep using your hand instead of foot. While in negativa or low position, grab the opponent's ankle and pull during their kick.",
             cues: ["You must be low — negativa or similar position", "Time the grab when they commit to a kick", "Pull the supporting foot toward you, fast", "Can also push the kicking leg to amplify imbalance"],
             milestone: "Successful hand sweep during live roda play",
-            duration: "4-8 weeks"
           },
           {
             name: "Aú de Cabeça com Rolê",
@@ -489,7 +446,6 @@ const PATHS = {
             description: "From a headstand or aú, transition into a ground roll. Flow between vertical and horizontal planes seamlessly. This is what makes a ground game beautiful.",
             cues: ["From aú or bananeira, lower controlled into a roll", "Use momentum — don't crash", "Emerge into negativa, cocorinha, or standing", "Practice the transition slowly before adding speed"],
             milestone: "Seamless aú → headstand → rolê → negativa flow",
-            duration: "4-6 weeks"
           }
         ]
       },
@@ -503,7 +459,6 @@ const PATHS = {
             description: "Playing extremely close to your opponent — inside striking range. This is where malícia, takedowns, and cabeçadas (headbutts) live. The truest test of a capoeirista.",
             cues: ["Stay close — resist the urge to create distance", "Every movement is both attack and defense", "Use shoulder bumps, headbutts, and close-range kicks", "Read your opponent's weight distribution constantly"],
             milestone: "Play a full game primarily inside, using takedowns and close range",
-            duration: "3-6 months"
           },
           {
             name: "Chapéu de Couro",
@@ -511,7 +466,6 @@ const PATHS = {
             description: "A dramatic ground-level movement where you swing over your opponent who is on the ground. Leapfrog meets cartwheel. Shows dominance and control.",
             cues: ["Opponent is low or on the ground", "Jump and arc over them using one or both hands", "Legs clear their body completely", "Land on the other side, ready to continue"],
             milestone: "Chapéu de couro over a partner cleanly during a game",
-            duration: "2-4 months"
           },
           {
             name: "Cabeçada",
@@ -519,7 +473,6 @@ const PATHS = {
             description: "One of the oldest techniques in capoeira. A controlled headbutt to the chest, used close range. Not about force — about timing and surprise.",
             cues: ["Use the top of the forehead — never the face", "Enter from a low position — negativa, esquiva", "Drive upward through the legs, head contacts chest", "More of a push than a strike — control is key"],
             milestone: "Controlled cabeçada entry from esquiva in a game",
-            duration: "4-8 weeks"
           },
           {
             name: "Fluxo Completo (Complete Flow)",
@@ -527,7 +480,6 @@ const PATHS = {
             description: "The ultimate goal: seamless flow between standing kicks, ground game, sweeps, floreios, and malícia. Not individual moves but an unbroken conversation with your body and your opponent.",
             cues: ["Stop thinking in individual moves — think in phrases", "Every dodge should contain a counter", "Every attack should set up the next movement", "Play with rhythm changes — fast/slow, high/low, in/out"],
             milestone: "Play a 3-minute roda game using all paths — kicks, ground, floreios, takedowns — seamlessly",
-            duration: "Ongoing — the lifelong pursuit"
           }
         ]
       }
@@ -553,7 +505,6 @@ const PATHS = {
             description: "Before you touch an instrument, feel the rhythm. Palmas (clapping) in the roda follows specific patterns. If you can clap on beat, you can play.",
             cues: ["Listen to the berimbau — it sets the rhythm", "Clap on the strong beats — not randomly", "Two main patterns: palm-to-palm (sharp) and cupped (deep)", "Practice with recorded rodas — clap along"],
             milestone: "Maintain steady palmas through an entire roda without losing the beat",
-            duration: "1-2 weeks"
           },
           {
             name: "Basic Capoeira Songs (Corridos)",
@@ -561,7 +512,6 @@ const PATHS = {
             description: "Corridos are the call-and-response songs during the game. The leader sings a line, the roda responds. Learn 5-10 basic corridos by heart.",
             cues: ["Start with: 'Paranauê,' 'Volta do Mundo,' 'Sai Sai Catarina'", "Learn the chorus first — that's what you sing in the roda", "Pronunciation matters — learn the Portuguese", "Sing with energy — this isn't background music"],
             milestone: "Sing the chorus of 10 corridos from memory during a roda",
-            duration: "3-4 weeks"
           },
           {
             name: "Ladainhas (Opening Songs)",
@@ -569,7 +519,6 @@ const PATHS = {
             description: "The slow, storytelling songs sung at the opening of a roda, usually by the most senior player. They tell of capoeira history, legends, and life lessons.",
             cues: ["Ladainha is sung solo — everyone listens", "The roda doesn't start until the ladainha ends", "Learn at least 3 ladainhas", "Understand the stories — they carry the history"],
             milestone: "Sing one complete ladainha from memory with correct melody and Portuguese",
-            duration: "4-8 weeks"
           },
           {
             name: "Pandeiro (Tambourine)",
@@ -577,7 +526,6 @@ const PATHS = {
             description: "The pandeiro provides the rhythmic backbone of the bateria. Held in one hand, struck with the other. Multiple tones possible.",
             cues: ["Three basic sounds: open (thumb), closed (fingertips), slap (palm)", "The basic samba rhythm: thumb-tip-slap-tip", "Keep the pandeiro tilted slightly", "Wrist movement — don't slap with the whole arm"],
             milestone: "Play basic pandeiro rhythm for 5 minutes without losing the beat",
-            duration: "4-6 weeks"
           }
         ]
       },
@@ -591,7 +539,6 @@ const PATHS = {
             description: "The tall drum that anchors the rhythm. Play with hands using three tones: open, closed, and slap. The heartbeat of the roda.",
             cues: ["Open tone: flat fingers near the edge", "Closed tone: press and hold in the center", "Slap: cupped hand strike near the edge", "Maintain steady rhythm — the roda depends on you"],
             milestone: "Play atabaque rhythm for a full roda (10+ minutes)",
-            duration: "4-6 weeks"
           },
           {
             name: "Berimbau — Holding & Striking",
@@ -599,15 +546,13 @@ const PATHS = {
             description: "The master instrument of capoeira. A single-string bow with a gourd resonator. Hold the stone (pedra), press the string, and strike with the stick (baqueta).",
             cues: ["Left hand holds berimbau, stone (dobrão), and gourd", "Right hand holds baqueta and caxixi", "Three tones: open (solto), closed (preso), buzz (chiado)", "The gourd opens and closes against your belly for resonance"],
             milestone: "Produce all three clean tones consistently",
-            duration: "4-8 weeks"
           },
           {
             name: "Berimbau — Toque de Angola",
             pt: "Angola Rhythm",
             description: "The slow, methodical rhythm of Capoeira Angola. Deep, grounded, meditative. Dictates a slow, strategic game full of malícia.",
-            cues: ["Slow tempo — don't rush", "The rhythm cycles: ding-dong-ding-dong-ding...", "Alternating open and closed tones", "Feel the weight of each note — it controls the roda"],
+            cues: ["Slow tempo — don't rush", "The rhythm cycles: Tch-Tch-DONG-DING", "Alternating open and closed tones", "Feel the weight of each note — it controls the roda"],
             milestone: "Play toque de Angola for 5 minutes maintaining steady tempo",
-            duration: "4-6 weeks"
           },
           {
             name: "Berimbau — Toque de São Bento Grande",
@@ -615,7 +560,6 @@ const PATHS = {
             description: "The fast rhythm of Regional. This is the toque that drives the athletic, kick-heavy game most people associate with capoeira. Energetic and driving.",
             cues: ["Faster tempo — builds energy in the roda", "More complex pattern than Angola", "The buzz tone features heavily", "This toque drives the energy in most Regional rodas"],
             milestone: "Play São Bento Grande for 5 minutes with speed and consistency",
-            duration: "2-3 months"
           }
         ]
       },
@@ -629,7 +573,6 @@ const PATHS = {
             description: "Stand up in the roda, pick up the gunga, and sing a ladainha from your heart. This is leadership. You set the tone for the entire roda.",
             cues: ["Choose a ladainha you feel deeply", "Project your voice — own the space", "The roda is silent during your ladainha", "After ladainha, transition smoothly into the chula and corrido"],
             milestone: "Open a roda with a full ladainha + chula + corrido transition, confidently",
-            duration: "2-4 months"
           },
           {
             name: "Berimbau — Multiple Toques",
@@ -637,7 +580,6 @@ const PATHS = {
             description: "Learn the full range of toques: Angola, São Bento Pequeno, São Bento Grande, Amazonas, Iuna, Santa Maria, Cavalaria. Each dictates a different game.",
             cues: ["Each toque changes the energy of the roda", "Iuna: only graduated students play", "Cavalaria: warning rhythm (historically warning of police)", "Practice switching between toques without stopping"],
             milestone: "Play 5 different toques and explain when each is used",
-            duration: "3-6 months"
           },
           {
             name: "Capoeira History",
@@ -645,7 +587,6 @@ const PATHS = {
             description: "Know the history: enslaved Africans in Brazil, engolo from Angola, the persecution era, legalization, Mestre Bimba and Regional, Mestre Pastinha and Angola, and the growth of the modern capoeira community worldwide.",
             cues: ["Study the African roots — particularly engolo from Angola", "Understand why capoeira was criminalized (and when)", "Mestre Bimba (Regional) vs Mestre Pastinha (Angola)", "Learn about your own group's lineage and mestres"],
             milestone: "Explain capoeira's history from African origins to the modern era to a newcomer",
-            duration: "2-3 months"
           },
           {
             name: "Portuguese for Capoeira",
@@ -653,7 +594,6 @@ const PATHS = {
             description: "Understand what you're singing. Learn the key Portuguese terms, phrases in songs, and basic conversation relevant to capoeira.",
             cues: ["Movement names: know what every name means", "Song vocabulary: axé, mandinga, malícia, dendê, berimbau", "Basic phrases: 'Joga bonito,' 'Iê, volta do mundo'", "Understanding lyrics transforms your connection to the music"],
             milestone: "Translate and explain 10 full capoeira songs",
-            duration: "3-6 months"
           }
         ]
       },
@@ -667,7 +607,6 @@ const PATHS = {
             description: "Write your own ladainhas and corridos. Draw from your personal capoeira journey, your mestre's teachings, and the tradition. Original songs carry your story forward.",
             cues: ["Follow traditional structures — ladainha, chula, corrido", "Draw from real experiences and feelings", "Respect the tradition while adding your voice", "Test your songs in the roda — they need to work live"],
             milestone: "Compose and perform an original ladainha in a roda",
-            duration: "3-6 months"
           },
           {
             name: "Commanding the Bateria",
@@ -675,7 +614,6 @@ const PATHS = {
             description: "Lead the entire musical ensemble. Control the energy of the roda through your berimbau, change toques to shift the game, call songs that match the moment.",
             cues: ["The gunga player is the conductor of the roda", "Change toques to change the energy — faster, slower, different game", "Call songs that match or contrast with what's happening", "Start and end games with the berimbau"],
             milestone: "Command a full roda bateria for 30+ minutes, managing energy and transitions",
-            duration: "6-12 months"
           },
           {
             name: "Understanding Fundamentos",
@@ -683,7 +621,6 @@ const PATHS = {
             description: "Beyond technique: understand mandinga (magic/sorcery in movement), malícia (cunning/deception), axé (vital force), and dendê (the flavor of capoeira). These are what separate a technician from a capoeirista.",
             cues: ["Mandinga cannot be taught — it emerges from deep practice", "Malícia is reading intention before action", "Axé is the energy you bring and the energy the roda creates", "Dendê is style, flavor, your unique expression"],
             milestone: "Demonstrate mandinga and malícia in the roda — your mestre will tell you when you have it",
-            duration: "Ongoing — lifelong"
           },
           {
             name: "Your Group's Philosophy & Community",
@@ -691,7 +628,6 @@ const PATHS = {
             description: "Understand and embody your group's philosophy: the relentless pursuit of technical mastery, the cycle of learning and teaching, community building, and using capoeira as a tool for personal and social growth.",
             cues: ["Study your mestre's teachings and lineage", "The cord system represents growth — each color has meaning", "Teaching is part of growth — give back to the group", "Capoeira is a vehicle for social transformation"],
             milestone: "Articulate your group's philosophy and how it shapes your practice and life",
-            duration: "Ongoing"
           }
         ]
       }
@@ -721,7 +657,6 @@ const ANGOLA_PATHS = {
             description: "Lower, wider, and more deceptive than Regional ginga. Your body stays close to the ground, weight shifts are subtle, and every movement is a question waiting for an answer. The Angola ginga is a conversation, not a monologue.",
             cues: ["Stay low — bend deep in the knees, center of gravity near the ground", "Wider base than Regional — feet spread, rooted stance", "Arms move deliberately — each hand position is protection AND deception", "The rhythm comes from within — listen to the berimbau, let it guide your movement"],
             milestone: "Fluid, low Angola ginga for 5 minutes with natural chamadas and variations",
-            duration: "Ongoing — the ginga is a lifelong study"
           },
           {
             name: "Negativa",
@@ -729,7 +664,6 @@ const ANGOLA_PATHS = {
             description: "The foundation of Angola's ground game. One leg extended, one bent underneath you, hand on the ground, body low. It's a dodge, a rest, a trap — all at once. In Angola, the negativa is where you think.",
             cues: ["Sit deep — one leg extended, same-side arm on the ground", "Keep your eyes on your opponent — the negativa is not a retreat", "Chin protected by the raised arm", "Learn to enter and exit negativa fluidly from ginga"],
             milestone: "Enter negativa from ginga to both sides smoothly, hold for 10 seconds with control",
-            duration: "2-3 weeks"
           },
           {
             name: "Rolê",
@@ -737,7 +671,6 @@ const ANGOLA_PATHS = {
             description: "How you move on the ground. A circular ground movement where your body rolls around a central point. In Angola, the rolê is your primary transportation — you don't stand up and walk, you rolê.",
             cues: ["Hands planted, body rotates around them", "Legs sweep close to the ground — controlled, not wild", "Eyes always track your opponent through the rotation", "Chain rolês together to cover distance while staying low"],
             milestone: "Continuous rolê in both directions, transitioning smoothly in and out of negativa",
-            duration: "2-4 weeks"
           },
           {
             name: "Chamada",
@@ -745,7 +678,6 @@ const ANGOLA_PATHS = {
             description: "Unique to Angola. One player stops and 'calls' the other by opening their arms. The other must approach carefully — it's a test of trust, awareness, and malícia. The chamada is a ritual within the game.",
             cues: ["The caller opens arms wide, stands tall and still", "The responder approaches slowly, carefully — never rushing", "Eye contact is constant — this is a moment of deep connection", "The exit is the most dangerous part — stay alert for the unexpected"],
             milestone: "Initiate and respond to chamadas with awareness and proper ritualistic form",
-            duration: "3-4 weeks"
           }
         ]
       },
@@ -759,7 +691,6 @@ const ANGOLA_PATHS = {
             description: "The signature kick of Angola. A spinning low kick delivered from the ground, sweeping like a stingray's tail. Beautiful, deceptive, and devastating when it connects.",
             cues: ["Start from negativa or a low squat position", "Hand plants as the body spins, leg sweeps in a wide arc", "Stay low — the kick should pass at shin to knee height", "The spin continues into your next movement — never stop"],
             milestone: "Clean rabo de arraia from negativa, both directions, with full rotation and recovery",
-            duration: "3-5 weeks"
           },
           {
             name: "Cabeçada",
@@ -767,7 +698,6 @@ const ANGOLA_PATHS = {
             description: "The headbutt. In Angola, the cabeçada is a legitimate and respected attack. Delivered from a low position, rising up into the opponent's body. It requires timing, proximity, and courage.",
             cues: ["Rise from a low position — the power comes from your legs driving upward", "Forehead or top of the skull makes contact — never the face", "Timing is everything — enter when your opponent is open and close", "Follow through with your whole body, not just your head"],
             milestone: "Execute controlled cabeçada from negativa, rising into standing position",
-            duration: "3-4 weeks"
           },
           {
             name: "Rasteira",
@@ -775,7 +705,6 @@ const ANGOLA_PATHS = {
             description: "Foot sweeps are the bread and butter of Angola. When your opponent's weight is on one foot, you take it away. Simple concept, lifetime of mastery. In Angola, the rasteira is an art form.",
             cues: ["Read the weight transfer — sweep the loaded foot", "Your sweeping foot hooks behind their ankle, pulling toward you", "Timing over power — a well-timed rasteira needs no force", "Stay balanced on your support leg — don't fall chasing the sweep"],
             milestone: "Successfully time rasteiras during jogo, reading weight shifts naturally",
-            duration: "4-6 weeks"
           },
           {
             name: "Vingativa",
@@ -783,7 +712,6 @@ const ANGOLA_PATHS = {
             description: "A body takedown unique to Angola. You trap your opponent's leg with yours while pushing their upper body in the opposite direction. It's a lesson in leverage and malícia.",
             cues: ["Enter when close — inside your opponent's space", "Your leg hooks behind theirs as your body presses forward", "The push is diagonal — chest into their shoulder", "Control the fall — this is a takedown, not an assault"],
             milestone: "Execute vingativa from close jogo with control and proper body mechanics",
-            duration: "4-6 weeks"
           }
         ]
       },
@@ -797,7 +725,6 @@ const ANGOLA_PATHS = {
             description: "Playing close. In Angola, the game happens inside — face to face, body to body. The jogo de dentro is where malícia lives. You must be comfortable being uncomfortable, close enough to smell your opponent's sweat.",
             cues: ["Stay in range — don't retreat to comfort", "Use small, precise movements — no wide wild swings", "Your head, hands, and knees are your tools at this range", "Read intention through proximity — feel what they're about to do"],
             milestone: "Maintain close-range jogo for a full toque without retreating to distance",
-            duration: "Ongoing"
           },
           {
             name: "Malandragem",
@@ -805,7 +732,6 @@ const ANGOLA_PATHS = {
             description: "The art of deception in the roda. False movements, traps, theatrical gestures that hide real intentions. In Angola, the cleverest player wins, not the strongest. Malandragem is intelligence made physical.",
             cues: ["Fake a movement and do the opposite — train your body to lie", "Use rhythm changes to disrupt your opponent's timing", "The best malandro makes their opponent feel safe right before the trap", "Study the old mestres — watch videos of Mestre Pastinha, João Grande, Moraes"],
             milestone: "Successfully set up and execute deceptive sequences in the roda",
-            duration: "Ongoing — lifelong study"
           },
           {
             name: "Volta ao Mundo",
@@ -813,7 +739,6 @@ const ANGOLA_PATHS = {
             description: "The reset. When a player initiates the volta ao mundo, both players walk the circle of the roda. It's a moment to breathe, to reset, to reflect. In Angola, it happens naturally and frequently — it's part of the ritual.",
             cues: ["Walk the circle calmly — this is not a race", "Stay aware — the game can restart at any moment", "Use this time to read your opponent, catch your breath, plan your next approach", "Respect the ritual — volta ao mundo is sacred space"],
             milestone: "Initiate and respond to volta ao mundo with proper ritual awareness",
-            duration: "2-3 weeks"
           },
           {
             name: "Playing with the Berimbau",
@@ -821,7 +746,6 @@ const ANGOLA_PATHS = {
             description: "The game at the foot of the berimbau. This is where the jogo begins and ends. In Angola, the ritual of entering and exiting the roda is as important as the game itself. You buy the game, you play, you return.",
             cues: ["Crouch at the foot of the berimbau — make the sign of the cross or your personal ritual", "Wait for the berimbau to 'release' you into the roda", "When exiting, return to the berimbau and acknowledge it", "The berimbau commands the roda — always listen, always respect"],
             milestone: "Enter and exit the roda with full ritual awareness and proper form",
-            duration: "2-3 weeks"
           }
         ]
       },
@@ -835,7 +759,6 @@ const ANGOLA_PATHS = {
             description: "The invisible force in capoeira Angola. Mandinga is the magic that cannot be taught — it emerges from deep, devoted practice. It's in the eyes, the timing, the way you make your opponent see ghosts. Old mestres say mandinga comes from the ancestors.",
             cues: ["Mandinga is not a technique — it's a quality of movement and intention", "Study with a mestre who carries mandinga — it's transmitted, not learned from books", "Spend time in the roda watching, absorbing — mandinga enters through the eyes", "Be patient — mandinga comes when you stop trying to force it"],
             milestone: "Your mestre will tell you when they see mandinga in your game",
-            duration: "Ongoing — years of practice"
           },
           {
             name: "Ladainha Composition",
@@ -843,7 +766,6 @@ const ANGOLA_PATHS = {
             description: "Write your own ladainha. In Angola, singing is not optional — it's essential. A ladainha tells a story, honors the ancestors, teaches a lesson. When you compose your own, you add your voice to centuries of tradition.",
             cues: ["Study the classic ladainhas — understand their structure and storytelling", "Write from your own experience — authenticity matters more than poetry", "Practice singing solo — your voice must carry the roda", "A good ladainha makes people feel something — aim for the heart"],
             milestone: "Compose and perform your own ladainha that moves the roda",
-            duration: "3-6 months"
           },
           {
             name: "Fundamentos Filosóficos",
@@ -851,7 +773,6 @@ const ANGOLA_PATHS = {
             description: "Understand the philosophy of Angola. Mestre Pastinha's teachings, the African roots in Candomblé and Bantu traditions, the meaning of the roda as a microcosm of life. Angola is not just a fighting style — it's a worldview.",
             cues: ["Read Mestre Pastinha's writings — 'Capoeira Angola' is essential", "Understand the connection to Candomblé and African spiritual traditions", "The roda is life: you face opponents, make allies, fall and rise, and the music never stops", "Study the lineage — know where your Angola comes from"],
             milestone: "Articulate the philosophical foundations of Angola to a newcomer with depth and feeling",
-            duration: "Ongoing"
           },
           {
             name: "Roda Leadership",
@@ -859,7 +780,6 @@ const ANGOLA_PATHS = {
             description: "Lead an Angola roda. This means commanding the bateria, singing the opening ladainha, controlling the energy of the games, knowing when to call volta ao mundo, and maintaining the sacred space. In Angola, the roda leader is a spiritual guide.",
             cues: ["The gunga (big berimbau) leads — learn to command from the instrument", "Set the energy with your ladainha — the roda follows your intention", "Watch every game — intervene when necessary, let flow when the jogo is good", "Hold the space — an Angola roda is ceremony, and you are the conductor"],
             milestone: "Lead a complete Angola roda from opening ladainha through all games to closing",
-            duration: "Years of experience"
           }
         ]
       }
@@ -885,7 +805,6 @@ const ANGOLA_PATHS = {
             description: "The fundamental toque. Slow, deep, hypnotic. This is the rhythm that defines capoeira Angola — it sets the pace for the low, strategic game. Learn to feel it in your bones before you play it.",
             cues: ["Slow tempo — the berimbau breathes, it doesn't rush", "Deep resonant tone — let the cabaça amplify", "The pattern is simple but the feel is everything", "Close your eyes and let the toque pull you into the roda"],
             milestone: "Play toque de Angola for 10 minutes with consistent rhythm and tone",
-            duration: "4-6 weeks"
           },
           {
             name: "Palmas de Angola",
@@ -893,7 +812,6 @@ const ANGOLA_PATHS = {
             description: "The clapping patterns in Angola are different — slower, more deliberate, deeply connected to the berimbau rhythm. Your palmas are your voice when you're not singing. They carry the energy of the roda.",
             cues: ["Match the berimbau tempo — don't rush ahead", "Cupped hands for deep tones, flat for sharp", "Feel the communal rhythm — your palmas merge with everyone else's", "Palmas are participation — you're part of the roda even from the outside"],
             milestone: "Maintain proper Angola palmas rhythm for a full roda session",
-            duration: "2-3 weeks"
           },
           {
             name: "Corridos de Angola",
@@ -901,7 +819,6 @@ const ANGOLA_PATHS = {
             description: "The call-and-response songs of Angola. The soloist sings a line, the roda responds. In Angola, the corridos are often slower and more melodic than in Regional. Learn the classic ones first.",
             cues: ["Listen first — learn the responses before trying to lead", "Sing from the diaphragm — Angola singing needs depth, not volume", "Learn the Portuguese — understand what you're singing", "The corrido sets the mood — choose songs that match the game's energy"],
             milestone: "Know 10 traditional Angola corridos and sing the responses confidently",
-            duration: "4-6 weeks"
           }
         ]
       },
@@ -915,7 +832,6 @@ const ANGOLA_PATHS = {
             description: "In Angola, the bateria has three berimbaus: the gunga (bass, leader), the médio (middle, complementary), and the viola (high, improvisational). Understanding their roles is understanding the hierarchy of the roda.",
             cues: ["Gunga: deepest tone, sets the tempo, commands the roda", "Médio: middle register, plays the complementary rhythm", "Viola: highest pitch, improvises and ornaments around the base rhythm", "The three berimbaus create a conversation — learn to listen to all three"],
             milestone: "Play each berimbau role (gunga, médio, viola) in the Angola bateria",
-            duration: "3-6 months"
           },
           {
             name: "Pandeiro de Angola",
@@ -923,7 +839,6 @@ const ANGOLA_PATHS = {
             description: "The pandeiro in Angola follows a more traditional pattern. Less flashy than in Regional, but the groove must be solid and locked into the berimbau's tempo. The pandeiro is the heartbeat under the melody.",
             cues: ["Thumb, fingers, palm — master the three basic strokes", "Lock into the berimbau tempo — don't lead, support", "Subtle variations keep it alive without overpowering", "In Angola, the pandeiro whispers — it doesn't shout"],
             milestone: "Hold steady Angola pandeiro pattern for a full roda",
-            duration: "4-6 weeks"
           },
           {
             name: "Atabaque",
@@ -931,7 +846,6 @@ const ANGOLA_PATHS = {
             description: "The atabaque connects capoeira to its African and Candomblé roots. In Angola, the atabaque is essential — its deep pulse anchors everything. Playing atabaque is a privilege and a responsibility.",
             cues: ["Open tone (edge), slap (center), and bass (muffled) — three voices from one drum", "The atabaque follows the berimbau — never overpower it", "Feel the rhythm in your whole body, not just your hands", "This drum connects you to centuries of African tradition — play with reverence"],
             milestone: "Play atabaque in the Angola bateria with proper rhythm and dynamics",
-            duration: "2-3 months"
           }
         ]
       },
@@ -945,7 +859,6 @@ const ANGOLA_PATHS = {
             description: "The ladainha opens the Angola roda. Sung solo by the most senior player or the roda leader, it tells a story — of capoeira, of life, of struggle and beauty. During the ladainha, no one plays. Everyone listens.",
             cues: ["Memorize at least 5 traditional ladainhas", "The melody is free — each singer brings their own interpretation", "Tell the story with feeling — a ladainha without emotion is empty", "Your voice doesn't need to be perfect — it needs to be honest"],
             milestone: "Sing 5 ladainhas from memory with proper melody and feeling",
-            duration: "2-4 months"
           },
           {
             name: "Chula",
@@ -953,7 +866,6 @@ const ANGOLA_PATHS = {
             description: "After the ladainha comes the chula — the transition into the game. 'Iê, volta do mundo, camará!' The chula calls the roda to attention and signals that the game is about to begin. It's the bridge between prayer and play.",
             cues: ["The chula follows specific traditional phrases", "The roda responds to each line — call and response", "Energy builds through the chula — from contemplative ladainha to active game", "Master the timing — the game begins at the right moment, not too early"],
             milestone: "Lead the transition from ladainha through chula into the game",
-            duration: "3-4 weeks"
           },
           {
             name: "Singing While Playing",
@@ -961,7 +873,6 @@ const ANGOLA_PATHS = {
             description: "In Angola, the game and the music are inseparable. The ultimate skill is to play berimbau, sing, and participate in the energy of the roda all at once. Your body, your voice, and the instrument become one.",
             cues: ["Start by humming the corrido while playing berimbau", "Build to singing full verses while maintaining the toque", "Your breathing must be controlled — sing from the diaphragm while your arms work", "This is meditation in action — total presence"],
             milestone: "Lead corridos while playing berimbau without losing rhythm or melody",
-            duration: "3-6 months"
           }
         ]
       }
@@ -991,7 +902,6 @@ const KIDS_PATHS = {
             description: "This is how every capoeirista moves! It's like dancing from side to side — step back, swing your arms, and feel the rhythm. Think of it like being a tree swaying in the wind! 🌴💃",
             cues: ["Step back with one foot, then the other — like a dance!", "Swing your arms — one protects your face like a superhero shield! 🛡️", "Stay bouncy on your toes — never stand like a statue!"],
             milestone: "Dance the ginga for 1 whole minute without stopping! You're a capoeirista now!",
-            duration: "1-2 weeks"
           },
           {
             name: "The Push Kick!",
@@ -999,7 +909,6 @@ const KIDS_PATHS = {
             description: "Push your foot forward like you're opening a really heavy door with your foot! It's the most basic kick and it's super satisfying when you get it right! 🚪💥",
             cues: ["Lift your knee up high like a flamingo! 🦩", "Push your foot out straight — like kicking a ball really far! ⚽", "Pull it back quick — don't leave your foot out there!"],
             milestone: "Do 10 push kicks without losing your balance — 5 on each side!",
-            duration: "1-2 weeks"
           },
           {
             name: "The Crouch!",
@@ -1007,7 +916,6 @@ const KIDS_PATHS = {
             description: "Someone kicks over your head and you just... duck! Squat down like a little frog and cover your head with your hand. Simple, but it'll save you every time! 🐸",
             cues: ["Squat down low — pretend you're a tiny frog! 🐸", "One hand protects the top of your head", "Keep your eyes UP — watch what's happening!"],
             milestone: "Duck under 5 kicks from a friend without falling over!",
-            duration: "1 week"
           },
           {
             name: "Animal Walks!",
@@ -1015,7 +923,6 @@ const KIDS_PATHS = {
             description: "Capoeiristas move like animals! Walk like a bear 🐻, crawl like a spider 🕷️, hop like a monkey 🐒, and slither like a snake 🐍. These make you super strong and flexible!",
             cues: ["Bear walk: hands and feet on the ground, bum up high! 🐻", "Monkey hop: squat down and jump sideways like a cheeky monkey! 🐒", "Crab walk: sit down, hands behind you, walk backwards!"],
             milestone: "Do the animal walk circuit (bear, monkey, crab, spider) twice without stopping!",
-            duration: "1-2 weeks"
           }
         ]
       },
@@ -1029,7 +936,6 @@ const KIDS_PATHS = {
             description: "The capoeira cartwheel! It looks just like a regular cartwheel but cooler because you keep your eyes on your friend the whole time. You're upside down AND watching! 🤸‍♂️✨",
             cues: ["Hands down one at a time — like a slow-motion cartwheel", "Keep your legs apart and straight — make a big star shape! ⭐", "Look at your friend the whole time — even when you're upside down!"],
             milestone: "Do 5 cartwheels in a row on both sides!",
-            duration: "2-3 weeks"
           },
           {
             name: "The Spinning Kick!",
@@ -1037,7 +943,6 @@ const KIDS_PATHS = {
             description: "Swing your leg in a big half-circle like a rainbow! 🌈 It goes from one side allll the way to the other. It's like your leg is painting a rainbow in the air!",
             cues: ["Keep your leg straight like a stick! 🦿", "Swing it in a big arc — from outside to inside", "Don't fall over! Keep your balance on the other foot"],
             milestone: "Do the rainbow kick 5 times on each side without wobbling!",
-            duration: "2-3 weeks"
           },
           {
             name: "The Dodge Roll!",
@@ -1045,7 +950,6 @@ const KIDS_PATHS = {
             description: "Roll along the ground like a ninja! 🥷 Hands down, spin your body around in a circle close to the floor. It's how you escape AND get into position for your next move!",
             cues: ["Hands on the floor, body low like you're sneaking! 🥷", "Spin your legs around in a circle", "Stay smooth — no bumping or crashing!"],
             milestone: "Roll smoothly in both directions 3 times each!",
-            duration: "2-3 weeks"
           },
           {
             name: "Playing the Game!",
@@ -1053,7 +957,6 @@ const KIDS_PATHS = {
             description: "Now you put it all together! You and a friend take turns — one attacks, one dodges, and you keep going back and forth. It's like a conversation but with your bodies! 🗣️💬",
             cues: ["Take turns — when they kick, you dodge! When you kick, they dodge!", "Keep your ginga going the whole time — never stop moving!", "Smile and have fun — capoeira is a game, not a fight! 😄"],
             milestone: "Play a full game with a friend for 2 minutes — attack, dodge, and keep the flow!",
-            duration: "Ongoing — always getting better!"
           }
         ]
       },
@@ -1067,7 +970,6 @@ const KIDS_PATHS = {
             description: "Go upside down like a banana tree! 🍌 It's a handstand where you balance on your hands. Start against a wall and work your way to doing it on your own. You'll feel like a superhero! 🦸",
             cues: ["Start with your hands on the floor, kick up gently against a wall", "Squeeze your tummy muscles tight — they keep you balanced! 💪", "Point your toes to the sky — make yourself as tall as possible!"],
             milestone: "Hold a headstand for 10 seconds without the wall!",
-            duration: "3-4 weeks"
           },
           {
             name: "The Monkey Flip!",
@@ -1075,7 +977,6 @@ const KIDS_PATHS = {
             description: "A backwards flip using your hands — you jump backwards over yourself like a monkey! 🐒🙃 It looks AMAZING and your friends will be SO impressed!",
             cues: ["One hand goes back to the ground behind you", "Push off your feet and flip backwards over your hand", "Land on your feet — superhero landing! 🦸‍♂️"],
             milestone: "Do a clean macaco from standing — both sides!",
-            duration: "4-6 weeks"
           },
           {
             name: "The Hammer Kick!",
@@ -1083,7 +984,6 @@ const KIDS_PATHS = {
             description: "The big powerful roundhouse kick! Swing your leg around like you're hitting a nail with a giant hammer! 🔨💥 Chamber your knee, twist your hips, and BOOM!",
             cues: ["Lift your knee up first — like loading a spring! 🔋", "Twist your whole body — power comes from the spin!", "Snap it back fast — don't leave your leg hanging out!"],
             milestone: "10 fast hammer kicks — 5 each side, head height!",
-            duration: "3-4 weeks"
           },
           {
             name: "Your First Roda!",
@@ -1091,7 +991,6 @@ const KIDS_PATHS = {
             description: "The roda is the big circle where everyone plays! You clap, you sing, and when it's your turn, you go in and show your moves! It's the most exciting thing ever! 🎪🎶",
             cues: ["Clap along with everyone — feel the rhythm! 👏", "When it's your turn, enter the circle with confidence!", "Play with a smile — have fun and show your personality! 🌟"],
             milestone: "Play in a real roda and have an awesome game!",
-            duration: "When you're ready — your teacher will tell you!"
           }
         ]
       }
@@ -1117,7 +1016,6 @@ const KIDS_PATHS = {
             description: "Clap your hands to the rhythm! 👏👏 In capoeira, everyone around the circle claps together. It's like being in a giant band where clapping is your instrument!",
             cues: ["Clap on the beat — listen to the music and match it! 🎵", "Cup your hands a little for a deeper sound 🤲", "Keep going even when you're tired — the roda needs your claps!"],
             milestone: "Clap along to 3 different capoeira songs without losing the beat!",
-            duration: "1 week"
           },
           {
             name: "Singing Together!",
@@ -1125,7 +1023,6 @@ const KIDS_PATHS = {
             description: "When someone sings a line, everyone sings it back! It's like the most fun echo game ever! 🗣️📢 Don't worry about being perfect — just be LOUD and have fun!",
             cues: ["Listen to what the leader sings, then repeat it back! 📢", "Sing LOUD and proud — don't be shy! 🎤", "Learn the words in Portuguese — they sound SO cool!"],
             milestone: "Know 5 capoeira songs and sing the responses with the group!",
-            duration: "2-3 weeks"
           },
           {
             name: "The Rhythm Game!",
@@ -1133,7 +1030,6 @@ const KIDS_PATHS = {
             description: "Can you feel the beat? Tap your knees, stomp your feet, nod your head — the music is everywhere and your whole body can dance to it! 🥁💃",
             cues: ["Close your eyes and feel the berimbau rhythm 🎶", "Tap the rhythm on your knees — can you keep it going?", "Try walking to the beat — slow when the music is slow, fast when it speeds up!"],
             milestone: "Move your whole body to the rhythm — clap, tap, and step all at once!",
-            duration: "1-2 weeks"
           }
         ]
       },
@@ -1147,7 +1043,6 @@ const KIDS_PATHS = {
             description: "The berimbau is the coolest instrument ever — it's a bow with a gourd that makes magical sounds! 🏹✨ It's the boss of the roda. When the berimbau plays, everyone listens!",
             cues: ["Hold the berimbau with one hand, the baqueta (stick) in the other 🪵", "Hit the wire gently — tap tap tap to the rhythm!", "Press the dobrão (coin) against the wire to change the sound — it's like magic! ✨"],
             milestone: "Play a simple berimbau rhythm for 30 seconds without stopping!",
-            duration: "3-4 weeks"
           },
           {
             name: "The Pandeiro!",
@@ -1155,7 +1050,6 @@ const KIDS_PATHS = {
             description: "Shake it, tap it, slap it! 🪘 The pandeiro is like a supercharged tambourine. It jingles and booms and keeps everyone on rhythm. So satisfying to play!",
             cues: ["Hold it in one hand, tap with the other ✋", "Thumb for the bass sound, fingers for the jingle! 🎵", "Keep it steady — the pandeiro is the heartbeat of the music! ❤️"],
             milestone: "Play pandeiro for a whole song with your group!",
-            duration: "2-3 weeks"
           },
           {
             name: "Animal Songs!",
@@ -1163,7 +1057,6 @@ const KIDS_PATHS = {
             description: "Capoeira has songs about everything — parrots 🦜, snakes 🐍, monkeys 🐒, and stingrays! Learn the animal songs and make the animal sounds while you sing! ROAR! 🦁",
             cues: ["Learn 'A Cobra Mordeu' (The Snake Bit!) — it's everyone's favorite! 🐍", "Make the animal noises during the song — be as silly as you want! 🐒", "Dance like the animal while you sing — be a parrot, be a monkey!"],
             milestone: "Sing 3 animal songs and teach one to a friend!",
-            duration: "2-3 weeks"
           },
           {
             name: "Lead a Song!",
@@ -1171,7 +1064,6 @@ const KIDS_PATHS = {
             description: "YOU be the leader! Stand up, start singing, and everyone follows YOU! 🎤👑 It takes courage but when the whole roda sings YOUR song back to you... best feeling EVER!",
             cues: ["Pick your favorite song — one you know really well! ⭐", "Sing loud and clear so everyone can hear you! 📢", "Keep the energy up — if you're excited, everyone will be excited! 🎉"],
             milestone: "Lead a song in the roda and keep it going for at least 1 minute!",
-            duration: "3-4 weeks"
           }
         ]
       }
@@ -1331,6 +1223,42 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
 
   const deleteSong = (idx) => setSongs(prev => prev.filter((_, i) => i !== idx));
 
+  // ── Song catalog ──
+  const SONG_CATALOG = [
+    // Free songs
+    { title: "Paranauê", type: "corrido", free: true,
+      lyrics: "Paranauê, paranauê, paraná\nParanauê, paranauê, paraná" },
+    { title: "Volta do Mundo", type: "corrido", free: true,
+      lyrics: "Volta do mundo, camará\nQue o mundo deu, que o mundo dá\nVolta do mundo, camará" },
+    { title: "Dona Maria Como Vai Você", type: "corrido", free: true,
+      lyrics: "Dona Maria como vai você?\nEu vou bem, eu vou bem\nDona Maria como vai você?\nEu vou bem, graças a Deus" },
+    { title: "Água de Beber", type: "ladainha", free: true,
+      lyrics: "Água de beber, camará\nÁgua de beber\nÁgua de beber, camará" },
+    { title: "Zum Zum Zum", type: "corrido", free: true,
+      lyrics: "Zum zum zum, capoeira mata um\nZum zum zum, capoeira mata um" },
+    // Premium songs
+    { title: "Eu Já Vivo Enjoado", type: "corrido", free: false,
+      lyrics: "Eu já vivo enjoado\nDe viver aqui na terra\nÔ mamãe eu vou pra lua\nEu já falei com a mulher" },
+    { title: "A Manteiga Derramou", type: "corrido", free: false,
+      lyrics: "A manteiga derramou\nQuem derramou, bota pra fora\nA manteiga derramou" },
+    { title: "Toque de Angola (Ladainha)", type: "ladainha", free: false,
+      lyrics: "Iê, maior é Deus\nMaior é Deus, pequeno sou eu\nO que eu tenho foi Deus quem me deu\nNa roda de capoeira, grande e pequeno sou eu" },
+    { title: "Parana ê Parana", type: "corrido", free: false,
+      lyrics: "Paraná ê, Paraná ê, Paraná\nCapoeira de Angola que Pastinha me ensinou" },
+    { title: "Sou Eu Sou Eu", type: "corrido", free: false,
+      lyrics: "Sou eu, sou eu\nSou eu, berimbau bateu\nSou eu, sou eu\nCapoeira sou eu" },
+    { title: "O Navio Negreiro", type: "ladainha", free: false,
+      lyrics: "O navio negreiro, trouxe pra cá\nOs escravos da África, ô meu Deus\nPra trabalhar, camará" },
+    { title: "Santa Maria Mãe de Deus", type: "corrido", free: false,
+      lyrics: "Santa Maria, mãe de Deus\nSanta Maria, mãe de Deus\nOlha, toma conta de mim" },
+    { title: "Ai Ai Aidê", type: "corrido", free: false,
+      lyrics: "Ai ai aidê\nJoga bonito que eu quero aprender\nAi ai aidê" },
+    { title: "Valha Me Deus Senhor São Bento", type: "ladainha", free: false,
+      lyrics: "Valha me Deus, Senhor São Bento\nA capoeira é um bom fundamento\nFoi Besouro Mangangá\nQue me ensinou a jogar" },
+    { title: "Quem Vem Lá Sou Eu", type: "corrido", free: false,
+      lyrics: "Quem vem lá sou eu\nQuem vem lá sou eu\nBerimbau tocou na capoeira sou eu" },
+  ];
+
   // ── Events state ──
   const SEED_EVENTS = [
     { id: "e1", name: "Weekly Open Roda", type: "roda", date: "2026-03-01", time: "18:00", location: "Brixton Community Centre, London", scope: "local", description: "Open roda for all levels. Come play, sing, and connect. Berimbaus provided but bring your own if you have one.", organizer: "Mestre João", group: "Capoeira Mandinga", link: "", price: "Free", attendees: ["Ana", "Carlos", "Mia"] },
@@ -1481,7 +1409,6 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
       description: customDesc.trim() || `Personal training goal: ${customInput.trim()}`,
       cues: ["Focus on form and consistency", "Track your progress session by session", "Set small milestones along the way", "Celebrate your growth"],
       milestone: `Complete your personal goal: ${customInput.trim()}`,
-      duration: "Self-paced"
     };
     setCustomSkills(prev => ({
       ...prev,
@@ -2058,13 +1985,6 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
                     fontSize: "0.85rem", color: c.textMuted, lineHeight: 1.55, margin: 0,
                     display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden"
                   }}>{sk.description}</p>
-                  <div style={{
-                    display: "flex", gap: 16, marginTop: 8,
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.73rem", color: c.textMuted
-                  }}>
-                    <span>⏱ {sk.duration}</span>
-                  </div>
                 </div>
                 <span style={{ color: c.textMuted, fontSize: "1.2rem", marginTop: 4 }}>›</span>
               </div>
@@ -2166,6 +2086,76 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
             )}
           </div>
         )}
+
+        {/* Song Catalog — on music path */}
+        {pathKey === "music" && (
+          <div style={{ marginBottom: 48, animation: "fadeUp 0.5s ease both 0.4s" }}>
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: "1.3rem", letterSpacing: "0.04em", color: c.text, margin: "0 0 14px"
+            }}>
+              <span style={{ color: "#D4A843" }}>📜</span> Song Catalog
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {SONG_CATALOG.map((song, i) => {
+                const locked = !song.free && !isPremium;
+                return (
+                  <div key={i} style={{
+                    background: c.bgCard, border: `1px solid ${c.border}`,
+                    borderRadius: 10, padding: "14px 18px",
+                    opacity: locked ? 0.55 : 1,
+                    position: "relative",
+                    animation: `fadeUp 0.3s ease both ${i * 0.04}s`,
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                      <h3 style={{
+                        fontFamily: "'Bebas Neue', sans-serif",
+                        fontSize: "1.05rem", letterSpacing: "0.03em",
+                        color: c.text, margin: 0
+                      }}>{locked ? "🔒 " : ""}{song.title}</h3>
+                      <span style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.68rem", letterSpacing: "0.08em", textTransform: "uppercase",
+                        color: "#D4A843", fontWeight: 600,
+                        padding: "2px 8px",
+                        border: "1px solid #D4A84344",
+                        borderRadius: 4
+                      }}>{song.type}</span>
+                    </div>
+                    {locked ? (
+                      <p style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.82rem", color: c.textMuted, margin: 0, fontStyle: "italic"
+                      }}>Upgrade to premium to see lyrics</p>
+                    ) : (
+                      <p style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.85rem", color: c.textMuted, lineHeight: 1.6,
+                        margin: 0, whiteSpace: "pre-wrap",
+                      }}>{song.lyrics}</p>
+                    )}
+                  </div>
+                );
+              })}
+              {!isPremium && (
+                <button
+                  onClick={() => setShowUpgrade(true)}
+                  style={{
+                    marginTop: 8,
+                    padding: "14px 20px",
+                    background: `linear-gradient(135deg, #D4A843, #E8652B)`,
+                    border: "none", borderRadius: 10,
+                    color: "#fff", fontFamily: "'DM Sans', sans-serif",
+                    fontWeight: 600, fontSize: "0.88rem",
+                    cursor: "pointer", textAlign: "center",
+                  }}
+                >
+                  Unlock full catalog with Premium
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -2255,10 +2245,6 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
               fontFamily: "'DM Sans', sans-serif",
               margin: 0, color: c.textMuted, fontSize: "0.92rem", lineHeight: 1.6
             }}>{skill.milestone}</p>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              margin: "8px 0 0", color: c.textMuted, fontSize: "0.8rem", fontStyle: "italic"
-            }}>Estimated: {skill.duration}</p>
           </div>
 
           <button onClick={() => toggle(pathKey, levelIdx, skill.si)} style={{
