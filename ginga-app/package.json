@@ -23,6 +23,9 @@
     "sql.js": "^1.11.0",
     "stripe": "^17.0.0"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.7",
