@@ -1498,9 +1498,6 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
         }} title="Settings">&#9881;</button>
       </div>
 
-      {/* Install as app prompt */}
-      <InstallPrompt colors={c} />
-
       {/* Gentle premium prompt */}
       {showGentlePrompt && (
         <div style={{
@@ -1717,6 +1714,11 @@ function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
         >
           <span style={{ fontSize: "1.1rem", lineHeight: 1 }}>+</span> Add Custom Training {!isPremium && <span style={{ fontSize: "0.75rem", opacity: 0.7 }}>({totalCustomSkills}/{FREE_CUSTOM_LIMIT})</span>}
         </button>
+      </div>
+
+      {/* Install as app prompt */}
+      <div style={{ marginTop: 24 }}>
+        <InstallPrompt colors={c} />
       </div>
 
       {/* Cord System Card */}
