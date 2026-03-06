@@ -1,4 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useAuth } from "./context/AuthContext";
+import { api } from "./lib/api";
+import LoginScreen from "./components/LoginScreen";
+import { usePremium } from "./context/PremiumContext";
+import PremiumLock from "./components/PremiumLock";
+import UpgradeModal from "./components/UpgradeModal";
+import SettingsPanel from "./components/SettingsPanel";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import InstallPrompt from "./components/InstallPrompt";
 
 /* ═══════════════════════════════════════════════════════════════
    AXÉ — Capoeira Progression Guide
@@ -30,29 +39,6 @@ function classifyCustomTraining(text) {
   return best;
 }
 
-// ── Hero Splash Silhouettes (capoeira poses, 100x100 viewBox) ──
-const HERO_SILHOUETTES = {
-  // Ginga — classic back-step stance, arms guarding
-  ginga: "M50 6 C54 6 57 9 57 13 C57 17 54 20 50 20 C46 20 43 17 43 13 C43 9 46 6 50 6 Z M48 20 L44 38 L38 38 C36 38 35 36 36 34 L40 26 L44 20 Z M52 20 L56 38 L62 38 C64 38 65 36 64 34 L60 26 L56 20 Z M44 38 L40 58 L36 78 L32 82 L38 84 L42 80 L44 60 Z M56 38 L60 52 L66 68 L70 80 L76 82 L72 76 L64 60 L58 44 Z",
-  // Meia Lua de Compasso — hand on ground, spinning kick overhead
-  compasso: "M26 68 C30 68 33 65 33 61 C33 57 30 54 26 54 C22 54 19 57 19 61 C19 65 22 68 26 68 Z M28 54 L34 42 L38 36 L42 44 L56 38 L62 34 L66 30 L72 24 L78 20 L82 18 L78 22 L84 16 L80 22 L72 28 L64 34 L54 40 L42 48 L36 54 Z M34 42 L30 40 L24 44 L20 50 L22 52 L28 46 Z M28 68 L22 80 L18 88 L24 90 L28 84 L30 74 Z M34 56 L38 68 L40 80 L36 88 L42 90 L44 82 L40 68 L36 58 Z",
-  // Au (Cartwheel) — inverted, legs spread in V
-  au: "M50 82 C54 82 57 79 57 75 C57 71 54 68 50 68 C46 68 43 71 43 75 C43 79 46 82 50 82 Z M48 68 L44 52 L40 38 L38 28 L36 22 L32 16 L28 10 L24 8 L28 14 L30 20 L32 28 Z M52 68 L56 52 L60 38 L62 28 L64 22 L68 16 L72 10 L76 8 L72 14 L70 20 L68 28 Z M40 38 L34 34 L28 36 L24 40 L22 44 L26 42 L32 38 Z M60 38 L66 34 L72 36 L76 40 L78 44 L74 42 L68 38 Z",
-  // Armada — spinning kick, leg extended horizontally
-  armada: "M44 10 C48 10 51 13 51 17 C51 21 48 24 44 24 C40 24 37 21 37 17 C37 13 40 10 44 10 Z M42 24 L38 40 L36 50 L34 58 L32 66 L28 74 L24 78 L30 76 L34 70 L36 62 L38 52 L40 40 Z M46 24 L50 30 L52 36 L50 42 L46 40 L44 34 Z M36 50 L32 48 L26 50 L22 54 L20 58 L24 56 L30 52 Z M38 52 L44 54 L54 52 L64 48 L74 44 L82 42 L88 40 L82 44 L74 48 L64 52 L54 56 L44 58 L38 56 Z",
-  // Negativa — low crouch, one leg extended, arm supporting
-  negativa: "M30 48 C34 48 37 45 37 41 C37 37 34 34 30 34 C26 34 23 37 23 41 C23 45 26 48 30 48 Z M32 48 L36 54 L40 62 L42 70 L38 74 L34 70 L32 62 L30 56 Z M28 48 L22 56 L18 60 L16 66 L14 72 L18 70 L22 64 L26 56 Z M40 62 L50 66 L60 68 L70 70 L78 72 L84 74 L78 70 L68 66 L58 64 L48 62 Z M36 54 L40 50 L44 46 L48 44 L44 48 L40 52 Z"
-};
-
-const SILHOUETTE_CONFIGS = [
-  { pose: "ginga",    direction: "Right",  delay: 0,   duration: 4.5, size: 300, bottom: "18%", opacity: 0.12, flip: false },
-  { pose: "compasso", direction: "Left",   delay: 0.4, duration: 4.5, size: 260, bottom: "15%", opacity: 0.12, flip: true },
-  { pose: "au",       direction: "Right",  delay: 0.8, duration: 3.8, size: 200, bottom: "22%", opacity: 0.3, flip: false },
-  { pose: "armada",   direction: "Left",   delay: 1.2, duration: 3.8, size: 220, bottom: "20%", opacity: 0.3, flip: false },
-  { pose: "negativa", direction: "Center", delay: 1.5, duration: 3.2, size: 180, bottom: "25%", opacity: 0.55, flip: false },
-  { pose: "compasso", direction: "Right",  delay: 0.2, duration: 5,   size: 340, bottom: "12%", opacity: 0.06, flip: false },
-  { pose: "armada",   direction: "Left",   delay: 0.6, duration: 5,   size: 320, bottom: "10%", opacity: 0.06, flip: true },
-];
 
 const PATHS = {
   kicks: {
@@ -1207,162 +1193,6 @@ const CORD_COLORS = [
   { name: "White", hex: "#F5F0E8" },
 ];
 
-// ── Hero Splash ──
-
-function HeroSplash({ isKids, onComplete }) {
-  const [phase, setPhase] = useState(0);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setTimeout(() => onComplete(), 400);
-      return;
-    }
-    const t1 = setTimeout(() => setPhase(1), 2800);
-    const t2 = setTimeout(() => setPhase(2), 4200);
-    const t3 = setTimeout(() => onComplete(), 5000);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, [onComplete]);
-
-  const c = isKids
-    ? { bg: "#FFF8F0", sil: "#2D1B4E", accent: "#FF9F43", accentAlt: "#E84393", text: "#2D1B4E" }
-    : { bg: "#FDF6EC", sil: "#D4A843", accent: "#D4A843", accentAlt: "#E8652B", text: "#2C1810" };
-
-  return (
-    <div style={{
-      position: "fixed", inset: 0, zIndex: 9999,
-      background: `radial-gradient(ellipse at 50% 60%, ${c.accent}11 0%, transparent 70%), ${c.bg}`,
-      opacity: phase === 2 ? 0 : 1,
-      transition: "opacity 0.8s ease",
-      overflow: "hidden"
-    }}>
-      <style>{`
-        @keyframes heroSlideRight {
-          0%   { transform: translateX(-130%); opacity: 0; }
-          12%  { opacity: 1; }
-          50%  { transform: translateX(40vw); opacity: 1; }
-          88%  { opacity: 1; }
-          100% { transform: translateX(110vw); opacity: 0; }
-        }
-        @keyframes heroSlideLeft {
-          0%   { transform: translateX(110vw) scaleX(-1); opacity: 0; }
-          12%  { opacity: 1; }
-          50%  { transform: translateX(30vw) scaleX(-1); opacity: 1; }
-          88%  { opacity: 1; }
-          100% { transform: translateX(-130%) scaleX(-1); opacity: 0; }
-        }
-        @keyframes heroRiseCenter {
-          0%   { transform: translateX(-50%) translateY(60px) scale(0.85); opacity: 0; }
-          25%  { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
-          75%  { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
-          100% { transform: translateX(-50%) translateY(-30px) scale(1.08); opacity: 0; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .hero-splash-fig { animation-duration: 0.01s !important; }
-        }
-      `}</style>
-
-      {/* Horizon line */}
-      <div style={{
-        position: "absolute", bottom: "22%", left: 0, right: 0,
-        height: 1,
-        background: `linear-gradient(90deg, transparent 0%, ${c.accent}22 30%, ${c.accent}44 50%, ${c.accent}22 70%, transparent 100%)`
-      }} />
-
-      {/* Particle dust */}
-      {[...Array(12)].map((_, i) => (
-        <div key={i} style={{
-          position: "absolute",
-          width: 3 + (i % 3) * 2,
-          height: 3 + (i % 3) * 2,
-          borderRadius: "50%",
-          background: c.accent,
-          opacity: 0.08 + (i % 4) * 0.04,
-          left: `${8 + i * 7.5}%`,
-          bottom: `${18 + (i % 5) * 8}%`,
-          animation: `floatCircle ${10 + i * 2}s ease-in-out infinite ${i * 0.8}s`
-        }} />
-      ))}
-
-      {/* Silhouette parade */}
-      {SILHOUETTE_CONFIGS.map((fig, i) => {
-        const animName = fig.direction === "Center" ? "heroRiseCenter"
-          : fig.direction === "Right" ? "heroSlideRight" : "heroSlideLeft";
-        const hexOpacity = Math.round(fig.opacity * 255).toString(16).padStart(2, "0");
-        return (
-          <svg
-            key={i}
-            className="hero-splash-fig"
-            viewBox="0 0 100 100"
-            style={{
-              position: "absolute",
-              bottom: fig.bottom,
-              left: fig.direction === "Center" ? "50%" : undefined,
-              height: fig.size,
-              width: fig.size,
-              fill: `${c.sil}${hexOpacity}`,
-              animation: `${animName} ${fig.duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${fig.delay}s both`,
-              willChange: "transform, opacity",
-              filter: fig.opacity < 0.15 ? `blur(${1}px)` : "none"
-            }}
-          >
-            <path d={HERO_SILHOUETTES[fig.pose]} />
-          </svg>
-        );
-      })}
-
-      {/* Title — appears in phase 1 */}
-      <div style={{
-        position: "absolute", inset: 0,
-        display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center",
-        opacity: phase >= 1 ? 1 : 0,
-        transform: phase >= 1 ? "scale(1) translateY(0)" : "scale(0.7) translateY(20px)",
-        transition: "all 0.9s cubic-bezier(0.16, 1, 0.3, 1)",
-        pointerEvents: "none"
-      }}>
-        <div style={{
-          fontFamily: "'Bebas Neue', sans-serif",
-          fontSize: "clamp(5rem, 18vw, 12rem)",
-          letterSpacing: "0.12em",
-          background: isKids
-            ? "linear-gradient(135deg, #FF9F43, #E84393, #6C5CE7)"
-            : `linear-gradient(135deg, ${c.accent}, ${c.accentAlt}, ${c.accent})`,
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-          lineHeight: 0.85,
-          textShadow: "none",
-          filter: `drop-shadow(0 0 40px ${c.accent}33)`
-        }}>AXE</div>
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: "clamp(0.7rem, 2vw, 1rem)",
-          letterSpacing: "0.35em",
-          textTransform: "uppercase",
-          color: c.accent,
-          marginTop: 12,
-          opacity: 0.6,
-          fontWeight: 300
-        }}>Capoeira Progression Guide</div>
-      </div>
-
-      {/* Skip */}
-      <button
-        onClick={onComplete}
-        style={{
-          position: "absolute", bottom: 32, right: 32,
-          background: "transparent", border: `1px solid ${c.accent}33`,
-          color: c.accent, padding: "6px 18px", borderRadius: 20,
-          fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem",
-          cursor: "pointer", opacity: 0.4, letterSpacing: "0.15em",
-          textTransform: "uppercase", transition: "opacity 0.3s"
-        }}
-        onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
-        onMouseLeave={e => e.currentTarget.style.opacity = "0.4"}
-      >Skip</button>
-    </div>
-  );
-}
 
 // ── Animated Background ──
 
@@ -1440,6 +1270,25 @@ function CordVisual({ color, stripe, pattern, active, small }) {
 // ── App ──
 
 export default function CapoeiraApp() {
+  const { user, loading: authLoading, logout } = useAuth();
+  const [showPrivacy, setShowPrivacy] = useState(false);
+
+  // Privacy policy can be shown before or after auth
+  if (showPrivacy) return <PrivacyPolicy dark={!user} onBack={() => setShowPrivacy(false)} />;
+
+  // Auth gate
+  if (authLoading) return (
+    <div style={{ minHeight: "100vh", background: "#FDF6EC", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans', sans-serif", color: "#8B7355" }}>
+      Loading...
+    </div>
+  );
+  if (!user) return <LoginScreen onShowPrivacy={() => setShowPrivacy(true)} />;
+
+  return <CapoeiraAppInner user={user} logout={logout} onShowPrivacy={() => setShowPrivacy(true)} />;
+}
+
+function CapoeiraAppInner({ user, logout, onShowPrivacy }) {
+  const { isPremium, requirePremium, showUpgrade, setShowUpgrade } = usePremium();
   const [view, setView] = useState("home");
   const [isKids, setIsKids] = useState(false);
   const [capoStyle, setCapoStyle] = useState("regional"); // regional | angola
@@ -1448,11 +1297,6 @@ export default function CapoeiraApp() {
   const [skill, setSkill] = useState(null);
   const [completed, setCompleted] = useState({});
   const [fade, setFade] = useState(true);
-  const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem("axe-splash-seen"));
-  const handleSplashComplete = useCallback(() => {
-    sessionStorage.setItem("axe-splash-seen", "1");
-    setShowSplash(false);
-  }, []);
   const [customSkills, setCustomSkills] = useState({});  // { pathKey: [skill, ...] }
   const [showAddModal, setShowAddModal] = useState(false);
   const [customInput, setCustomInput] = useState("");
@@ -1513,7 +1357,44 @@ export default function CapoeiraApp() {
   const SCOPE_COLORS = { local: "#16A34A", regional: "#2563EB", national: "#E8652B", global: "#8B5FA8" };
   const EVT_TYPES = ["roda", "workshop", "batizado", "festival", "other"];
 
-  const toggleAttending = (id) => setAttending(prev => ({ ...prev, [id]: !prev[id] }));
+  // ── Data persistence ──
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  useEffect(() => {
+    api('/api/data').then(data => {
+      if (data.completed && Object.keys(data.completed).length) setCompleted(data.completed);
+      if (data.customSkills && Object.keys(data.customSkills).length) setCustomSkills(data.customSkills);
+      if (data.cords && data.cords.length) setCords(data.cords);
+      if (data.songs && data.songs.length) setSongs(data.songs);
+      if (data.attending && Object.keys(data.attending).length) setAttending(data.attending);
+      if (data.preferences) {
+        if (data.preferences.capoStyle) setCapoStyle(data.preferences.capoStyle);
+        if (data.preferences.isKids) setIsKids(data.preferences.isKids);
+      }
+      setDataLoaded(true);
+    }).catch(() => setDataLoaded(true));
+  }, []);
+
+  const saveTimer = useRef(null);
+  useEffect(() => {
+    if (!dataLoaded) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      api('/api/data', {
+        method: 'PUT',
+        body: JSON.stringify({
+          completed, customSkills, cords, songs, attending,
+          preferences: { capoStyle, isKids }
+        })
+      }).catch(() => {});
+    }, 1500);
+    return () => { if (saveTimer.current) clearTimeout(saveTimer.current); };
+  }, [completed, customSkills, cords, songs, attending, capoStyle, isKids, dataLoaded]);
+
+  const toggleAttending = (id) => {
+    if (!requirePremium()) return;
+    setAttending(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const createEvent = () => {
     if (!newEvent.name.trim() || !newEvent.date) return;
@@ -1584,7 +1465,14 @@ export default function CapoeiraApp() {
     return merged;
   }, [customSkills, capoStyle, isKids]);
 
+  const totalCustomSkills = Object.values(customSkills).reduce((sum, arr) => sum + arr.length, 0);
+  const FREE_CUSTOM_LIMIT = 2;
+
   const addCustomTraining = () => {
+    if (!isPremium && totalCustomSkills >= FREE_CUSTOM_LIMIT) {
+      requirePremium();
+      return;
+    }
     if (!customInput.trim()) return;
     const category = classifyCustomTraining(customInput + " " + customDesc);
     const newSkill = {
@@ -1663,9 +1551,45 @@ export default function CapoeiraApp() {
     opacity: fade ? 1 : 0, transition: "opacity 0.12s ease"
   };
 
+  // ── 2-week gentle prompt ──
+  const daysSinceSignup = user?.firstLogin
+    ? Math.floor((Date.now() - new Date(user.firstLogin).getTime()) / 86400000)
+    : 0;
+  const [dismissedPromo, setDismissedPromo] = useState(
+    () => localStorage.getItem('ginga_promo_dismissed') === 'true'
+  );
+  const showGentlePrompt = !isPremium && daysSinceSignup >= 14 && !dismissedPromo;
+
   // ── HOME ──
   const renderHome = () => (
     <div style={container}>
+      {/* Settings gear */}
+      <div style={{ position: 'absolute', top: 24, right: 24, zIndex: 10 }}>
+        <button onClick={() => go("settings")} style={{
+          background: 'none', border: 'none', cursor: 'pointer',
+          color: c.textMuted, fontSize: '1.3rem', padding: 8, opacity: 0.6,
+        }} title="Settings">&#9881;</button>
+      </div>
+
+      {/* Install as app prompt */}
+      <InstallPrompt colors={c} />
+
+      {/* Gentle premium prompt */}
+      {showGentlePrompt && (
+        <div style={{
+          background: `${c.gold}11`, border: `1px solid ${c.gold}33`,
+          borderRadius: 12, padding: '12px 16px', marginBottom: 16,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem',
+          color: c.text, animation: 'fadeUp 0.4s ease both',
+        }}>
+          <span>Enjoying AXÉ? <span onClick={() => setShowUpgrade(true)} style={{ color: c.gold, cursor: 'pointer', fontWeight: 600 }}>Premium unlocks deeper tracking.</span></span>
+          <button onClick={() => { setDismissedPromo(true); localStorage.setItem('ginga_promo_dismissed', 'true'); }} style={{
+            background: 'none', border: 'none', color: c.textMuted, cursor: 'pointer', fontSize: '1rem', padding: '0 4px',
+          }}>&times;</button>
+        </div>
+      )}
+
       {/* Header — title with breathing room */}
       <header style={{ textAlign: "center", padding: "64px 0 0" }}>
         <div style={{
@@ -1673,7 +1597,8 @@ export default function CapoeiraApp() {
           fontWeight: 800,
           fontFamily: "'Bebas Neue', sans-serif",
           letterSpacing: "0.08em",
-          lineHeight: 0.9,
+          lineHeight: 1.1,
+          paddingTop: 6,
           color: c.text,
           animation: "slideDown 0.6s ease both"
         }}>
@@ -1709,6 +1634,21 @@ export default function CapoeiraApp() {
             animation: "slideDown 0.6s ease both 0.12s"
           }}>
             {GLOBAL_TAGLINES[Math.floor(Date.now() / 86400000) % GLOBAL_TAGLINES.length]}
+          </div>
+        )}
+
+        {/* Greet capoeirista by apelido */}
+        {user?.name && (
+          <div style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "1.1rem",
+            fontWeight: 500,
+            color: c.gold,
+            marginTop: 20,
+            opacity: 0.85,
+            animation: "slideDown 0.6s ease both 0.2s",
+          }}>
+            Salve, {user.name}! 🤙
           </div>
         )}
 
@@ -1848,7 +1788,7 @@ export default function CapoeiraApp() {
           onMouseEnter={e => { e.currentTarget.style.borderColor = c.gold; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(212,168,67,0.15)"; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = `${c.gold}55`; e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.04)"; }}
         >
-          <span style={{ fontSize: "1.1rem", lineHeight: 1 }}>+</span> Add Custom Training
+          <span style={{ fontSize: "1.1rem", lineHeight: 1 }}>+</span> Add Custom Training {!isPremium && <span style={{ fontSize: "0.75rem", opacity: 0.7 }}>({totalCustomSkills}/{FREE_CUSTOM_LIMIT})</span>}
         </button>
       </div>
 
@@ -2038,8 +1978,10 @@ export default function CapoeiraApp() {
           {p.levels.map((lev, idx) => {
             const active = levelIdx === idx;
             const lpr = lvlProg(pathKey, idx);
+            const isAdvanced = idx >= 3;
+            const locked = isAdvanced && !isPremium;
             return (
-              <button key={idx} onClick={() => setLevelIdx(idx)} style={{
+              <button key={idx} onClick={() => { if (locked) { requirePremium(); return; } setLevelIdx(idx); }} style={{
                 fontFamily: "'DM Sans', sans-serif", fontSize: "0.85rem",
                 fontWeight: active ? 600 : 400,
                 background: active ? `${p.accent}22` : "transparent",
@@ -2048,9 +1990,9 @@ export default function CapoeiraApp() {
                 color: active ? p.accent : c.textMuted,
                 whiteSpace: "nowrap", transition: "all 0.2s"
               }}>
-                <div>{lev.name}</div>
-                <div style={{ fontSize: "0.7rem", opacity: 0.8, marginTop: 2 }}>
-                  {lpr.d}/{lpr.t} {lpr.pct === 100 ? "✦" : ""}
+                <div>{lev.name} {locked && <span style={{ fontSize: "0.7rem" }}>&#x1F512;</span>}</div>
+                <div style={{ fontSize: "0.7rem", opacity: locked ? 0.5 : 0.8, marginTop: 2 }}>
+                  {locked ? "Premium" : `${lpr.d}/${lpr.t} ${lpr.pct === 100 ? "✦" : ""}`}
                 </div>
               </button>
             );
@@ -2367,12 +2309,12 @@ export default function CapoeiraApp() {
             borderRadius: 8, padding: "8px 14px", cursor: "pointer",
             color: EVT_ACCENT, fontFamily: "'DM Sans', sans-serif", fontSize: "0.82rem", fontWeight: 600
           }}>📅 Calendar</button>
-          <button onClick={() => setShowCreateEvent(true)} style={{
-            background: `linear-gradient(135deg, ${EVT_ACCENT}, #FF8A6A)`,
+          <button onClick={() => { if (!requirePremium()) return; setShowCreateEvent(true); }} style={{
+            background: isPremium ? `linear-gradient(135deg, ${EVT_ACCENT}, #FF8A6A)` : `${EVT_ACCENT}44`,
             border: "none", borderRadius: 8, padding: "8px 16px", cursor: "pointer",
-            color: c.bg, fontFamily: "'Bebas Neue', sans-serif", fontSize: "0.95rem",
+            color: isPremium ? c.bg : EVT_ACCENT, fontFamily: "'Bebas Neue', sans-serif", fontSize: "0.95rem",
             letterSpacing: "0.04em"
-          }}>+ Create</button>
+          }}>+ Create {!isPremium && "🔒"}</button>
         </div>
       </div>
 
@@ -2506,7 +2448,7 @@ export default function CapoeiraApp() {
                         fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem",
                         fontWeight: isGoing ? 600 : 400, transition: "all 0.2s"
                       }}
-                    >{isGoing ? "✓ Going" : "I'm Going"}</button>
+                    >{isGoing ? "✓ Going" : isPremium ? "I'm Going" : "RSVP 🔒"}</button>
                   </div>
                 </div>
               </div>
@@ -2651,7 +2593,7 @@ export default function CapoeiraApp() {
             onMouseEnter={e => e.target.style.transform = "scale(1.02)"}
             onMouseLeave={e => e.target.style.transform = "scale(1)"}
           >
-            {isGoing ? "✓ GOING — TAP TO CANCEL" : "I'M GOING ✦"}
+            {isGoing ? "✓ GOING — TAP TO CANCEL" : isPremium ? "I'M GOING ✦" : "RSVP — PREMIUM ONLY 🔒"}
           </button>
           <div style={{ height: 48 }} />
         </div>
@@ -2999,9 +2941,7 @@ export default function CapoeiraApp() {
         }
       `}</style>
 
-      {showSplash && <HeroSplash isKids={isKids} onComplete={handleSplashComplete} />}
-
-      <div style={{ opacity: showSplash ? 0 : 1, transition: "opacity 0.5s ease 0.1s" }}>
+      <div>
       <KineticBackground />
       {view === "home" && renderHome()}
       {view === "path" && renderPath()}
@@ -3010,6 +2950,8 @@ export default function CapoeiraApp() {
       {view === "events" && renderEvents()}
       {view === "event-detail" && renderEventDetail()}
       {view === "calendar" && renderCalendar()}
+      {view === "settings" && <SettingsPanel user={user} onBack={() => go("home")} onLogout={logout} onUpgrade={() => setShowUpgrade(true)} onShowPrivacy={onShowPrivacy} />}
+      {showUpgrade && <UpgradeModal onClose={() => setShowUpgrade(false)} />}
       </div>
 
       {/* Add Custom Training Modal */}
