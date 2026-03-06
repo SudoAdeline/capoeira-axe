@@ -87,7 +87,7 @@ export default function InstallPrompt({ colors: c }) {
             fontFamily: "'Helvetica Neue','Arial Black',Arial,sans-serif",
             fontWeight: 900, fontSize: "1.4rem", color: "#fff",
             letterSpacing: "0.05em",
-          }}>AXE</span>
+          }}>AXÉ</span>
         </div>
 
         <h2 style={{
@@ -106,8 +106,8 @@ export default function InstallPrompt({ colors: c }) {
           margin: "0 0 28px",
         }}>
           {isIOS
-            ? "Add AXE to your home screen for instant access — works offline, feels native."
-            : "Install AXE on your device. One tap, instant access, works offline."
+            ? "Add AXÉ to your home screen for instant access — works offline, feels native."
+            : "Install AXÉ on your device. One tap, instant access, works offline."
           }
         </p>
 
@@ -136,7 +136,7 @@ export default function InstallPrompt({ colors: c }) {
                 </p>
                 <p>
                   <strong style={{ color: c.text || "#F5E6D3" }}>3.</strong>{" "}
-                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add"</strong> — that's it! Open AXE from your home screen.
+                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Add"</strong> — that's it! Open AXÉ from your home screen.
                 </p>
               </>
             ) : (
@@ -152,7 +152,7 @@ export default function InstallPrompt({ colors: c }) {
                 </p>
                 <p>
                   <strong style={{ color: c.text || "#F5E6D3" }}>3.</strong>{" "}
-                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Install"</strong> — done! Open AXE from your home screen.
+                  Tap <strong style={{ color: c.text || "#F5E6D3" }}>"Install"</strong> — done! Open AXÉ from your home screen.
                 </p>
               </>
             )}
