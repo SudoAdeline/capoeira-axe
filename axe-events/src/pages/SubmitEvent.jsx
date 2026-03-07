@@ -5,10 +5,10 @@ import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
 const c = {
-  bg: '#1A0F08',
-  card: '#241710',
-  border: '#3A2A1A',
-  text: '#F5E6D3',
+  bg: '#FFFBF5',
+  card: '#FFFFFF',
+  border: '#F0E6D8',
+  text: '#2D1B0E',
   muted: '#8B7355',
   accent: '#E8652B',
   gold: '#D4A843',
@@ -86,7 +86,7 @@ export default function SubmitEvent() {
       }}>
         <div style={{
           width: 64, height: 64, borderRadius: '50%',
-          background: '#0DAA8A22', border: '2px solid #0DAA8A',
+          background: '#0DAA8A0C', border: '2px solid #0DAA8A',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           margin: '0 auto 20px', fontSize: '1.5rem',
         }}>&#10003;</div>
@@ -220,7 +220,7 @@ export default function SubmitEvent() {
         {error && (
           <div style={{
             padding: '10px 14px', borderRadius: 8,
-            background: 'rgba(232,101,43,0.1)', border: `1px solid ${c.accent}44`,
+            background: `${c.accent}0A`, border: `1px solid ${c.accent}22`,
             color: c.accent, fontSize: '0.82rem', marginBottom: 18,
           }}>{error}</div>
         )}
@@ -234,7 +234,7 @@ export default function SubmitEvent() {
             color: '#fff', fontWeight: 700, fontSize: '1rem',
             cursor: loading ? 'wait' : 'pointer',
             opacity: loading ? 0.7 : 1,
-            boxShadow: `0 4px 20px rgba(232,101,43,0.3)`,
+            boxShadow: `0 4px 20px rgba(232,101,43,0.2)`,
           }}
         >
           {loading ? t('common.loading') : t('submit.submitBtn')}

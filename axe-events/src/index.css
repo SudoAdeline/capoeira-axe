@@ -12,8 +12,8 @@ html, body, #root {
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: #1A0F08;
-  color: #F5E6D3;
+  background: #FFFBF5;
+  color: #2D1B0E;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-top: env(safe-area-inset-top);

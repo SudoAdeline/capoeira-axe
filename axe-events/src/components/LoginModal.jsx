@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 
 const c = {
-  bg: '#1A0F08',
-  card: '#241710',
-  border: '#3A2A1A',
-  text: '#F5E6D3',
+  bg: '#FFFBF5',
+  card: '#FFFFFF',
+  border: '#F0E6D8',
+  text: '#2D1B0E',
   muted: '#8B7355',
   accent: '#E8652B',
   gold: '#D4A843',
@@ -65,7 +65,7 @@ export default function LoginModal({ onClose }) {
       onClick={onClose}
       style={{
         position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)',
+        background: 'rgba(45,27,14,0.3)', backdropFilter: 'blur(10px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 20, animation: 'fadeIn 0.2s ease',
       }}
@@ -73,11 +73,13 @@ export default function LoginModal({ onClose }) {
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: `linear-gradient(160deg, ${c.card}, ${c.bg})`,
+          background: c.card,
           border: `1px solid ${c.border}`,
           borderRadius: 22, padding: '36px 28px',
           width: '100%', maxWidth: 380,
+          boxShadow: '0 20px 60px rgba(45,27,14,0.15)',
           animation: 'fadeUp 0.3s ease both',
+          position: 'relative',
         }}
       >
         {/* Logo */}
@@ -138,7 +140,7 @@ export default function LoginModal({ onClose }) {
             {error && (
               <div style={{
                 padding: '10px 14px', borderRadius: 8,
-                background: 'rgba(232,101,43,0.1)', border: `1px solid ${c.accent}44`,
+                background: `${c.accent}0A`, border: `1px solid ${c.accent}22`,
                 color: c.accent, fontSize: '0.82rem', marginBottom: 14,
               }}>{error}</div>
             )}
@@ -213,7 +215,7 @@ export default function LoginModal({ onClose }) {
                 onClick={() => { setMode('signup'); setError(''); }}
                 style={{
                   background: 'none', border: 'none',
-                  color: c.gold, cursor: 'pointer', fontSize: '0.8rem',
+                  color: c.accent, cursor: 'pointer', fontSize: '0.8rem',
                 }}
               >{t('auth.switchToSignup')}</button>
             </>
@@ -223,7 +225,7 @@ export default function LoginModal({ onClose }) {
               onClick={() => { setMode('login'); setError(''); }}
               style={{
                 background: 'none', border: 'none',
-                color: c.gold, cursor: 'pointer', fontSize: '0.8rem',
+                color: c.accent, cursor: 'pointer', fontSize: '0.8rem',
               }}
             >{t('auth.switchToLogin')}</button>
           )}
@@ -232,7 +234,7 @@ export default function LoginModal({ onClose }) {
               onClick={() => { setMode('login'); setError(''); setResetSent(false); }}
               style={{
                 background: 'none', border: 'none',
-                color: c.gold, cursor: 'pointer', fontSize: '0.8rem',
+                color: c.accent, cursor: 'pointer', fontSize: '0.8rem',
               }}
             >{t('auth.switchToLogin')}</button>
           )}

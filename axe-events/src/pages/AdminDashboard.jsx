@@ -4,10 +4,10 @@ import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
 const c = {
-  bg: '#1A0F08',
-  card: '#241710',
-  border: '#3A2A1A',
-  text: '#F5E6D3',
+  bg: '#FFFBF5',
+  card: '#FFFFFF',
+  border: '#F0E6D8',
+  text: '#2D1B0E',
   muted: '#8B7355',
   accent: '#E8652B',
   gold: '#D4A843',
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
 
   const tabStyle = (active) => ({
     flex: 1, padding: '10px',
-    background: active ? `${c.accent}22` : 'transparent',
+    background: active ? `${c.accent}0C` : 'transparent',
     border: 'none',
     borderBottom: active ? `2px solid ${c.accent}` : `2px solid transparent`,
     color: active ? c.text : c.muted,
@@ -108,8 +108,8 @@ export default function AdminDashboard() {
 
   const actionBtn = (color) => ({
     padding: '6px 14px',
-    background: `${color}22`,
-    border: `1px solid ${color}44`,
+    background: `${color}0C`,
+    border: `1px solid ${color}22`,
     borderRadius: 6,
     color, fontWeight: 600,
     fontSize: '0.72rem', cursor: 'pointer',
@@ -133,7 +133,6 @@ export default function AdminDashboard() {
         color: c.text, marginBottom: 20,
       }}>{t('admin.title')}</h1>
 
-      {/* Tabs */}
       <div style={{
         display: 'flex',
         borderBottom: `1px solid ${c.border}`,
@@ -153,7 +152,6 @@ export default function AdminDashboard() {
       {loading ? (
         <div style={{ textAlign: 'center', padding: 40, color: c.muted }}>{t('common.loading')}</div>
       ) : tab === 'queue' ? (
-        /* Moderation Queue */
         pendingEvents.length === 0 ? (
           <div style={{
             textAlign: 'center', padding: '40px 20px',
@@ -199,7 +197,6 @@ export default function AdminDashboard() {
           </div>
         )
       ) : tab === 'all' ? (
-        /* All Events */
         <div>
           <input
             type="text" placeholder={t('home.search')}
@@ -233,7 +230,7 @@ export default function AdminDashboard() {
                   <span style={{
                     fontSize: '0.65rem', fontWeight: 700,
                     color: statusColor, textTransform: 'uppercase',
-                    background: `${statusColor}18`,
+                    background: `${statusColor}0C`,
                     padding: '3px 8px', borderRadius: 4,
                   }}>{ev.status}</span>
                   <div style={{ display: 'flex', gap: 6 }}>
@@ -261,7 +258,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       ) : (
-        /* Stats */
         <div style={{
           display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
           gap: 12,

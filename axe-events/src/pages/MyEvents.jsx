@@ -5,10 +5,10 @@ import { useAuth } from '../context/AuthContext';
 import EventCard from '../components/EventCard';
 
 const c = {
-  bg: '#1A0F08',
-  card: '#241710',
-  border: '#3A2A1A',
-  text: '#F5E6D3',
+  bg: '#FFFBF5',
+  card: '#FFFFFF',
+  border: '#F0E6D8',
+  text: '#2D1B0E',
   muted: '#8B7355',
   accent: '#E8652B',
   gold: '#D4A843',
@@ -36,7 +36,6 @@ export default function MyEvents() {
   const fetchData = async () => {
     setLoading(true);
 
-    // Fetch RSVP'd events
     const { data: rsvpData } = await supabase
       .from('rsvps')
       .select('status, events(*)')
@@ -46,7 +45,6 @@ export default function MyEvents() {
       setRsvpEvents(rsvpData.map(r => ({ ...r.events, myRsvpStatus: r.status })));
     }
 
-    // Fetch submitted events
     const { data: subData } = await supabase
       .from('events')
       .select('*')
@@ -67,7 +65,7 @@ export default function MyEvents() {
 
   const tabStyle = (active) => ({
     flex: 1, padding: '10px',
-    background: active ? `${c.accent}22` : 'transparent',
+    background: active ? `${c.accent}0C` : 'transparent',
     border: 'none',
     borderBottom: active ? `2px solid ${c.accent}` : `2px solid transparent`,
     color: active ? c.text : c.muted,
@@ -83,7 +81,6 @@ export default function MyEvents() {
         color: c.text, marginBottom: 20,
       }}>{t('myEvents.title')}</h1>
 
-      {/* Tabs */}
       <div style={{
         display: 'flex',
         borderBottom: `1px solid ${c.border}`,
@@ -139,7 +136,7 @@ export default function MyEvents() {
                     <span style={{
                       fontSize: '0.7rem', fontWeight: 700,
                       color: statusColor, textTransform: 'uppercase',
-                      background: `${statusColor}18`,
+                      background: `${statusColor}0C`,
                       padding: '3px 10px', borderRadius: 4,
                       letterSpacing: '0.05em',
                     }}>{t(`myEvents.${ev.status}`)}</span>

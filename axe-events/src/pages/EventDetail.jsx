@@ -5,10 +5,10 @@ import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
 const c = {
-  bg: '#1A0F08',
-  card: '#241710',
-  border: '#3A2A1A',
-  text: '#F5E6D3',
+  bg: '#FFFBF5',
+  card: '#FFFFFF',
+  border: '#F0E6D8',
+  text: '#2D1B0E',
   muted: '#8B7355',
   accent: '#E8652B',
   gold: '#D4A843',
@@ -63,18 +63,15 @@ export default function EventDetail() {
 
     if (myRsvp) {
       if (myRsvp.status === status) {
-        // Remove RSVP
         await supabase.from('rsvps').delete().eq('id', myRsvp.id);
         setMyRsvp(null);
         setRsvps(rsvps.filter(r => r.id !== myRsvp.id));
       } else {
-        // Update RSVP
         await supabase.from('rsvps').update({ status }).eq('id', myRsvp.id);
         setMyRsvp({ ...myRsvp, status });
         setRsvps(rsvps.map(r => r.id === myRsvp.id ? { ...r, status } : r));
       }
     } else {
-      // New RSVP
       const { data } = await supabase
         .from('rsvps')
         .insert({ event_id: id, user_id: user.id, status })
@@ -117,7 +114,7 @@ export default function EventDetail() {
     padding: '12px 16px',
     borderRadius: 10,
     border: myRsvp?.status === status ? `2px solid ${typeColor}` : `1px solid ${c.border}`,
-    background: myRsvp?.status === status ? `${typeColor}22` : c.card,
+    background: myRsvp?.status === status ? `${typeColor}0C` : c.card,
     color: myRsvp?.status === status ? typeColor : c.text,
     fontWeight: 600,
     fontSize: '0.88rem',
@@ -131,7 +128,6 @@ export default function EventDetail() {
 
   return (
     <div style={{ animation: 'fadeUp 0.3s ease' }}>
-      {/* Back button */}
       <button
         onClick={() => navigate(-1)}
         style={{
@@ -144,7 +140,6 @@ export default function EventDetail() {
         &larr; {t('common.back')}
       </button>
 
-      {/* Event image */}
       {event.image_url && (
         <div style={{
           borderRadius: 16, overflow: 'hidden',
@@ -156,19 +151,18 @@ export default function EventDetail() {
         </div>
       )}
 
-      {/* Type badge + title */}
       <div style={{ marginBottom: 6 }}>
         <span style={{
           fontSize: '0.7rem', fontWeight: 700,
           color: typeColor, textTransform: 'uppercase',
           letterSpacing: '0.1em',
-          background: `${typeColor}18`,
+          background: `${typeColor}0C`,
           padding: '3px 10px', borderRadius: 4,
         }}>{t(`event.${event.event_type}`)}</span>
         {event.is_free && (
           <span style={{
             fontSize: '0.7rem', fontWeight: 600,
-            color: '#0DAA8A', background: '#0DAA8A18',
+            color: '#0DAA8A', background: '#0DAA8A0C',
             padding: '3px 10px', borderRadius: 4,
             marginLeft: 6,
           }}>{t('event.free')}</span>
@@ -176,7 +170,7 @@ export default function EventDetail() {
         {!event.is_free && event.price_info && (
           <span style={{
             fontSize: '0.7rem', fontWeight: 600,
-            color: c.gold, background: `${c.gold}18`,
+            color: c.gold, background: `${c.gold}0C`,
             padding: '3px 10px', borderRadius: 4,
             marginLeft: 6,
           }}>{event.price_info}</span>
@@ -189,12 +183,10 @@ export default function EventDetail() {
         color: c.text, margin: '8px 0 20px',
       }}>{event.title}</h1>
 
-      {/* Info cards */}
       <div style={{
         display: 'grid', gridTemplateColumns: '1fr 1fr',
         gap: 10, marginBottom: 20,
       }}>
-        {/* Date */}
         <div style={{
           background: c.card, border: `1px solid ${c.border}`,
           borderRadius: 12, padding: '14px 16px',
@@ -210,7 +202,6 @@ export default function EventDetail() {
           )}
         </div>
 
-        {/* Time */}
         <div style={{
           background: c.card, border: `1px solid ${c.border}`,
           borderRadius: 12, padding: '14px 16px',
@@ -221,7 +212,6 @@ export default function EventDetail() {
           </div>
         </div>
 
-        {/* Location */}
         {(event.location_name || event.location_address) && (
           <div style={{
             background: c.card, border: `1px solid ${c.border}`,
@@ -251,7 +241,6 @@ export default function EventDetail() {
         )}
       </div>
 
-      {/* Description */}
       {event.description && (
         <div style={{
           background: c.card, border: `1px solid ${c.border}`,
@@ -266,7 +255,6 @@ export default function EventDetail() {
         </div>
       )}
 
-      {/* Organizer */}
       {event.organizer_name && (
         <div style={{
           background: c.card, border: `1px solid ${c.border}`,
@@ -288,7 +276,6 @@ export default function EventDetail() {
         </div>
       )}
 
-      {/* RSVP section */}
       <div style={{
         background: c.card, border: `1px solid ${c.border}`,
         borderRadius: 12, padding: '18px 16px',
@@ -321,13 +308,12 @@ export default function EventDetail() {
         )}
       </div>
 
-      {/* Share button */}
       <button
         onClick={handleShare}
         style={{
           width: '100%', padding: '14px',
-          background: `${c.accent}15`,
-          border: `1px solid ${c.accent}33`,
+          background: `${c.accent}0A`,
+          border: `1px solid ${c.accent}22`,
           borderRadius: 12,
           color: c.accent, fontWeight: 600,
           fontSize: '0.9rem', cursor: 'pointer',

@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
 const c = {
-  text: '#F5E6D3',
+  text: '#2D1B0E',
   muted: '#8B7355',
-  card: '#241710',
-  border: '#3A2A1A',
+  card: '#FFFFFF',
+  border: '#F0E6D8',
   accent: '#E8652B',
 };
 
