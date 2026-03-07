@@ -47,7 +47,7 @@ export default function EventDetail() {
 
     const { data: rsvpData } = await supabase
       .from('rsvps')
-      .select('*')
+      .select('*, profiles(name, capoeira_group)')
       .eq('event_id', id);
     setRsvps(rsvpData || []);
 
@@ -307,6 +307,89 @@ export default function EventDetail() {
           </div>
         )}
       </div>
+
+      {/* Attendee list — visible only to event creator */}
+      {user && event.submitted_by === user.id && rsvps.length > 0 && (() => {
+        const going = rsvps.filter(r => r.status === 'going');
+        const interested = rsvps.filter(r => r.status === 'interested');
+        return (
+          <div style={{
+            background: c.card, border: `1px solid ${c.border}`,
+            borderRadius: 12, padding: '18px 16px',
+            marginBottom: 20,
+          }}>
+            <div style={{
+              fontSize: '0.7rem', color: c.muted, marginBottom: 12,
+              textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600,
+            }}>{t('event.attendeeList')}</div>
+
+            {going.length > 0 && (
+              <>
+                <div style={{
+                  fontSize: '0.72rem', color: typeColor, fontWeight: 700,
+                  marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.06em',
+                }}>{t('event.going')} ({going.length})</div>
+                {going.map(r => (
+                  <div key={r.id} style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '8px 0', borderBottom: `1px solid ${c.border}`,
+                  }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: '50%',
+                      background: `linear-gradient(135deg, ${c.accent}, ${c.gold})`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: '#fff', fontSize: '0.75rem', fontWeight: 700, flexShrink: 0,
+                    }}>{(r.profiles?.name || '?')[0].toUpperCase()}</div>
+                    <div>
+                      <div style={{ fontSize: '0.85rem', color: c.text, fontWeight: 500 }}>
+                        {r.profiles?.name || t('event.anonymous')}
+                      </div>
+                      {r.profiles?.capoeira_group && (
+                        <div style={{ fontSize: '0.73rem', color: c.muted }}>
+                          {r.profiles.capoeira_group}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+
+            {interested.length > 0 && (
+              <>
+                <div style={{
+                  fontSize: '0.72rem', color: c.gold, fontWeight: 700,
+                  marginBottom: 8, marginTop: going.length > 0 ? 16 : 0,
+                  textTransform: 'uppercase', letterSpacing: '0.06em',
+                }}>{t('event.interested')} ({interested.length})</div>
+                {interested.map(r => (
+                  <div key={r.id} style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '8px 0', borderBottom: `1px solid ${c.border}`,
+                  }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: '50%',
+                      background: `${c.gold}18`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: c.gold, fontSize: '0.75rem', fontWeight: 700, flexShrink: 0,
+                    }}>{(r.profiles?.name || '?')[0].toUpperCase()}</div>
+                    <div>
+                      <div style={{ fontSize: '0.85rem', color: c.text, fontWeight: 500 }}>
+                        {r.profiles?.name || t('event.anonymous')}
+                      </div>
+                      {r.profiles?.capoeira_group && (
+                        <div style={{ fontSize: '0.73rem', color: c.muted }}>
+                          {r.profiles.capoeira_group}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        );
+      })()}
 
       <button
         onClick={handleShare}

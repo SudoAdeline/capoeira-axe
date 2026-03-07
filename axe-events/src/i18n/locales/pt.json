@@ -20,6 +20,8 @@
     "email": "Email",
     "password": "Senha",
     "name": "Seu Nome",
+    "capoeiraGroup": "Grupo de Capoeira (opcional)",
+    "addGroup": "+ Adicionar seu grupo",
     "loginBtn": "Entrar",
     "signupBtn": "Cadastrar",
     "switchToSignup": "Não tem conta? Cadastre-se",
@@ -62,7 +64,9 @@
     "time": "Horário",
     "share": "Compartilhar",
     "details": "Detalhes",
-    "openMap": "Abrir no Mapa"
+    "openMap": "Abrir no Mapa",
+    "attendeeList": "Participantes",
+    "anonymous": "Anônimo"
   },
   "submit": {
     "title": "Enviar um Evento",

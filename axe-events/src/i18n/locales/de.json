@@ -20,6 +20,8 @@
     "email": "E-Mail",
     "password": "Passwort",
     "name": "Dein Name",
+    "capoeiraGroup": "Capoeira-Gruppe (optional)",
+    "addGroup": "+ Gruppe hinzufügen",
     "loginBtn": "Anmelden",
     "signupBtn": "Registrieren",
     "switchToSignup": "Noch kein Konto? Registrieren",
@@ -62,7 +64,9 @@
     "time": "Uhrzeit",
     "share": "Teilen",
     "details": "Details",
-    "openMap": "In Karten öffnen"
+    "openMap": "In Karten öffnen",
+    "attendeeList": "Teilnehmer",
+    "anonymous": "Anonym"
   },
   "submit": {
     "title": "Event einreichen",

@@ -20,6 +20,8 @@
     "email": "Email",
     "password": "Password",
     "name": "Your Name",
+    "capoeiraGroup": "Capoeira Group (optional)",
+    "addGroup": "+ Add your group",
     "loginBtn": "Log In",
     "signupBtn": "Sign Up",
     "switchToSignup": "Don't have an account? Sign up",
@@ -62,7 +64,9 @@
     "time": "Time",
     "share": "Share",
     "details": "Details",
-    "openMap": "Open in Maps"
+    "openMap": "Open in Maps",
+    "attendeeList": "Attendees",
+    "anonymous": "Anonymous"
   },
   "submit": {
     "title": "Submit an Event",

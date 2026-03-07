@@ -19,6 +19,7 @@ export default function LoginModal({ onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [capoeiraGroup, setCapoeiraGroup] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
@@ -32,7 +33,7 @@ export default function LoginModal({ onClose }) {
         await resetPassword(email);
         setResetSent(true);
       } else if (mode === 'signup') {
-        await signUp(email, password, name);
+        await signUp(email, password, name, capoeiraGroup);
         onClose();
       } else {
         await signIn(email, password);
@@ -110,13 +111,22 @@ export default function LoginModal({ onClose }) {
         ) : (
           <form onSubmit={handleSubmit}>
             {mode === 'signup' && (
-              <div style={{ marginBottom: 14 }}>
-                <input
-                  type="text" placeholder={t('auth.name')}
-                  value={name} onChange={(e) => setName(e.target.value)}
-                  required style={inputStyle}
-                />
-              </div>
+              <>
+                <div style={{ marginBottom: 14 }}>
+                  <input
+                    type="text" placeholder={t('auth.name')}
+                    value={name} onChange={(e) => setName(e.target.value)}
+                    required style={inputStyle}
+                  />
+                </div>
+                <div style={{ marginBottom: 14 }}>
+                  <input
+                    type="text" placeholder={t('auth.capoeiraGroup')}
+                    value={capoeiraGroup} onChange={(e) => setCapoeiraGroup(e.target.value)}
+                    style={inputStyle}
+                  />
+                </div>
+              </>
             )}
 
             <div style={{ marginBottom: 14 }}>

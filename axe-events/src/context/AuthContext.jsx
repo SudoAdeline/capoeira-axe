@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email, password, name) => {
+  const signUp = async (email, password, name, capoeiraGroup) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
     if (data.user) {
@@ -45,9 +45,22 @@ export function AuthProvider({ children }) {
         id: data.user.id,
         name,
         role: 'user',
+        capoeira_group: capoeiraGroup || null,
       });
     }
     return data;
+  };
+
+  const updateProfile = async (fields) => {
+    if (!user) return;
+    const { error } = await supabase
+      .from('profiles')
+      .update(fields)
+      .eq('id', user.id);
+    if (!error) {
+      setProfile(prev => ({ ...prev, ...fields }));
+    }
+    return { error };
   };
 
   const signIn = async (email, password) => {
@@ -83,7 +96,7 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={{
       user, profile, loading, isAdmin,
-      signUp, signIn, signInWithGoogle, signOut, resetPassword, fetchProfile,
+      signUp, signIn, signInWithGoogle, signOut, resetPassword, fetchProfile, updateProfile,
     }}>
       {children}
     </AuthContext.Provider>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
@@ -23,10 +23,16 @@ const c = {
 
 export default function Layout({ children }) {
   const { t, i18n } = useTranslation();
-  const { user, profile, isAdmin, signOut } = useAuth();
+  const { user, profile, isAdmin, signOut, updateProfile } = useAuth();
   const location = useLocation();
   const [showLogin, setShowLogin] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [editingGroup, setEditingGroup] = useState(false);
+  const [groupValue, setGroupValue] = useState('');
+
+  useEffect(() => {
+    if (profile) setGroupValue(profile.capoeira_group || '');
+  }, [profile]);
 
   const navLinks = [
     { to: '/', label: t('nav.home'), show: true },
@@ -162,7 +168,46 @@ export default function Layout({ children }) {
                       padding: '8px 12px', fontSize: '0.8rem', color: c.muted,
                       borderBottom: `1px solid ${c.border}`, marginBottom: 4,
                     }}>
-                      {profile?.name || user.email}
+                      <div>{profile?.name || user.email}</div>
+                      {editingGroup ? (
+                        <div style={{ display: 'flex', gap: 4, marginTop: 6 }}>
+                          <input
+                            type="text"
+                            value={groupValue}
+                            onChange={(e) => setGroupValue(e.target.value)}
+                            placeholder={t('auth.capoeiraGroup')}
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              flex: 1, padding: '4px 8px', fontSize: '0.75rem',
+                              border: `1px solid ${c.border}`, borderRadius: 6,
+                              background: c.bg, color: c.text, outline: 'none',
+                            }}
+                          />
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              updateProfile({ capoeira_group: groupValue || null });
+                              setEditingGroup(false);
+                            }}
+                            style={{
+                              padding: '4px 8px', fontSize: '0.7rem',
+                              background: c.accent, color: '#fff', border: 'none',
+                              borderRadius: 6, cursor: 'pointer', fontWeight: 600,
+                            }}
+                          >{t('common.save')}</button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setEditingGroup(true); }}
+                          style={{
+                            background: 'none', border: 'none', padding: 0,
+                            fontSize: '0.72rem', color: profile?.capoeira_group ? c.text : c.accent,
+                            cursor: 'pointer', marginTop: 4, display: 'block',
+                          }}
+                        >
+                          {profile?.capoeira_group || t('auth.addGroup')}
+                        </button>
+                      )}
                     </div>
                     {/* Mobile nav links */}
                     <div className="mobile-nav-items">

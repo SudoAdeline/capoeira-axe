@@ -20,6 +20,8 @@
     "email": "Email",
     "password": "Mot de passe",
     "name": "Votre Nom",
+    "capoeiraGroup": "Groupe de Capoeira (optionnel)",
+    "addGroup": "+ Ajouter votre groupe",
     "loginBtn": "Se connecter",
     "signupBtn": "S'inscrire",
     "switchToSignup": "Pas de compte ? Inscrivez-vous",
@@ -62,7 +64,9 @@
     "time": "Heure",
     "share": "Partager",
     "details": "Détails",
-    "openMap": "Ouvrir dans Plans"
+    "openMap": "Ouvrir dans Plans",
+    "attendeeList": "Participants",
+    "anonymous": "Anonyme"
   },
   "submit": {
     "title": "Soumettre un Événement",
