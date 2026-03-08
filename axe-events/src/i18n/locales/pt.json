@@ -134,6 +134,18 @@
     "back": "Voltar",
     "language": "Idioma"
   },
+  "deleteAccount": {
+    "title": "Excluir Conta",
+    "subtitle": "Remover permanentemente sua conta e todos os dados associados",
+    "warning": "Esta ação é permanente e não pode ser desfeita. Excluir sua conta removerá:",
+    "item1": "Seu perfil e informações pessoais",
+    "item2": "Todos os eventos que você enviou",
+    "item3": "Todas as suas confirmações de presença",
+    "confirm": "Eu entendo que esta ação é permanente",
+    "deleteBtn": "Excluir Minha Conta",
+    "success": "Conta excluída",
+    "successDetail": "Sua conta e todos os dados associados foram removidos."
+  },
   "install": {
     "title": "Instalar AXÉ Eventos",
     "description": "Adicione à tela inicial — abre instantaneamente, funciona offline.",

@@ -6,6 +6,7 @@ import SubmitEvent from './pages/SubmitEvent';
 import MyEvents from './pages/MyEvents';
 import AdminDashboard from './pages/AdminDashboard';
 import Privacy from './pages/Privacy';
+import DeleteAccount from './pages/DeleteAccount';
 import InstallPrompt from './components/InstallPrompt';
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/my-events" element={<MyEvents />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/delete-account" element={<DeleteAccount />} />
       </Routes>
       <InstallPrompt />
     </Layout>

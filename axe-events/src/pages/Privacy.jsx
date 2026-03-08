@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const c = {
@@ -83,9 +84,12 @@ export default function Privacy() {
           <h2 style={headingStyle}>Your Rights</h2>
           <p style={textStyle}>
             You can view, update, or delete your account and all associated data at any time.
-            To request data deletion, contact us or delete your account through the app settings.
             Under GDPR, you have the right to access, rectify, or erase your personal data.
           </p>
+          <Link to="/delete-account" style={{
+            display: 'inline-block', marginTop: 10,
+            fontSize: '0.85rem', color: c.accent, fontWeight: 600,
+          }}>Request account deletion &rarr;</Link>
         </div>
 
         <div style={sectionStyle}>

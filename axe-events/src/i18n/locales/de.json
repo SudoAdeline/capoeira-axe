@@ -134,6 +134,18 @@
     "back": "Zurück",
     "language": "Sprache"
   },
+  "deleteAccount": {
+    "title": "Konto löschen",
+    "subtitle": "Dein Konto und alle zugehörigen Daten dauerhaft entfernen",
+    "warning": "Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden. Das Löschen deines Kontos entfernt:",
+    "item1": "Dein Profil und persönliche Daten",
+    "item2": "Alle von dir eingereichten Events",
+    "item3": "Alle deine Teilnahmen",
+    "confirm": "Ich verstehe, dass diese Aktion dauerhaft ist",
+    "deleteBtn": "Mein Konto löschen",
+    "success": "Konto gelöscht",
+    "successDetail": "Dein Konto und alle zugehörigen Daten wurden entfernt."
+  },
   "install": {
     "title": "AXÉ Events installieren",
     "description": "Zum Startbildschirm hinzufügen — öffnet sofort, funktioniert offline.",

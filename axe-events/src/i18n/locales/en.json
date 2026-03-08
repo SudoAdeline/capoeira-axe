@@ -134,6 +134,18 @@
     "back": "Back",
     "language": "Language"
   },
+  "deleteAccount": {
+    "title": "Delete Account",
+    "subtitle": "Permanently remove your account and all associated data",
+    "warning": "This action is permanent and cannot be undone. Deleting your account will remove:",
+    "item1": "Your profile and personal information",
+    "item2": "All events you have submitted",
+    "item3": "All your RSVPs",
+    "confirm": "I understand this action is permanent",
+    "deleteBtn": "Delete My Account",
+    "success": "Account deleted",
+    "successDetail": "Your account and all associated data have been removed."
+  },
   "install": {
     "title": "Install AXÉ Events",
     "description": "Add it to your home screen — opens instantly, works offline.",

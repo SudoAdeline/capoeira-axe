@@ -134,6 +134,18 @@
     "back": "Retour",
     "language": "Langue"
   },
+  "deleteAccount": {
+    "title": "Supprimer le compte",
+    "subtitle": "Supprimer définitivement votre compte et toutes les données associées",
+    "warning": "Cette action est définitive et irréversible. La suppression de votre compte supprimera :",
+    "item1": "Votre profil et vos informations personnelles",
+    "item2": "Tous les événements que vous avez soumis",
+    "item3": "Toutes vos participations",
+    "confirm": "Je comprends que cette action est définitive",
+    "deleteBtn": "Supprimer mon compte",
+    "success": "Compte supprimé",
+    "successDetail": "Votre compte et toutes les données associées ont été supprimés."
+  },
   "install": {
     "title": "Installer AXÉ Événements",
     "description": "Ajoutez à l'écran d'accueil — s'ouvre instantanément, fonctionne hors ligne.",
