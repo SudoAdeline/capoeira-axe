@@ -412,17 +412,46 @@ export default function EventDetail() {
         );
       })()}
 
-      <button
-        onClick={handleShare}
-        style={{
-          width: '100%', padding: '14px',
-          background: `${c.accent}0A`,
-          border: `1px solid ${c.accent}22`,
-          borderRadius: 12,
-          color: c.accent, fontWeight: 600,
-          fontSize: '0.9rem', cursor: 'pointer',
-        }}
-      >{t('event.share')}</button>
+      <div style={{ display: 'flex', gap: 10 }}>
+        <a
+          href={(() => {
+            const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+            const end = endDate || new Date(startDate.getTime() + 2 * 60 * 60 * 1000);
+            const location = [event.location_name, event.location_address, event.city, event.country]
+              .filter(Boolean).join(', ');
+            const params = new URLSearchParams({
+              action: 'TEMPLATE',
+              text: event.title,
+              dates: `${fmt(startDate)}/${fmt(end)}`,
+              details: event.description || '',
+              location,
+            });
+            return `https://calendar.google.com/calendar/render?${params}`;
+          })()}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            flex: 1, padding: '14px', textAlign: 'center',
+            background: `${c.gold}0A`,
+            border: `1px solid ${c.gold}22`,
+            borderRadius: 12,
+            color: c.gold, fontWeight: 600,
+            fontSize: '0.9rem', cursor: 'pointer',
+            textDecoration: 'none',
+          }}
+        >{t('event.addToCalendar')}</a>
+        <button
+          onClick={handleShare}
+          style={{
+            flex: 1, padding: '14px',
+            background: `${c.accent}0A`,
+            border: `1px solid ${c.accent}22`,
+            borderRadius: 12,
+            color: c.accent, fontWeight: 600,
+            fontSize: '0.9rem', cursor: 'pointer',
+          }}
+        >{t('event.share')}</button>
+      </div>
     </div>
   );
 }
