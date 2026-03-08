@@ -1,13 +1,31 @@
 {
+  "id": "/",
   "name": "AXÉ Events — Capoeira Calendar",
   "short_name": "AXÉ Events",
   "description": "Find capoeira events near you — rodas, workshops, batizados, and festivals worldwide",
-  "start_url": "./",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#FFFBF5",
   "theme_color": "#E8652B",
   "orientation": "portrait-primary",
+  "lang": "en",
+  "dir": "ltr",
   "categories": ["sports", "social", "events"],
+  "screenshots": [
+    {
+      "src": "screenshots/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/screenshot-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
   "icons": [
     {
       "src": "logo.svg",
