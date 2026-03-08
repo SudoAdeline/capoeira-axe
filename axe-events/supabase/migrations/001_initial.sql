@@ -4,8 +4,16 @@ CREATE TABLE IF NOT EXISTS profiles (
   name TEXT,
   role TEXT DEFAULT 'user' CHECK (role IN ('user', 'admin')),
   locale TEXT DEFAULT 'en',
+  capoeira_group TEXT,
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+-- Add columns if table already exists (safe to re-run)
+-- Add column if table already exists (safe to re-run)
+DO $$ BEGIN
+  ALTER TABLE profiles ADD COLUMN IF NOT EXISTS capoeira_group TEXT;
+EXCEPTION WHEN others THEN NULL;
+END $$;
 
 -- Events
 CREATE TABLE IF NOT EXISTS events (
@@ -13,7 +21,6 @@ CREATE TABLE IF NOT EXISTS events (
   title TEXT NOT NULL,
   description TEXT,
   event_type TEXT NOT NULL CHECK (event_type IN ('roda', 'workshop', 'batizado', 'festival', 'other')),
-  scope TEXT DEFAULT 'local' CHECK (scope IN ('local', 'regional', 'national', 'global')),
   start_date TIMESTAMPTZ NOT NULL,
   end_date TIMESTAMPTZ,
   location_name TEXT,

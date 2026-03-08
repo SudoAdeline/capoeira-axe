@@ -122,8 +122,10 @@ export default function EventDetail() {
     transition: 'all 0.2s',
   });
 
-  const mapsUrl = event.location_address
-    ? `https://maps.google.com/?q=${encodeURIComponent(event.location_address)}`
+  const mapsQuery = [event.location_name, event.location_address, event.city, event.country]
+    .filter(Boolean).join(', ');
+  const mapsUrl = mapsQuery
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`
     : null;
 
   return (
@@ -237,6 +239,25 @@ export default function EventDetail() {
                 fontWeight: 600,
               }}>{t('event.openMap')} &rarr;</a>
             )}
+          </div>
+        )}
+
+        {/* Show maps link even without venue/address if we have city */}
+        {!event.location_name && !event.location_address && event.city && (
+          <div style={{
+            background: c.card, border: `1px solid ${c.border}`,
+            borderRadius: 12, padding: '14px 16px',
+            gridColumn: '1 / -1',
+          }}>
+            <div style={{ fontSize: '0.7rem', color: c.muted, marginBottom: 4 }}>{t('event.location')}</div>
+            <div style={{ fontSize: '0.78rem', color: c.muted }}>
+              {event.city}{event.country ? `, ${event.country}` : ''}
+            </div>
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([event.city, event.country].filter(Boolean).join(', '))}`} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-block', marginTop: 8,
+              fontSize: '0.78rem', color: typeColor,
+              fontWeight: 600,
+            }}>{t('event.openMap')} &rarr;</a>
           </div>
         )}
       </div>

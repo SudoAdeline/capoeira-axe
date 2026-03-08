@@ -133,7 +133,7 @@ function SplashIntro({ onEnter, userName }) {
 export default function Home() {
   const { t } = useTranslation();
   const { profile } = useAuth();
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem('axe_splash_seen'));
   const [fadeOut, setFadeOut] = useState(false);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -148,6 +148,7 @@ export default function Home() {
 
   const handleEnter = () => {
     setFadeOut(true);
+    sessionStorage.setItem('axe_splash_seen', '1');
     setTimeout(() => setShowSplash(false), 500);
   };
 

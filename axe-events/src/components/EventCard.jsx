@@ -18,13 +18,6 @@ const TYPE_COLORS = {
   other: '#8B7355',
 };
 
-const SCOPE_COLORS = {
-  local: '#0DAA8A',
-  regional: '#E8652B',
-  national: '#8B5FA8',
-  global: '#D4A843',
-};
-
 export default function EventCard({ event }) {
   const { t } = useTranslation();
 
@@ -74,18 +67,6 @@ export default function EventCard({ event }) {
             }}>
               {t(`event.${event.event_type}`)}
             </span>
-            {event.scope && (
-              <span style={{
-                fontSize: '0.62rem', fontWeight: 700,
-                color: SCOPE_COLORS[event.scope] || c.muted,
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                background: `${SCOPE_COLORS[event.scope] || c.muted}0C`,
-                padding: '3px 10px', borderRadius: 4,
-              }}>
-                {event.scope}
-              </span>
-            )}
             {event.is_free && (
               <span style={{
                 fontSize: '0.62rem', fontWeight: 600,
