@@ -4,7 +4,7 @@
   "description": "Find capoeira events near you — rodas, workshops, batizados, and festivals worldwide",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#1A0F08",
+  "background_color": "#FFFBF5",
   "theme_color": "#E8652B",
   "orientation": "portrait-primary",
   "categories": ["sports", "social", "events"],
