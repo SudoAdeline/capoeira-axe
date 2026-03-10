@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import LoginModal from './LoginModal';
+import NotificationBell from './NotificationBell';
 
 const LANGS = [
   { code: 'en', label: 'EN' },
@@ -137,6 +138,9 @@ export default function Layout({ children }) {
                 <option key={l.code} value={l.code}>{l.label}</option>
               ))}
             </select>
+
+            {/* Notification bell */}
+            {user && <NotificationBell userId={user.id} />}
 
             {/* Auth button */}
             {user ? (

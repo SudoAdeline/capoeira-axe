@@ -31,6 +31,10 @@ export default function EventDetail() {
   const [rsvps, setRsvps] = useState([]);
   const [myRsvp, setMyRsvp] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showReminder, setShowReminder] = useState(false);
+  const [reminderMsg, setReminderMsg] = useState('');
+  const [reminderSending, setReminderSending] = useState(false);
+  const [reminderSent, setReminderSent] = useState(false);
 
   useEffect(() => {
     fetchEvent();
@@ -94,6 +98,26 @@ export default function EventDetail() {
     } else {
       navigator.clipboard.writeText(window.location.href);
     }
+  };
+
+  const sendReminder = async () => {
+    if (!reminderMsg.trim() || rsvps.length === 0) return;
+    setReminderSending(true);
+    const notifications = rsvps
+      .filter(r => r.user_id !== user.id)
+      .map(r => ({
+        user_id: r.user_id,
+        event_id: id,
+        sender_id: user.id,
+        message: reminderMsg.trim(),
+      }));
+    if (notifications.length > 0) {
+      await supabase.from('notifications').insert(notifications);
+    }
+    setReminderSending(false);
+    setReminderSent(true);
+    setReminderMsg('');
+    setTimeout(() => { setReminderSent(false); setShowReminder(false); }, 2000);
   };
 
   if (loading) {
@@ -576,6 +600,69 @@ export default function EventDetail() {
           </div>
         );
       })()}
+
+      {/* Send Reminder — visible only to event creator */}
+      {user && event.submitted_by === user.id && rsvps.length > 0 && (
+        <div style={sectionCard}>
+          {!showReminder ? (
+            <button
+              onClick={() => setShowReminder(true)}
+              style={{
+                width: '100%', padding: '12px',
+                background: `${c.gold}0A`, border: `1px solid ${c.gold}22`,
+                borderRadius: 10, color: c.gold,
+                fontWeight: 600, fontSize: '0.85rem',
+                cursor: 'pointer',
+              }}
+            >{t('notify.sendReminder')}</button>
+          ) : reminderSent ? (
+            <div style={{
+              textAlign: 'center', padding: '12px',
+              color: '#0DAA8A', fontSize: '0.88rem', fontWeight: 600,
+            }}>{t('notify.sent')}</div>
+          ) : (
+            <div>
+              <textarea
+                value={reminderMsg}
+                onChange={(e) => setReminderMsg(e.target.value)}
+                placeholder={t('notify.messagePlaceholder')}
+                rows={3}
+                style={{
+                  width: '100%', padding: '12px 14px',
+                  background: c.bg, border: `1px solid ${c.border}`,
+                  borderRadius: 10, color: c.text,
+                  fontSize: '0.85rem', outline: 'none',
+                  resize: 'vertical', boxSizing: 'border-box',
+                  marginBottom: 10,
+                }}
+              />
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button
+                  onClick={sendReminder}
+                  disabled={!reminderMsg.trim() || reminderSending}
+                  style={{
+                    flex: 1, padding: '10px',
+                    background: `linear-gradient(135deg, ${c.accent}, ${c.gold})`,
+                    border: 'none', borderRadius: 8,
+                    color: '#fff', fontWeight: 600, fontSize: '0.85rem',
+                    cursor: reminderMsg.trim() && !reminderSending ? 'pointer' : 'not-allowed',
+                    opacity: !reminderMsg.trim() || reminderSending ? 0.6 : 1,
+                  }}
+                >{reminderSending ? t('common.loading') : t('notify.send')}</button>
+                <button
+                  onClick={() => { setShowReminder(false); setReminderMsg(''); }}
+                  style={{
+                    padding: '10px 16px',
+                    background: 'none', border: `1px solid ${c.border}`,
+                    borderRadius: 8, color: c.muted,
+                    fontSize: '0.85rem', cursor: 'pointer',
+                  }}
+                >{t('common.cancel')}</button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       <div style={{ display: 'flex', gap: 10 }}>
         <a

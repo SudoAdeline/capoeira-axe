@@ -175,6 +175,15 @@
     "organizerPending": "Organisator (ausstehend)",
     "organizerApproved": "Organisator \u2713"
   },
+  "notify": {
+    "sendReminder": "Erinnerung an Teilnehmer senden",
+    "messagePlaceholder": "Nachricht an die Teilnehmer...",
+    "send": "Senden",
+    "sent": "Erinnerung gesendet!",
+    "notifications": "Benachrichtigungen",
+    "markAllRead": "Alle als gelesen markieren",
+    "noNotifications": "Keine Benachrichtigungen"
+  },
   "deleteAccount": {
     "title": "Konto löschen",
     "subtitle": "Dein Konto und alle zugehörigen Daten dauerhaft entfernen",

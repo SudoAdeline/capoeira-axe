@@ -175,6 +175,15 @@
     "organizerPending": "Organizador (pendente)",
     "organizerApproved": "Organizador \u2713"
   },
+  "notify": {
+    "sendReminder": "Enviar lembrete aos participantes",
+    "messagePlaceholder": "Escreva uma mensagem para os participantes...",
+    "send": "Enviar",
+    "sent": "Lembrete enviado!",
+    "notifications": "Notificações",
+    "markAllRead": "Marcar tudo como lido",
+    "noNotifications": "Sem notificações"
+  },
   "deleteAccount": {
     "title": "Excluir Conta",
     "subtitle": "Remover permanentemente sua conta e todos os dados associados",

@@ -175,6 +175,15 @@
     "organizerPending": "Organizer (pending)",
     "organizerApproved": "Organizer \u2713"
   },
+  "notify": {
+    "sendReminder": "Send Reminder to Attendees",
+    "messagePlaceholder": "Write a message for attendees...",
+    "send": "Send",
+    "sent": "Reminder sent!",
+    "notifications": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications"
+  },
   "deleteAccount": {
     "title": "Delete Account",
     "subtitle": "Permanently remove your account and all associated data",
