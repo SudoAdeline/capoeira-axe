@@ -92,11 +92,25 @@ export function AuthProvider({ children }) {
   };
 
   const isAdmin = profile?.role === 'admin';
+  const isApprovedOrganizer = profile?.organizer_status === 'approved';
+
+  const requestOrganizer = async () => {
+    if (!user) return;
+    const { error } = await supabase
+      .from('profiles')
+      .update({ organizer_status: 'pending' })
+      .eq('id', user.id);
+    if (!error) {
+      setProfile(prev => ({ ...prev, organizer_status: 'pending' }));
+    }
+    return { error };
+  };
 
   return (
     <AuthContext.Provider value={{
-      user, profile, loading, isAdmin,
-      signUp, signIn, signInWithGoogle, signOut, resetPassword, fetchProfile, updateProfile,
+      user, profile, loading, isAdmin, isApprovedOrganizer,
+      signUp, signIn, signInWithGoogle, signOut, resetPassword,
+      fetchProfile, updateProfile, requestOrganizer,
     }}>
       {children}
     </AuthContext.Provider>

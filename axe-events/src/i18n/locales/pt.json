@@ -67,7 +67,14 @@
     "openMap": "Abrir no Mapa",
     "addToCalendar": "Adicionar ao Calendário",
     "attendeeList": "Participantes",
-    "anonymous": "Anônimo"
+    "anonymous": "Anônimo",
+    "guests": "Professores Convidados",
+    "schedule": "Programa",
+    "regClosed": "Inscrições encerradas",
+    "regOpen": "Inscrever-se",
+    "dayLocations": "Locais",
+    "whatsapp": "WhatsApp",
+    "phone": "Telefone"
   },
   "submit": {
     "title": "Enviar um Evento",
@@ -90,7 +97,28 @@
     "submitBtn": "Enviar para Revisão",
     "success": "Evento enviado! Aparecerá após aprovação do admin.",
     "loginRequired": "Faça login para enviar um evento.",
-    "preview": "Pré-visualizar"
+    "preview": "Pré-visualizar",
+    "multiDay": "Este evento tem vários locais",
+    "addDay": "Adicionar outro dia",
+    "dayDate": "Data",
+    "dayVenue": "Local",
+    "dayAddress": "Endereço",
+    "dayCity": "Cidade",
+    "removeDay": "Remover",
+    "guests": "Professores / Mestres convidados",
+    "addGuest": "Adicionar convidado",
+    "guestName": "Nome",
+    "guestTitle": "Título (ex. Mestre)",
+    "guestGroup": "Grupo",
+    "removeGuest": "Remover",
+    "contactPhone": "Telefone / WhatsApp (opcional)",
+    "regDeadline": "Prazo de inscrição (opcional)",
+    "regUrl": "Link de inscrição (opcional)",
+    "schedule": "Programa do Evento",
+    "addSchedule": "Adicionar ao programa",
+    "scheduleTime": "Horário",
+    "scheduleDesc": "Descrição",
+    "removeSchedule": "Remover"
   },
   "myEvents": {
     "title": "Meus Eventos",
@@ -119,7 +147,11 @@
     "totalEvents": "Total de Eventos",
     "totalRsvps": "Total de Confirmações",
     "thisMonth": "Este Mês",
-    "unauthorized": "Você não tem acesso de admin."
+    "unauthorized": "Você não tem acesso de admin.",
+    "organizerRequests": "Pedidos de Organizador",
+    "approveOrganizer": "Aprovar",
+    "rejectOrganizer": "Rejeitar",
+    "noOrgRequests": "Nenhum pedido de organizador."
   },
   "privacy": {
     "title": "Política de Privacidade",
@@ -134,6 +166,11 @@
     "close": "Fechar",
     "back": "Voltar",
     "language": "Idioma"
+  },
+  "profile": {
+    "requestOrganizer": "Solicitar status de organizador",
+    "organizerPending": "Organizador (pendente)",
+    "organizerApproved": "Organizador \u2713"
   },
   "deleteAccount": {
     "title": "Excluir Conta",

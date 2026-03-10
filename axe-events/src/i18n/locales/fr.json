@@ -67,7 +67,14 @@
     "openMap": "Ouvrir dans Plans",
     "addToCalendar": "Ajouter au calendrier",
     "attendeeList": "Participants",
-    "anonymous": "Anonyme"
+    "anonymous": "Anonyme",
+    "guests": "Professeurs invités",
+    "schedule": "Programme",
+    "regClosed": "Inscriptions fermées",
+    "regOpen": "S'inscrire",
+    "dayLocations": "Lieux",
+    "whatsapp": "WhatsApp",
+    "phone": "Téléphone"
   },
   "submit": {
     "title": "Soumettre un Événement",
@@ -90,7 +97,28 @@
     "submitBtn": "Soumettre pour validation",
     "success": "Événement soumis ! Il apparaîtra après validation par un admin.",
     "loginRequired": "Veuillez vous connecter pour soumettre un événement.",
-    "preview": "Aperçu"
+    "preview": "Aperçu",
+    "multiDay": "Cet événement a plusieurs lieux",
+    "addDay": "Ajouter un jour",
+    "dayDate": "Date",
+    "dayVenue": "Lieu",
+    "dayAddress": "Adresse",
+    "dayCity": "Ville",
+    "removeDay": "Supprimer",
+    "guests": "Professeurs / Mestres invités",
+    "addGuest": "Ajouter un invité",
+    "guestName": "Nom",
+    "guestTitle": "Titre (ex. Mestre)",
+    "guestGroup": "Groupe",
+    "removeGuest": "Supprimer",
+    "contactPhone": "Téléphone / WhatsApp (optionnel)",
+    "regDeadline": "Date limite d'inscription (optionnel)",
+    "regUrl": "Lien d'inscription (optionnel)",
+    "schedule": "Programme de l'événement",
+    "addSchedule": "Ajouter au programme",
+    "scheduleTime": "Heure",
+    "scheduleDesc": "Description",
+    "removeSchedule": "Supprimer"
   },
   "myEvents": {
     "title": "Mes Événements",
@@ -119,7 +147,11 @@
     "totalEvents": "Total Événements",
     "totalRsvps": "Total Participations",
     "thisMonth": "Ce Mois",
-    "unauthorized": "Vous n'avez pas les droits admin."
+    "unauthorized": "Vous n'avez pas les droits admin.",
+    "organizerRequests": "Demandes organisateur",
+    "approveOrganizer": "Approuver",
+    "rejectOrganizer": "Refuser",
+    "noOrgRequests": "Aucune demande d'organisateur."
   },
   "privacy": {
     "title": "Politique de Confidentialité",
@@ -134,6 +166,11 @@
     "close": "Fermer",
     "back": "Retour",
     "language": "Langue"
+  },
+  "profile": {
+    "requestOrganizer": "Demander le statut organisateur",
+    "organizerPending": "Organisateur (en attente)",
+    "organizerApproved": "Organisateur \u2713"
   },
   "deleteAccount": {
     "title": "Supprimer le compte",

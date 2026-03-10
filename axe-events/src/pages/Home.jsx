@@ -158,6 +158,7 @@ export default function Home() {
       .from('events')
       .select('*, rsvps(status)')
       .in('status', ['approved', 'featured'])
+      .gte('start_date', new Date().toISOString())
       .order('start_date', { ascending: true });
 
     if (!error && data) {
@@ -180,7 +181,7 @@ export default function Home() {
 
   const filtered = useMemo(() => {
     return events.filter(ev => {
-      if (filterType && ev.event_type !== filterType) return false;
+      if (filterType && !ev.event_type?.split(',').includes(filterType)) return false;
       if (filterCity && ev.city !== filterCity) return false;
       if (search) {
         const q = search.toLowerCase();

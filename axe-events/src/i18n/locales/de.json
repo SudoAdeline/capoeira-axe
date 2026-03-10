@@ -67,7 +67,14 @@
     "openMap": "In Karten öffnen",
     "addToCalendar": "Zum Kalender hinzufügen",
     "attendeeList": "Teilnehmer",
-    "anonymous": "Anonym"
+    "anonymous": "Anonym",
+    "guests": "Gastlehrer",
+    "schedule": "Programm",
+    "regClosed": "Anmeldung geschlossen",
+    "regOpen": "Anmelden",
+    "dayLocations": "Veranstaltungsorte",
+    "whatsapp": "WhatsApp",
+    "phone": "Telefon"
   },
   "submit": {
     "title": "Event einreichen",
@@ -90,7 +97,28 @@
     "submitBtn": "Zur Prüfung einreichen",
     "success": "Event eingereicht! Es erscheint nach Admin-Freigabe.",
     "loginRequired": "Bitte melde dich an, um ein Event einzureichen.",
-    "preview": "Vorschau"
+    "preview": "Vorschau",
+    "multiDay": "Dieses Event hat mehrere Veranstaltungsorte",
+    "addDay": "Weiteren Tag hinzufügen",
+    "dayDate": "Datum",
+    "dayVenue": "Ort",
+    "dayAddress": "Adresse",
+    "dayCity": "Stadt",
+    "removeDay": "Entfernen",
+    "guests": "Gastlehrer / Mestres",
+    "addGuest": "Gast hinzufügen",
+    "guestName": "Name",
+    "guestTitle": "Titel (z.B. Mestre)",
+    "guestGroup": "Gruppe",
+    "removeGuest": "Entfernen",
+    "contactPhone": "Telefon / WhatsApp (optional)",
+    "regDeadline": "Anmeldefrist (optional)",
+    "regUrl": "Anmeldelink (optional)",
+    "schedule": "Veranstaltungsprogramm",
+    "addSchedule": "Zum Programm hinzufügen",
+    "scheduleTime": "Uhrzeit",
+    "scheduleDesc": "Beschreibung",
+    "removeSchedule": "Entfernen"
   },
   "myEvents": {
     "title": "Meine Events",
@@ -119,7 +147,11 @@
     "totalEvents": "Gesamt Events",
     "totalRsvps": "Gesamt Teilnahmen",
     "thisMonth": "Diesen Monat",
-    "unauthorized": "Du hast keinen Admin-Zugang."
+    "unauthorized": "Du hast keinen Admin-Zugang.",
+    "organizerRequests": "Organisator-Anfragen",
+    "approveOrganizer": "Genehmigen",
+    "rejectOrganizer": "Ablehnen",
+    "noOrgRequests": "Keine Organisator-Anfragen."
   },
   "privacy": {
     "title": "Datenschutzerklärung",
@@ -134,6 +166,11 @@
     "close": "Schließen",
     "back": "Zurück",
     "language": "Sprache"
+  },
+  "profile": {
+    "requestOrganizer": "Organisator-Status anfragen",
+    "organizerPending": "Organisator (ausstehend)",
+    "organizerApproved": "Organisator \u2713"
   },
   "deleteAccount": {
     "title": "Konto löschen",

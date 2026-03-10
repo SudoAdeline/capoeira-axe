@@ -21,7 +21,9 @@ const TYPE_COLORS = {
 export default function EventCard({ event }) {
   const { t } = useTranslation();
 
-  const typeColor = TYPE_COLORS[event.event_type] || c.muted;
+  const eventTypes = (event.event_type || '').split(',').filter(Boolean);
+  const primaryType = eventTypes[0] || 'other';
+  const typeColor = TYPE_COLORS[primaryType] || c.muted;
   const startDate = new Date(event.start_date);
 
   return (
@@ -57,21 +59,26 @@ export default function EventCard({ event }) {
             letterSpacing: '0.03em',
             color: c.text, margin: 0,
           }}>{event.title}</h3>
-          <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
-            <span style={{
-              fontSize: '0.62rem', fontWeight: 700,
-              color: typeColor, textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              background: `${typeColor}0C`,
-              padding: '3px 10px', borderRadius: 4,
-            }}>
-              {t(`event.${event.event_type}`)}
-            </span>
+          <div style={{ display: 'flex', gap: 4, flexShrink: 0, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+            {eventTypes.map(type => {
+              const tc = TYPE_COLORS[type] || c.muted;
+              return (
+                <span key={type} style={{
+                  fontSize: '0.62rem', fontWeight: 700,
+                  color: tc, textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  background: `${tc}0C`,
+                  padding: '3px 8px', borderRadius: 4,
+                }}>
+                  {t(`event.${type}`)}
+                </span>
+              );
+            })}
             {event.is_free && (
               <span style={{
                 fontSize: '0.62rem', fontWeight: 600,
                 color: '#0DAA8A', background: '#0DAA8A0C',
-                padding: '3px 10px', borderRadius: 4,
+                padding: '3px 8px', borderRadius: 4,
               }}>{t('event.free')}</span>
             )}
           </div>
@@ -108,6 +115,19 @@ export default function EventCard({ event }) {
           </div>
         )}
 
+        {/* Featured guests preview */}
+        {event.guests?.length > 0 && (
+          <div style={{
+            fontSize: '0.72rem', color: c.gold, marginTop: 6,
+            fontWeight: 500,
+          }}>
+            {event.guests.slice(0, 2).map(g =>
+              g.title ? `${g.title} ${g.name}` : g.name
+            ).join(', ')}
+            {event.guests.length > 2 && ` +${event.guests.length - 2}`}
+          </div>
+        )}
+
         {/* RSVP + footer */}
         {(event.rsvp_going > 0 || event.rsvp_interested > 0 || !event.is_free) && (
           <div style={{
@@ -123,12 +143,14 @@ export default function EventCard({ event }) {
               )}
             </div>
             {!event.is_free && event.price_info && (
-              <span style={{ color: c.gold, fontWeight: 600 }}>{event.price_info}</span>
+              <span style={{ color: c.gold, fontWeight: 600 }}>
+                {event.price_info.length > 30 ? event.price_info.substring(0, 30) + '...' : event.price_info}
+              </span>
             )}
           </div>
         )}
 
-        {/* RSVP arrow */}
+        {/* Arrow */}
         <div style={{
           position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
           color: typeColor, fontSize: '0.9rem', opacity: 0.4,

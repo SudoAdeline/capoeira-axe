@@ -103,11 +103,18 @@ export default function EventDetail() {
     return <div style={{ textAlign: 'center', padding: 60, color: c.muted }}>{t('common.error')}</div>;
   }
 
-  const typeColor = TYPE_COLORS[event.event_type] || c.muted;
+  // Parse comma-separated event types
+  const eventTypes = (event.event_type || '').split(',').filter(Boolean);
+  const primaryType = eventTypes[0] || 'other';
+  const typeColor = TYPE_COLORS[primaryType] || c.muted;
   const startDate = new Date(event.start_date);
   const endDate = event.end_date ? new Date(event.end_date) : null;
   const goingCount = rsvps.filter(r => r.status === 'going').length;
   const interestedCount = rsvps.filter(r => r.status === 'interested').length;
+
+  // Registration deadline check
+  const regDeadline = event.registration_deadline ? new Date(event.registration_deadline) : null;
+  const regClosed = regDeadline && regDeadline < new Date();
 
   const rsvpBtnStyle = (status) => ({
     flex: 1,
@@ -127,6 +134,17 @@ export default function EventDetail() {
   const mapsUrl = mapsQuery
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`
     : null;
+
+  const sectionCard = {
+    background: c.card, border: `1px solid ${c.border}`,
+    borderRadius: 12, padding: '18px 16px',
+    marginBottom: 20,
+  };
+
+  const sectionLabel = {
+    fontSize: '0.7rem', color: c.muted, marginBottom: 8,
+    textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600,
+  };
 
   return (
     <div style={{ animation: 'fadeUp 0.3s ease' }}>
@@ -153,29 +171,26 @@ export default function EventDetail() {
         </div>
       )}
 
-      <div style={{ marginBottom: 6 }}>
-        <span style={{
-          fontSize: '0.7rem', fontWeight: 700,
-          color: typeColor, textTransform: 'uppercase',
-          letterSpacing: '0.1em',
-          background: `${typeColor}0C`,
-          padding: '3px 10px', borderRadius: 4,
-        }}>{t(`event.${event.event_type}`)}</span>
+      {/* Type badges — supports multiple */}
+      <div style={{ marginBottom: 6, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        {eventTypes.map(type => {
+          const tc = TYPE_COLORS[type] || c.muted;
+          return (
+            <span key={type} style={{
+              fontSize: '0.7rem', fontWeight: 700,
+              color: tc, textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              background: `${tc}0C`,
+              padding: '3px 10px', borderRadius: 4,
+            }}>{t(`event.${type}`)}</span>
+          );
+        })}
         {event.is_free && (
           <span style={{
             fontSize: '0.7rem', fontWeight: 600,
             color: '#0DAA8A', background: '#0DAA8A0C',
             padding: '3px 10px', borderRadius: 4,
-            marginLeft: 6,
           }}>{t('event.free')}</span>
-        )}
-        {!event.is_free && event.price_info && (
-          <span style={{
-            fontSize: '0.7rem', fontWeight: 600,
-            color: c.gold, background: `${c.gold}0C`,
-            padding: '3px 10px', borderRadius: 4,
-            marginLeft: 6,
-          }}>{event.price_info}</span>
         )}
       </div>
 
@@ -214,7 +229,8 @@ export default function EventDetail() {
           </div>
         </div>
 
-        {(event.location_name || event.location_address) && (
+        {/* Single location */}
+        {(event.location_name || event.location_address) && !event.day_locations?.length && (
           <div style={{
             background: c.card, border: `1px solid ${c.border}`,
             borderRadius: 12, padding: '14px 16px',
@@ -242,8 +258,8 @@ export default function EventDetail() {
           </div>
         )}
 
-        {/* Show maps link even without venue/address if we have city */}
-        {!event.location_name && !event.location_address && event.city && (
+        {/* City-only location fallback */}
+        {!event.location_name && !event.location_address && event.city && !event.day_locations?.length && (
           <div style={{
             background: c.card, border: `1px solid ${c.border}`,
             borderRadius: 12, padding: '14px 16px',
@@ -262,12 +278,45 @@ export default function EventDetail() {
         )}
       </div>
 
+      {/* Multi-day locations */}
+      {event.day_locations?.length > 0 && (
+        <div style={sectionCard}>
+          <div style={sectionLabel}>{t('event.dayLocations')}</div>
+          {event.day_locations.map((day, idx) => (
+            <div key={idx} style={{
+              padding: '10px 12px', marginBottom: 8,
+              background: c.bg, borderRadius: 8,
+              border: `1px solid ${c.border}`,
+            }}>
+              {day.date && (
+                <div style={{ fontSize: '0.78rem', color: typeColor, fontWeight: 600, marginBottom: 4 }}>
+                  {new Date(day.date + 'T00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+                </div>
+              )}
+              {day.venue && (
+                <div style={{ fontSize: '0.88rem', color: c.text, fontWeight: 500 }}>{day.venue}</div>
+              )}
+              {day.address && (
+                <div style={{ fontSize: '0.78rem', color: c.muted }}>{day.address}</div>
+              )}
+              {day.city && (
+                <div style={{ fontSize: '0.78rem', color: c.muted }}>{day.city}</div>
+              )}
+              {(day.venue || day.address || day.city) && (
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([day.venue, day.address, day.city, event.country].filter(Boolean).join(', '))}`}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize: '0.72rem', color: typeColor, fontWeight: 600 }}
+                >{t('event.openMap')} &rarr;</a>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Description */}
       {event.description && (
-        <div style={{
-          background: c.card, border: `1px solid ${c.border}`,
-          borderRadius: 12, padding: '18px 16px',
-          marginBottom: 20,
-        }}>
+        <div style={sectionCard}>
           <div style={{ fontSize: '0.7rem', color: c.muted, marginBottom: 8 }}>{t('event.details')}</div>
           <div style={{
             fontSize: '0.88rem', color: c.text,
@@ -276,12 +325,118 @@ export default function EventDetail() {
         </div>
       )}
 
+      {/* Price info (when not free) */}
+      {!event.is_free && event.price_info && (
+        <div style={sectionCard}>
+          <div style={{ fontSize: '0.7rem', color: c.muted, marginBottom: 8 }}>{t('event.paid')}</div>
+          <div style={{
+            fontSize: '0.88rem', color: c.text,
+            lineHeight: 1.5, whiteSpace: 'pre-wrap',
+          }}>{event.price_info}</div>
+        </div>
+      )}
+
+      {/* Featured Teachers / Mestres */}
+      {event.guests?.length > 0 && (
+        <div style={sectionCard}>
+          <div style={sectionLabel}>{t('event.guests')}</div>
+          {event.guests.map((guest, idx) => (
+            <div key={idx} style={{
+              display: 'flex', alignItems: 'center', gap: 10,
+              padding: '8px 0',
+              borderBottom: idx < event.guests.length - 1 ? `1px solid ${c.border}` : 'none',
+            }}>
+              <div style={{
+                width: 36, height: 36, borderRadius: '50%',
+                background: `linear-gradient(135deg, ${c.accent}30, ${c.gold}30)`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: c.accent, fontSize: '0.8rem', fontWeight: 700, flexShrink: 0,
+              }}>{guest.name[0]?.toUpperCase()}</div>
+              <div>
+                <div style={{ fontSize: '0.88rem', color: c.text, fontWeight: 500 }}>
+                  {guest.title ? `${guest.title} ${guest.name}` : guest.name}
+                </div>
+                {guest.group && (
+                  <div style={{ fontSize: '0.73rem', color: c.muted }}>{guest.group}</div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Event Schedule / Program */}
+      {event.schedule?.length > 0 && (
+        <div style={sectionCard}>
+          <div style={sectionLabel}>{t('event.schedule')}</div>
+          {event.schedule.map((item, idx) => (
+            <div key={idx} style={{
+              display: 'flex', gap: 14, marginBottom: 12,
+              position: 'relative',
+            }}>
+              {/* Timeline line */}
+              {idx < event.schedule.length - 1 && (
+                <div style={{
+                  position: 'absolute', left: 23, top: 24, bottom: -12,
+                  width: 2, background: c.border,
+                }} />
+              )}
+              {/* Time dot */}
+              <div style={{
+                width: 48, flexShrink: 0, textAlign: 'center',
+              }}>
+                <div style={{
+                  width: 10, height: 10, borderRadius: '50%',
+                  background: typeColor, margin: '4px auto 4px',
+                }} />
+                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: typeColor }}>
+                  {item.time}
+                </div>
+              </div>
+              <div style={{
+                fontSize: '0.85rem', color: c.text, lineHeight: 1.5,
+                paddingTop: 1,
+              }}>
+                {item.description}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Registration */}
+      {(event.registration_url || regDeadline) && (
+        <div style={sectionCard}>
+          {regDeadline && (
+            <div style={{
+              fontSize: '0.78rem', marginBottom: 10,
+              color: regClosed ? c.accent : c.muted,
+              fontWeight: regClosed ? 600 : 400,
+            }}>
+              {regClosed
+                ? t('event.regClosed')
+                : `${t('submit.regDeadline').replace(' (optional)', '')}: ${regDeadline.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`
+              }
+            </div>
+          )}
+          {event.registration_url && !regClosed && (
+            <a
+              href={event.registration_url}
+              target="_blank" rel="noopener noreferrer"
+              style={{
+                display: 'inline-block', padding: '12px 24px',
+                background: `linear-gradient(135deg, ${c.accent}, ${c.gold})`,
+                color: '#fff', borderRadius: 10, fontWeight: 600,
+                fontSize: '0.88rem', textDecoration: 'none',
+              }}
+            >{t('event.regOpen')}</a>
+          )}
+        </div>
+      )}
+
+      {/* Organizer + Contact */}
       {event.organizer_name && (
-        <div style={{
-          background: c.card, border: `1px solid ${c.border}`,
-          borderRadius: 12, padding: '14px 16px',
-          marginBottom: 20,
-        }}>
+        <div style={sectionCard}>
           <div style={{ fontSize: '0.7rem', color: c.muted, marginBottom: 4 }}>{t('event.organizer')}</div>
           <div style={{ fontSize: '0.88rem', color: c.text, fontWeight: 500 }}>{event.organizer_name}</div>
           {event.contact_email && (
@@ -294,14 +449,29 @@ export default function EventDetail() {
               fontSize: '0.78rem', color: typeColor, display: 'block', marginTop: 2,
             }}>{event.contact_url}</a>
           )}
+          {event.contact_phone && (
+            <div style={{ marginTop: 6, display: 'flex', gap: 10, alignItems: 'center' }}>
+              <a href={`tel:${event.contact_phone}`} style={{
+                fontSize: '0.78rem', color: typeColor,
+              }}>{event.contact_phone}</a>
+              {event.contact_phone.startsWith('+') && (
+                <a
+                  href={`https://wa.me/${event.contact_phone.replace(/[\s\-()]/g, '')}`}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{
+                    fontSize: '0.72rem', fontWeight: 600,
+                    color: '#25D366', background: '#25D3660C',
+                    padding: '3px 10px', borderRadius: 4,
+                  }}
+                >{t('event.whatsapp')}</a>
+              )}
+            </div>
+          )}
         </div>
       )}
 
-      <div style={{
-        background: c.card, border: `1px solid ${c.border}`,
-        borderRadius: 12, padding: '18px 16px',
-        marginBottom: 20,
-      }}>
+      {/* RSVP section */}
+      <div style={sectionCard}>
         <div style={{
           display: 'flex', justifyContent: 'center', gap: 16,
           marginBottom: 14, fontSize: '0.82rem', color: c.muted,
@@ -334,15 +504,8 @@ export default function EventDetail() {
         const going = rsvps.filter(r => r.status === 'going');
         const interested = rsvps.filter(r => r.status === 'interested');
         return (
-          <div style={{
-            background: c.card, border: `1px solid ${c.border}`,
-            borderRadius: 12, padding: '18px 16px',
-            marginBottom: 20,
-          }}>
-            <div style={{
-              fontSize: '0.7rem', color: c.muted, marginBottom: 12,
-              textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600,
-            }}>{t('event.attendeeList')}</div>
+          <div style={sectionCard}>
+            <div style={sectionLabel}>{t('event.attendeeList')}</div>
 
             {going.length > 0 && (
               <>

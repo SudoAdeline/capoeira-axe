@@ -67,7 +67,14 @@
     "openMap": "Open in Maps",
     "addToCalendar": "Add to Calendar",
     "attendeeList": "Attendees",
-    "anonymous": "Anonymous"
+    "anonymous": "Anonymous",
+    "guests": "Featured Teachers",
+    "schedule": "Program",
+    "regClosed": "Registration closed",
+    "regOpen": "Register",
+    "dayLocations": "Locations",
+    "whatsapp": "WhatsApp",
+    "phone": "Phone"
   },
   "submit": {
     "title": "Submit an Event",
@@ -90,7 +97,28 @@
     "submitBtn": "Submit for Review",
     "success": "Event submitted! It will appear after admin approval.",
     "loginRequired": "Please log in to submit an event.",
-    "preview": "Preview"
+    "preview": "Preview",
+    "multiDay": "This event has multiple locations",
+    "addDay": "Add another day",
+    "dayDate": "Date",
+    "dayVenue": "Venue",
+    "dayAddress": "Address",
+    "dayCity": "City",
+    "removeDay": "Remove",
+    "guests": "Featured Teachers / Mestres",
+    "addGuest": "Add guest",
+    "guestName": "Name",
+    "guestTitle": "Title (e.g. Mestre)",
+    "guestGroup": "Group",
+    "removeGuest": "Remove",
+    "contactPhone": "Phone / WhatsApp (optional)",
+    "regDeadline": "Registration Deadline (optional)",
+    "regUrl": "Registration Link (optional)",
+    "schedule": "Event Program",
+    "addSchedule": "Add to schedule",
+    "scheduleTime": "Time",
+    "scheduleDesc": "Description",
+    "removeSchedule": "Remove"
   },
   "myEvents": {
     "title": "My Events",
@@ -119,7 +147,11 @@
     "totalEvents": "Total Events",
     "totalRsvps": "Total RSVPs",
     "thisMonth": "This Month",
-    "unauthorized": "You don't have admin access."
+    "unauthorized": "You don't have admin access.",
+    "organizerRequests": "Organizer Requests",
+    "approveOrganizer": "Approve",
+    "rejectOrganizer": "Reject",
+    "noOrgRequests": "No organizer requests."
   },
   "privacy": {
     "title": "Privacy Policy",
@@ -134,6 +166,11 @@
     "close": "Close",
     "back": "Back",
     "language": "Language"
+  },
+  "profile": {
+    "requestOrganizer": "Request Organizer Status",
+    "organizerPending": "Organizer (pending)",
+    "organizerApproved": "Organizer \u2713"
   },
   "deleteAccount": {
     "title": "Delete Account",

@@ -26,6 +26,7 @@ export default function AdminDashboard() {
   const [tab, setTab] = useState('queue');
   const [pendingEvents, setPendingEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
+  const [orgRequests, setOrgRequests] = useState([]);
   const [stats, setStats] = useState({ total: 0, rsvps: 0, thisMonth: 0 });
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -49,6 +50,13 @@ export default function AdminDashboard() {
       .select('*')
       .order('created_at', { ascending: false });
     setAllEvents(all || []);
+
+    const { data: orgReqs } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('organizer_status', 'pending')
+      .order('created_at', { ascending: false });
+    setOrgRequests(orgReqs || []);
 
     const { count: totalEvents } = await supabase
       .from('events')
@@ -82,6 +90,11 @@ export default function AdminDashboard() {
 
   const deleteEvent = async (eventId) => {
     await supabase.from('events').delete().eq('id', eventId);
+    fetchData();
+  };
+
+  const updateOrganizerStatus = async (profileId, status) => {
+    await supabase.from('profiles').update({ organizer_status: status }).eq('id', profileId);
     fetchData();
   };
 
@@ -143,6 +156,9 @@ export default function AdminDashboard() {
         </button>
         <button onClick={() => setTab('all')} style={tabStyle(tab === 'all')}>
           {t('admin.allEvents')}
+        </button>
+        <button onClick={() => setTab('organizers')} style={tabStyle(tab === 'organizers')}>
+          {t('admin.organizerRequests')} {orgRequests.length > 0 && `(${orgRequests.length})`}
         </button>
         <button onClick={() => setTab('stats')} style={tabStyle(tab === 'stats')}>
           {t('admin.stats')}
@@ -257,6 +273,42 @@ export default function AdminDashboard() {
             })}
           </div>
         </div>
+      ) : tab === 'organizers' ? (
+        orgRequests.length === 0 ? (
+          <div style={{
+            textAlign: 'center', padding: '40px 20px',
+            color: c.muted, background: c.card,
+            borderRadius: 14, border: `1px solid ${c.border}`,
+          }}>{t('admin.noOrgRequests')}</div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {orgRequests.map(p => (
+              <div key={p.id} style={{
+                background: c.card, border: `1px solid ${c.border}`,
+                borderRadius: 12, padding: '14px 16px',
+                display: 'flex', alignItems: 'center', gap: 12,
+                flexWrap: 'wrap',
+              }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 600, color: c.text }}>
+                    {p.name || 'Unknown'}
+                  </div>
+                  {p.capoeira_group && (
+                    <div style={{ fontSize: '0.75rem', color: c.muted }}>{p.capoeira_group}</div>
+                  )}
+                </div>
+                <div style={{ display: 'flex', gap: 6 }}>
+                  <button onClick={() => updateOrganizerStatus(p.id, 'approved')} style={actionBtn('#0DAA8A')}>
+                    {t('admin.approveOrganizer')}
+                  </button>
+                  <button onClick={() => updateOrganizerStatus(p.id, 'rejected')} style={actionBtn('#E8652B')}>
+                    {t('admin.rejectOrganizer')}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
       ) : (
         <div style={{
           display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
