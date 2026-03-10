@@ -16,6 +16,7 @@ const c = {
 };
 
 const STATUS_COLORS = {
+  draft: '#8B7355',
   pending: '#D4A843',
   approved: '#0DAA8A',
   rejected: '#E8652B',

@@ -76,7 +76,8 @@
     "regOpen": "Anmelden",
     "dayLocations": "Veranstaltungsorte",
     "whatsapp": "WhatsApp",
-    "phone": "Telefon"
+    "phone": "Telefon",
+    "additionalInfo": "Zusätzliche Infos"
   },
   "submit": {
     "title": "Event einreichen",
@@ -123,7 +124,11 @@
     "addSchedule": "Zum Programm hinzufügen",
     "scheduleTime": "Uhrzeit",
     "scheduleDesc": "Beschreibung",
-    "removeSchedule": "Entfernen"
+    "removeSchedule": "Entfernen",
+    "additionalInfo": "Zusätzliche Infos (optional)",
+    "posterUpload": "Eventposter (optional)",
+    "choosePoster": "Posterbild auswählen",
+    "saveDraft": "Entwurf speichern"
   },
   "myEvents": {
     "title": "Meine Events",
@@ -132,6 +137,7 @@
     "noRsvps": "Du hast noch an keinem Event teilgenommen.",
     "noSubmissions": "Du hast noch kein Event eingereicht.",
     "status": "Status",
+    "draft": "Entwurf",
     "pending": "In Prüfung",
     "approved": "Genehmigt",
     "rejected": "Abgelehnt",

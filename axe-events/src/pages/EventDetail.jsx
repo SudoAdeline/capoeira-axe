@@ -187,10 +187,10 @@ export default function EventDetail() {
       {event.image_url && (
         <div style={{
           borderRadius: 16, overflow: 'hidden',
-          marginBottom: 20, maxHeight: 240,
+          marginBottom: 20,
         }}>
           <img src={event.image_url} alt={event.title} style={{
-            width: '100%', height: '100%', objectFit: 'cover',
+            width: '100%', display: 'block', borderRadius: 16,
           }} />
         </div>
       )}
@@ -261,7 +261,7 @@ export default function EventDetail() {
           <div style={{ fontSize: '0.7rem', color: c.muted, marginBottom: 4 }}>{t('event.schedule')}</div>
           <div style={{ fontSize: '0.82rem', color: c.muted }}>
             {event.schedule?.length > 0
-              ? event.schedule[0].time + ' — ' + event.schedule[0].description
+              ? [event.schedule[0].date && new Date(event.schedule[0].date + 'T00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }), event.schedule[0].time].filter(Boolean).join(' · ')
               : t('event.details')}
           </div>
         </div>
@@ -358,7 +358,20 @@ export default function EventDetail() {
           <div style={{
             fontSize: '0.88rem', color: c.text,
             lineHeight: 1.6, whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
           }}>{event.description}</div>
+        </div>
+      )}
+
+      {/* Additional Info */}
+      {event.additional_info && (
+        <div style={sectionCard}>
+          <div style={{ fontSize: '0.7rem', color: c.muted, marginBottom: 8 }}>{t('event.additionalInfo')}</div>
+          <div style={{
+            fontSize: '0.88rem', color: c.text,
+            lineHeight: 1.6, whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+          }}>{event.additional_info}</div>
         </div>
       )}
 
@@ -408,34 +421,29 @@ export default function EventDetail() {
           <div style={sectionLabel}>{t('event.schedule')}</div>
           {event.schedule.map((item, idx) => (
             <div key={idx} style={{
-              display: 'flex', gap: 14, marginBottom: 12,
-              position: 'relative',
+              padding: '12px 14px', background: c.bg,
+              borderRadius: 10, marginBottom: idx < event.schedule.length - 1 ? 10 : 0,
+              border: `1px solid ${c.border}`,
             }}>
-              {/* Timeline line */}
-              {idx < event.schedule.length - 1 && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: item.description ? 8 : 0 }}>
                 <div style={{
-                  position: 'absolute', left: 23, top: 24, bottom: -12,
-                  width: 2, background: c.border,
+                  width: 8, height: 8, borderRadius: '50%',
+                  background: typeColor, flexShrink: 0,
                 }} />
-              )}
-              {/* Time dot */}
-              <div style={{
-                width: 48, flexShrink: 0, textAlign: 'center',
-              }}>
-                <div style={{
-                  width: 10, height: 10, borderRadius: '50%',
-                  background: typeColor, margin: '4px auto 4px',
-                }} />
-                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: typeColor }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: typeColor }}>
+                  {item.date && new Date(item.date + 'T00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+                  {item.date && item.time && ' · '}
                   {item.time}
                 </div>
               </div>
-              <div style={{
-                fontSize: '0.85rem', color: c.text, lineHeight: 1.5,
-                paddingTop: 1,
-              }}>
-                {item.description}
-              </div>
+              {item.description && (
+                <div style={{
+                  fontSize: '0.85rem', color: c.text, lineHeight: 1.6,
+                  whiteSpace: 'pre-wrap', paddingLeft: 16,
+                }}>
+                  {item.description}
+                </div>
+              )}
             </div>
           ))}
         </div>

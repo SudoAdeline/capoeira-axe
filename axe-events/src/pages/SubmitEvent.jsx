@@ -23,9 +23,13 @@ export default function SubmitEvent() {
   const { id: editId } = useParams();
   const isEditing = !!editId;
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [fetchingEvent, setFetchingEvent] = useState(!!editId);
+  const [posterFile, setPosterFile] = useState(null);
+  const [posterPreview, setPosterPreview] = useState('');
+  const [existingPoster, setExistingPoster] = useState('');
 
   // Core form
   const [form, setForm] = useState({
@@ -45,6 +49,7 @@ export default function SubmitEvent() {
     price_info: '',
     registration_deadline: '',
     registration_url: '',
+    additional_info: '',
   });
 
   // Multi-select event types
@@ -91,6 +96,8 @@ export default function SubmitEvent() {
           registration_deadline: formatDate(data.registration_deadline),
           registration_url: data.registration_url || '',
         });
+        if (data.additional_info) setForm(f => ({ ...f, additional_info: data.additional_info }));
+        if (data.image_url) setExistingPoster(data.image_url);
         setSelectedTypes((data.event_type || '').split(',').filter(Boolean));
         if (data.day_locations?.length > 0) {
           setIsMultiDay(true);
@@ -154,13 +161,81 @@ export default function SubmitEvent() {
 
   // Schedule helpers
   const addScheduleItem = () => {
-    setSchedule(prev => [...prev, { time: '', description: '' }]);
+    setSchedule(prev => [...prev, { date: '', time: '', description: '' }]);
   };
   const updateScheduleItem = (idx, field, value) => {
     setSchedule(prev => prev.map((s, i) => i === idx ? { ...s, [field]: value } : s));
   };
   const removeScheduleItem = (idx) => {
     setSchedule(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const handlePosterChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Image must be under 5MB');
+      return;
+    }
+    setPosterFile(file);
+    setPosterPreview(URL.createObjectURL(file));
+  };
+
+  const uploadPoster = async () => {
+    if (!posterFile) return existingPoster || null;
+    const ext = posterFile.name.split('.').pop();
+    const path = `posters/${user.id}/${Date.now()}.${ext}`;
+    const { error: upErr } = await supabase.storage
+      .from('event-posters')
+      .upload(path, posterFile, { cacheControl: '3600', upsert: false });
+    if (upErr) throw upErr;
+    const { data: { publicUrl } } = supabase.storage
+      .from('event-posters')
+      .getPublicUrl(path);
+    return publicUrl;
+  };
+
+  const buildPayload = () => ({
+    ...form,
+    event_type: selectedTypes.join(','),
+    start_date: form.start_date ? new Date(form.start_date).toISOString() : null,
+    end_date: form.end_date ? new Date(form.end_date).toISOString() : null,
+    registration_deadline: form.registration_deadline
+      ? new Date(form.registration_deadline).toISOString() : null,
+    registration_url: form.registration_url || null,
+    contact_phone: form.contact_phone || null,
+    day_locations: isMultiDay && dayLocations.some(d => d.venue || d.date)
+      ? dayLocations : null,
+    guests: guests.length > 0 && guests.some(g => g.name)
+      ? guests.filter(g => g.name) : null,
+    schedule: schedule.length > 0 && schedule.some(s => s.time || s.description)
+      ? schedule.filter(s => s.time || s.description) : null,
+    location_name: form.location_name || null,
+    location_address: form.location_address || null,
+    price_info: form.price_info || null,
+    additional_info: form.additional_info || null,
+  });
+
+  const handleSaveDraft = async () => {
+    setSaving(true);
+    setError('');
+    try {
+      const imageUrl = await uploadPoster();
+      const payload = { ...buildPayload(), image_url: imageUrl };
+      let err;
+      if (isEditing) {
+        ({ error: err } = await supabase.from('events').update({ ...payload, status: 'draft' }).eq('id', editId));
+      } else {
+        payload.submitted_by = user.id;
+        payload.status = 'draft';
+        ({ error: err } = await supabase.from('events').insert(payload));
+      }
+      if (err) setError(err.message);
+      else navigate('/my-events');
+    } catch (err) {
+      setError(err.message);
+    }
+    setSaving(false);
   };
 
   const handleSubmit = async (e) => {
@@ -172,41 +247,23 @@ export default function SubmitEvent() {
     setLoading(true);
     setError('');
 
-    const payload = {
-      ...form,
-      event_type: selectedTypes.join(','),
-      start_date: new Date(form.start_date).toISOString(),
-      end_date: form.end_date ? new Date(form.end_date).toISOString() : null,
-      registration_deadline: form.registration_deadline
-        ? new Date(form.registration_deadline).toISOString() : null,
-      registration_url: form.registration_url || null,
-      contact_phone: form.contact_phone || null,
-      day_locations: isMultiDay && dayLocations.some(d => d.venue || d.date)
-        ? dayLocations : null,
-      guests: guests.length > 0 && guests.some(g => g.name)
-        ? guests.filter(g => g.name) : null,
-      schedule: schedule.length > 0 && schedule.some(s => s.time || s.description)
-        ? schedule.filter(s => s.time || s.description) : null,
-    };
+    try {
+      const imageUrl = await uploadPoster();
+      const payload = { ...buildPayload(), image_url: imageUrl };
 
-    // Clean empty strings
-    if (!payload.location_name) payload.location_name = null;
-    if (!payload.location_address) payload.location_address = null;
-    if (!payload.price_info) payload.price_info = null;
+      let err;
+      if (isEditing) {
+        ({ error: err } = await supabase.from('events').update(payload).eq('id', editId));
+      } else {
+        payload.submitted_by = user.id;
+        payload.status = isApprovedOrganizer ? 'approved' : 'pending';
+        ({ error: err } = await supabase.from('events').insert(payload));
+      }
 
-    let err;
-    if (isEditing) {
-      ({ error: err } = await supabase.from('events').update(payload).eq('id', editId));
-    } else {
-      payload.submitted_by = user.id;
-      payload.status = isApprovedOrganizer ? 'approved' : 'pending';
-      ({ error: err } = await supabase.from('events').insert(payload));
-    }
-
-    if (err) {
+      if (err) setError(err.message);
+      else setSuccess(true);
+    } catch (err) {
       setError(err.message);
-    } else {
-      setSuccess(true);
     }
     setLoading(false);
   };
@@ -300,9 +357,61 @@ export default function SubmitEvent() {
           <label style={labelStyle}>{t('submit.description')}</label>
           <textarea
             value={form.description} onChange={set('description')}
+            rows={6}
+            style={{ ...inputStyle, resize: 'vertical', minHeight: 120 }}
+          />
+        </div>
+
+        {/* Additional Info */}
+        <div style={fieldStyle}>
+          <label style={labelStyle}>{t('submit.additionalInfo')}</label>
+          <textarea
+            value={form.additional_info} onChange={set('additional_info')}
             rows={4}
             style={{ ...inputStyle, resize: 'vertical' }}
           />
+        </div>
+
+        {/* Event Poster Upload */}
+        <div style={fieldStyle}>
+          <label style={labelStyle}>{t('submit.posterUpload')}</label>
+          <label style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            gap: 8, padding: '16px', borderRadius: 10,
+            border: `2px dashed ${c.border}`, background: c.bg,
+            cursor: 'pointer', fontSize: '0.85rem', color: c.muted,
+            transition: 'border-color 0.2s',
+          }}>
+            <span>&#128247; {t('submit.choosePoster')}</span>
+            <input
+              type="file" accept="image/*"
+              onChange={handlePosterChange}
+              style={{ display: 'none' }}
+            />
+          </label>
+          {(posterPreview || existingPoster) && (
+            <div style={{ marginTop: 10, position: 'relative' }}>
+              <img
+                src={posterPreview || existingPoster}
+                alt="Poster preview"
+                style={{
+                  width: '100%', maxHeight: 300, objectFit: 'contain',
+                  borderRadius: 10, border: `1px solid ${c.border}`,
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => { setPosterFile(null); setPosterPreview(''); setExistingPoster(''); }}
+                style={{
+                  position: 'absolute', top: 8, right: 8,
+                  width: 28, height: 28, borderRadius: '50%',
+                  background: 'rgba(0,0,0,0.5)', border: 'none',
+                  color: '#fff', fontSize: '1rem', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}
+              >&times;</button>
+            </div>
+          )}
         </div>
 
         {/* Event Type — multi-select checkboxes */}
@@ -535,28 +644,42 @@ export default function SubmitEvent() {
           <div style={sectionTitle}>{t('submit.schedule')}</div>
           {schedule.map((item, idx) => (
             <div key={idx} style={{
-              display: 'grid', gridTemplateColumns: '100px 1fr auto', gap: 8,
-              marginBottom: 8, alignItems: 'end',
+              padding: 12, background: c.bg, borderRadius: 10,
+              marginBottom: 10, border: `1px solid ${c.border}`,
             }}>
-              <div>
-                <label style={{ ...labelStyle, fontSize: '0.72rem' }}>{t('submit.scheduleTime')}</label>
-                <input
-                  type="text" value={item.time}
-                  onChange={(e) => updateScheduleItem(idx, 'time', e.target.value)}
-                  style={inputStyle} placeholder="10:00"
-                />
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <div style={{ display: 'flex', gap: 8, flex: 1 }}>
+                  <div style={{ flex: 1 }}>
+                    <label style={{ ...labelStyle, fontSize: '0.72rem' }}>{t('submit.dayDate')}</label>
+                    <input
+                      type="date" value={item.date || ''}
+                      onChange={(e) => updateScheduleItem(idx, 'date', e.target.value)}
+                      style={inputStyle}
+                    />
+                  </div>
+                  <div style={{ width: 100 }}>
+                    <label style={{ ...labelStyle, fontSize: '0.72rem' }}>{t('submit.scheduleTime')}</label>
+                    <input
+                      type="text" value={item.time}
+                      onChange={(e) => updateScheduleItem(idx, 'time', e.target.value)}
+                      style={inputStyle} placeholder="10:00"
+                    />
+                  </div>
+                </div>
+                <button type="button" onClick={() => removeScheduleItem(idx)} style={{ ...removeBtn, marginLeft: 8, alignSelf: 'flex-end', marginBottom: 2 }}>
+                  &times;
+                </button>
               </div>
               <div>
                 <label style={{ ...labelStyle, fontSize: '0.72rem' }}>{t('submit.scheduleDesc')}</label>
-                <input
-                  type="text" value={item.description}
+                <textarea
+                  value={item.description}
                   onChange={(e) => updateScheduleItem(idx, 'description', e.target.value)}
-                  style={inputStyle}
+                  rows={4}
+                  style={{ ...inputStyle, resize: 'vertical' }}
+                  placeholder={t('notify.messagePlaceholder')}
                 />
               </div>
-              <button type="button" onClick={() => removeScheduleItem(idx)} style={{ ...removeBtn, marginBottom: 2 }}>
-                &times;
-              </button>
             </div>
           ))}
           <button type="button" onClick={addScheduleItem} style={smallBtn}>
@@ -572,20 +695,36 @@ export default function SubmitEvent() {
           }}>{error}</div>
         )}
 
-        <button
-          type="submit" disabled={loading}
-          style={{
-            width: '100%', padding: '16px',
-            background: `linear-gradient(135deg, ${c.accent}, ${c.gold})`,
-            border: 'none', borderRadius: 12,
-            color: '#fff', fontWeight: 700, fontSize: '1rem',
-            cursor: loading ? 'wait' : 'pointer',
-            opacity: loading ? 0.7 : 1,
-            boxShadow: `0 4px 20px rgba(232,101,43,0.2)`,
-          }}
-        >
-          {loading ? t('common.loading') : isEditing ? t('submit.saveBtn') : t('submit.submitBtn')}
-        </button>
+        <div style={{ display: 'flex', gap: 12 }}>
+          <button
+            type="button" disabled={saving || loading}
+            onClick={handleSaveDraft}
+            style={{
+              flex: 1, padding: '16px',
+              background: c.card, border: `2px solid ${c.border}`,
+              borderRadius: 12, color: c.muted,
+              fontWeight: 700, fontSize: '0.9rem',
+              cursor: saving ? 'wait' : 'pointer',
+              opacity: saving ? 0.7 : 1,
+            }}
+          >
+            {saving ? t('common.loading') : t('submit.saveDraft')}
+          </button>
+          <button
+            type="submit" disabled={loading || saving}
+            style={{
+              flex: 2, padding: '16px',
+              background: `linear-gradient(135deg, ${c.accent}, ${c.gold})`,
+              border: 'none', borderRadius: 12,
+              color: '#fff', fontWeight: 700, fontSize: '1rem',
+              cursor: loading ? 'wait' : 'pointer',
+              opacity: loading ? 0.7 : 1,
+              boxShadow: `0 4px 20px rgba(232,101,43,0.2)`,
+            }}
+          >
+            {loading ? t('common.loading') : isEditing ? t('submit.saveBtn') : t('submit.submitBtn')}
+          </button>
+        </div>
       </form>
     </div>
   );

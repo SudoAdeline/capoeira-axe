@@ -76,7 +76,8 @@
     "regOpen": "Register",
     "dayLocations": "Locations",
     "whatsapp": "WhatsApp",
-    "phone": "Phone"
+    "phone": "Phone",
+    "additionalInfo": "Additional Info"
   },
   "submit": {
     "title": "Submit an Event",
@@ -123,7 +124,11 @@
     "addSchedule": "Add to schedule",
     "scheduleTime": "Time",
     "scheduleDesc": "Description",
-    "removeSchedule": "Remove"
+    "removeSchedule": "Remove",
+    "additionalInfo": "Additional Info (optional)",
+    "posterUpload": "Event Poster (optional)",
+    "choosePoster": "Choose poster image",
+    "saveDraft": "Save Draft"
   },
   "myEvents": {
     "title": "My Events",
@@ -132,6 +137,7 @@
     "noRsvps": "You haven't RSVP'd to any events yet.",
     "noSubmissions": "You haven't submitted any events yet.",
     "status": "Status",
+    "draft": "Draft",
     "pending": "Pending Review",
     "approved": "Approved",
     "rejected": "Rejected",

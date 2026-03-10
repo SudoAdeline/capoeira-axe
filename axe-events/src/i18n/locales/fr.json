@@ -76,7 +76,8 @@
     "regOpen": "S'inscrire",
     "dayLocations": "Lieux",
     "whatsapp": "WhatsApp",
-    "phone": "Téléphone"
+    "phone": "Téléphone",
+    "additionalInfo": "Infos supplémentaires"
   },
   "submit": {
     "title": "Soumettre un Événement",
@@ -123,7 +124,11 @@
     "addSchedule": "Ajouter au programme",
     "scheduleTime": "Heure",
     "scheduleDesc": "Description",
-    "removeSchedule": "Supprimer"
+    "removeSchedule": "Supprimer",
+    "additionalInfo": "Infos supplémentaires (optionnel)",
+    "posterUpload": "Affiche de l'événement (optionnel)",
+    "choosePoster": "Choisir une image d'affiche",
+    "saveDraft": "Enregistrer le brouillon"
   },
   "myEvents": {
     "title": "Mes Événements",
@@ -132,6 +137,7 @@
     "noRsvps": "Vous n'avez encore participé à aucun événement.",
     "noSubmissions": "Vous n'avez encore soumis aucun événement.",
     "status": "Statut",
+    "draft": "Brouillon",
     "pending": "En attente",
     "approved": "Approuvé",
     "rejected": "Rejeté",
