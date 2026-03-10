@@ -36,7 +36,7 @@ export default function Layout({ children }) {
 
   const navLinks = [
     { to: '/', label: t('nav.home'), show: true },
-    { to: '/submit', label: t('nav.submit'), show: !!user },
+    { to: '/submit', label: t('nav.submit'), show: !!user && (isApprovedOrganizer || isAdmin) },
     { to: '/my-events', label: t('nav.myEvents'), show: !!user },
     { to: '/admin', label: t('nav.admin'), show: isAdmin },
   ];
@@ -218,27 +218,18 @@ export default function Layout({ children }) {
                         }}>{l.label}</Link>
                       ))}
                     </div>
-                    {/* Organizer status */}
-                    {profile?.organizer_status === 'approved' ? (
+                    {/* Organizer status badge */}
+                    {profile?.organizer_status === 'approved' && (
                       <div style={{
                         padding: '6px 12px', fontSize: '0.75rem',
                         color: '#0DAA8A', fontWeight: 600,
                       }}>{t('profile.organizerApproved')}</div>
-                    ) : profile?.organizer_status === 'pending' ? (
+                    )}
+                    {profile?.organizer_status === 'pending' && (
                       <div style={{
                         padding: '6px 12px', fontSize: '0.75rem',
                         color: c.gold, fontWeight: 500,
                       }}>{t('profile.organizerPending')}</div>
-                    ) : (
-                      <button
-                        onClick={(e) => { e.stopPropagation(); requestOrganizer(); }}
-                        style={{
-                          width: '100%', padding: '8px 12px', borderRadius: 6,
-                          background: 'none', border: 'none', textAlign: 'left',
-                          color: c.gold, fontSize: '0.82rem', cursor: 'pointer',
-                          fontWeight: 500,
-                        }}
-                      >{t('profile.requestOrganizer')}</button>
                     )}
                     <button
                       onClick={signOut}

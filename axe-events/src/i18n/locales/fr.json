@@ -30,7 +30,9 @@
     "google": "Google",
     "forgotPassword": "Mot de passe oublié ?",
     "resetSent": "Email de réinitialisation envoyé !",
-    "error": "Une erreur est survenue. Veuillez réessayer."
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "iAmOrganizer": "Je suis organisateur d'événements",
+    "organizerTip": "Le statut d'organisateur vous permet de soumettre des événements de capoeira. Un admin examinera et approuvera votre demande."
   },
   "home": {
     "featured": "Événements en Vedette",
@@ -97,6 +99,7 @@
     "submitBtn": "Soumettre pour validation",
     "success": "Événement soumis ! Il apparaîtra après validation par un admin.",
     "loginRequired": "Veuillez vous connecter pour soumettre un événement.",
+    "organizerRequired": "Seuls les organisateurs approuvés peuvent soumettre des événements.",
     "preview": "Aperçu",
     "multiDay": "Cet événement a plusieurs lieux",
     "addDay": "Ajouter un jour",

@@ -20,6 +20,8 @@ export default function LoginModal({ onClose }) {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [capoeiraGroup, setCapoeiraGroup] = useState('');
+  const [isOrganizer, setIsOrganizer] = useState(false);
+  const [showOrgTip, setShowOrgTip] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
@@ -33,7 +35,7 @@ export default function LoginModal({ onClose }) {
         await resetPassword(email);
         setResetSent(true);
       } else if (mode === 'signup') {
-        await signUp(email, password, name, capoeiraGroup);
+        await signUp(email, password, name, capoeiraGroup, isOrganizer);
         onClose();
       } else {
         await signIn(email, password);
@@ -126,6 +128,38 @@ export default function LoginModal({ onClose }) {
                     style={inputStyle}
                   />
                 </div>
+                <div style={{
+                  marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8,
+                }}>
+                  <input
+                    type="checkbox" checked={isOrganizer}
+                    onChange={(e) => setIsOrganizer(e.target.checked)}
+                    style={{ width: 18, height: 18, accentColor: c.accent }}
+                  />
+                  <label style={{ fontSize: '0.85rem', color: c.text }}>
+                    {t('auth.iAmOrganizer')}
+                  </label>
+                  <span
+                    onClick={() => setShowOrgTip(!showOrgTip)}
+                    style={{
+                      width: 18, height: 18, borderRadius: '50%',
+                      background: c.bg, border: `1px solid ${c.border}`,
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '0.7rem', color: c.muted, cursor: 'pointer',
+                      fontWeight: 700, flexShrink: 0,
+                    }}
+                  >?</span>
+                </div>
+                {showOrgTip && (
+                  <div style={{
+                    marginBottom: 14, padding: '10px 14px',
+                    background: `${c.gold}08`, border: `1px solid ${c.gold}22`,
+                    borderRadius: 8, fontSize: '0.78rem', color: c.muted,
+                    lineHeight: 1.5,
+                  }}>
+                    {t('auth.organizerTip')}
+                  </div>
+                )}
               </>
             )}
 

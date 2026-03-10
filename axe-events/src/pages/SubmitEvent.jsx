@@ -18,7 +18,7 @@ const EVENT_TYPES = ['roda', 'workshop', 'batizado', 'festival', 'other'];
 
 export default function SubmitEvent() {
   const { t } = useTranslation();
-  const { user, isApprovedOrganizer } = useAuth();
+  const { user, isApprovedOrganizer, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -59,13 +59,13 @@ export default function SubmitEvent() {
   // Event schedule
   const [schedule, setSchedule] = useState([]);
 
-  if (!user) {
+  if (!user || (!isApprovedOrganizer && !isAdmin)) {
     return (
       <div style={{
         textAlign: 'center', padding: '60px 20px',
         color: c.muted, fontSize: '0.9rem',
       }}>
-        {t('submit.loginRequired')}
+        {!user ? t('submit.loginRequired') : t('submit.organizerRequired')}
       </div>
     );
   }

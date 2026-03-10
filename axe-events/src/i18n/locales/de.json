@@ -30,7 +30,9 @@
     "google": "Google",
     "forgotPassword": "Passwort vergessen?",
     "resetSent": "E-Mail zum Zurücksetzen gesendet!",
-    "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+    "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "iAmOrganizer": "Ich bin Veranstalter",
+    "organizerTip": "Der Organisator-Status erlaubt dir, Capoeira-Events einzureichen. Ein Admin wird deine Anfrage prüfen und genehmigen."
   },
   "home": {
     "featured": "Empfohlene Events",
@@ -97,6 +99,7 @@
     "submitBtn": "Zur Prüfung einreichen",
     "success": "Event eingereicht! Es erscheint nach Admin-Freigabe.",
     "loginRequired": "Bitte melde dich an, um ein Event einzureichen.",
+    "organizerRequired": "Nur genehmigte Organisatoren können Events einreichen.",
     "preview": "Vorschau",
     "multiDay": "Dieses Event hat mehrere Veranstaltungsorte",
     "addDay": "Weiteren Tag hinzufügen",

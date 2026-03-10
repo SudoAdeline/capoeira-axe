@@ -30,7 +30,9 @@
     "google": "Google",
     "forgotPassword": "Esqueceu a senha?",
     "resetSent": "Email de recuperação enviado!",
-    "error": "Algo deu errado. Tente novamente."
+    "error": "Algo deu errado. Tente novamente.",
+    "iAmOrganizer": "Sou organizador de eventos",
+    "organizerTip": "O status de organizador permite que você envie eventos de capoeira. Um admin revisará e aprovará sua solicitação."
   },
   "home": {
     "featured": "Eventos em Destaque",
@@ -97,6 +99,7 @@
     "submitBtn": "Enviar para Revisão",
     "success": "Evento enviado! Aparecerá após aprovação do admin.",
     "loginRequired": "Faça login para enviar um evento.",
+    "organizerRequired": "Apenas organizadores aprovados podem enviar eventos.",
     "preview": "Pré-visualizar",
     "multiDay": "Este evento tem vários locais",
     "addDay": "Adicionar outro dia",

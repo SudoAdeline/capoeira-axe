@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email, password, name, capoeiraGroup) => {
+  const signUp = async (email, password, name, capoeiraGroup, isOrganizer) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
     if (data.user) {
@@ -46,6 +46,7 @@ export function AuthProvider({ children }) {
         name,
         role: 'user',
         capoeira_group: capoeiraGroup || null,
+        organizer_status: isOrganizer ? 'pending' : null,
       });
     }
     return data;

@@ -30,7 +30,9 @@
     "google": "Google",
     "forgotPassword": "Forgot password?",
     "resetSent": "Password reset email sent!",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "iAmOrganizer": "I am an event organizer",
+    "organizerTip": "Organizer status lets you submit capoeira events to the calendar. An admin will review and approve your request."
   },
   "home": {
     "featured": "Featured Events",
@@ -97,6 +99,7 @@
     "submitBtn": "Submit for Review",
     "success": "Event submitted! It will appear after admin approval.",
     "loginRequired": "Please log in to submit an event.",
+    "organizerRequired": "Only approved organizers can submit events.",
     "preview": "Preview",
     "multiDay": "This event has multiple locations",
     "addDay": "Add another day",
