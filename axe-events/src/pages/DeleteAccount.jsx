@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
@@ -15,6 +16,7 @@ const c = {
 
 export default function DeleteAccount() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const [confirmed, setConfirmed] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -38,6 +40,13 @@ export default function DeleteAccount() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (done) {
+      const timer = setTimeout(() => navigate('/'), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [done, navigate]);
+
   if (done) {
     return (
       <div style={{
@@ -53,9 +62,19 @@ export default function DeleteAccount() {
         <p style={{ color: c.text, fontSize: '1rem', marginBottom: 8 }}>
           {t('deleteAccount.success')}
         </p>
-        <p style={{ color: c.muted, fontSize: '0.85rem' }}>
+        <p style={{ color: c.muted, fontSize: '0.85rem', marginBottom: 20 }}>
           {t('deleteAccount.successDetail')}
         </p>
+        <button
+          onClick={() => navigate('/')}
+          style={{
+            padding: '10px 24px',
+            background: `linear-gradient(135deg, ${c.accent}, ${c.gold})`,
+            border: 'none', borderRadius: 10,
+            color: '#fff', fontWeight: 600,
+            fontSize: '0.9rem', cursor: 'pointer',
+          }}
+        >{t('common.back')}</button>
       </div>
     );
   }
