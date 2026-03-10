@@ -92,8 +92,6 @@ export default function EventCard({ event }) {
           flexWrap: 'wrap',
         }}>
           <span>{startDate.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-          <span style={{ opacity: 0.3 }}>&middot;</span>
-          <span>{startDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}</span>
           {event.location_name && (
             <>
               <span style={{ opacity: 0.3 }}>&middot;</span>
