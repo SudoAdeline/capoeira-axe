@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
@@ -20,9 +20,12 @@ export default function SubmitEvent() {
   const { t } = useTranslation();
   const { user, isApprovedOrganizer, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const { id: editId } = useParams();
+  const isEditing = !!editId;
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [fetchingEvent, setFetchingEvent] = useState(!!editId);
 
   // Core form
   const [form, setForm] = useState({
@@ -59,6 +62,48 @@ export default function SubmitEvent() {
   // Event schedule
   const [schedule, setSchedule] = useState([]);
 
+  // Fetch event data when editing
+  useEffect(() => {
+    if (!editId || !user) return;
+    const fetchEvent = async () => {
+      const { data } = await supabase
+        .from('events')
+        .select('*')
+        .eq('id', editId)
+        .single();
+      if (data && (data.submitted_by === user.id || isAdmin)) {
+        const formatDate = (d) => d ? new Date(d).toISOString().split('T')[0] : '';
+        setForm({
+          title: data.title || '',
+          description: data.description || '',
+          start_date: formatDate(data.start_date),
+          end_date: formatDate(data.end_date),
+          location_name: data.location_name || '',
+          location_address: data.location_address || '',
+          city: data.city || '',
+          country: data.country || '',
+          organizer_name: data.organizer_name || '',
+          contact_email: data.contact_email || '',
+          contact_url: data.contact_url || '',
+          contact_phone: data.contact_phone || '',
+          is_free: data.is_free ?? true,
+          price_info: data.price_info || '',
+          registration_deadline: formatDate(data.registration_deadline),
+          registration_url: data.registration_url || '',
+        });
+        setSelectedTypes((data.event_type || '').split(',').filter(Boolean));
+        if (data.day_locations?.length > 0) {
+          setIsMultiDay(true);
+          setDayLocations(data.day_locations);
+        }
+        if (data.guests?.length > 0) setGuests(data.guests);
+        if (data.schedule?.length > 0) setSchedule(data.schedule);
+      }
+      setFetchingEvent(false);
+    };
+    fetchEvent();
+  }, [editId, user]);
+
   if (!user || (!isApprovedOrganizer && !isAdmin)) {
     return (
       <div style={{
@@ -68,6 +113,10 @@ export default function SubmitEvent() {
         {!user ? t('submit.loginRequired') : t('submit.organizerRequired')}
       </div>
     );
+  }
+
+  if (fetchingEvent) {
+    return <div style={{ textAlign: 'center', padding: 60, color: c.muted }}>{t('common.loading')}</div>;
   }
 
   const set = (key) => (e) => {
@@ -132,8 +181,6 @@ export default function SubmitEvent() {
         ? new Date(form.registration_deadline).toISOString() : null,
       registration_url: form.registration_url || null,
       contact_phone: form.contact_phone || null,
-      submitted_by: user.id,
-      status: isApprovedOrganizer ? 'approved' : 'pending',
       day_locations: isMultiDay && dayLocations.some(d => d.venue || d.date)
         ? dayLocations : null,
       guests: guests.length > 0 && guests.some(g => g.name)
@@ -147,7 +194,14 @@ export default function SubmitEvent() {
     if (!payload.location_address) payload.location_address = null;
     if (!payload.price_info) payload.price_info = null;
 
-    const { error: err } = await supabase.from('events').insert(payload);
+    let err;
+    if (isEditing) {
+      ({ error: err } = await supabase.from('events').update(payload).eq('id', editId));
+    } else {
+      payload.submitted_by = user.id;
+      payload.status = isApprovedOrganizer ? 'approved' : 'pending';
+      ({ error: err } = await supabase.from('events').insert(payload));
+    }
 
     if (err) {
       setError(err.message);
@@ -229,7 +283,7 @@ export default function SubmitEvent() {
         fontFamily: "'Bebas Neue', sans-serif",
         fontSize: '1.8rem', letterSpacing: '0.04em',
         color: c.text, marginBottom: 4,
-      }}>{t('submit.title')}</h1>
+      }}>{isEditing ? t('submit.editTitle') : t('submit.title')}</h1>
       <p style={{
         fontSize: '0.85rem', color: c.muted, marginBottom: 28,
       }}>{t('submit.subtitle')}</p>
@@ -530,7 +584,7 @@ export default function SubmitEvent() {
             boxShadow: `0 4px 20px rgba(232,101,43,0.2)`,
           }}
         >
-          {loading ? t('common.loading') : t('submit.submitBtn')}
+          {loading ? t('common.loading') : isEditing ? t('submit.saveBtn') : t('submit.submitBtn')}
         </button>
       </form>
     </div>

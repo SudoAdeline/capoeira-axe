@@ -16,6 +16,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/submit" element={<SubmitEvent />} />
+        <Route path="/edit/:id" element={<SubmitEvent />} />
         <Route path="/my-events" element={<MyEvents />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/privacy" element={<Privacy />} />

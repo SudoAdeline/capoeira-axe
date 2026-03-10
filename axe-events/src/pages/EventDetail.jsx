@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
@@ -218,11 +218,22 @@ export default function EventDetail() {
         )}
       </div>
 
-      <h1 style={{
-        fontFamily: "'Bebas Neue', sans-serif",
-        fontSize: '1.8rem', letterSpacing: '0.03em',
-        color: c.text, margin: '8px 0 20px',
-      }}>{event.title}</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+        <h1 style={{
+          fontFamily: "'Bebas Neue', sans-serif",
+          fontSize: '1.8rem', letterSpacing: '0.03em',
+          color: c.text, margin: '8px 0 20px',
+        }}>{event.title}</h1>
+        {user && event.submitted_by === user.id && (
+          <Link to={`/edit/${event.id}`} style={{
+            fontSize: '0.75rem', fontWeight: 600,
+            color: c.accent, textDecoration: 'none',
+            padding: '6px 14px', borderRadius: 8,
+            background: `${c.accent}0A`, border: `1px solid ${c.accent}22`,
+            flexShrink: 0, marginTop: 12,
+          }}>{t('admin.edit')}</Link>
+        )}
+      </div>
 
       <div style={{
         display: 'grid', gridTemplateColumns: '1fr 1fr',

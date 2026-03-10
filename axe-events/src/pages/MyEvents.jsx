@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
@@ -141,11 +142,21 @@ export default function MyEvents() {
                       letterSpacing: '0.05em',
                     }}>{t(`myEvents.${ev.status}`)}</span>
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: c.muted }}>
-                    {new Date(ev.start_date).toLocaleDateString(undefined, {
-                      weekday: 'short', month: 'short', day: 'numeric',
-                    })}
-                    {ev.city && ` — ${ev.city}`}
+                  <div style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  }}>
+                    <div style={{ fontSize: '0.78rem', color: c.muted }}>
+                      {new Date(ev.start_date).toLocaleDateString(undefined, {
+                        weekday: 'short', month: 'short', day: 'numeric',
+                      })}
+                      {ev.city && ` — ${ev.city}`}
+                    </div>
+                    <Link to={`/edit/${ev.id}`} style={{
+                      fontSize: '0.75rem', fontWeight: 600,
+                      color: c.accent, textDecoration: 'none',
+                      padding: '4px 12px', borderRadius: 6,
+                      background: `${c.accent}0A`, border: `1px solid ${c.accent}22`,
+                    }}>{t('admin.edit')}</Link>
                   </div>
                 </div>
               );

@@ -80,6 +80,8 @@
   },
   "submit": {
     "title": "Soumettre un Événement",
+    "editTitle": "Modifier l'événement",
+    "saveBtn": "Enregistrer les modifications",
     "subtitle": "Partagez un événement de capoeira avec la communauté",
     "eventTitle": "Titre de l'événement",
     "description": "Description",
