@@ -14,7 +14,7 @@ const c = {
   gold: '#D4A843',
 };
 
-const EVENT_TYPES = ['roda', 'workshop', 'batizado', 'festival', 'other'];
+const EVENT_TYPES = ['roda', 'workshop', 'batizado', 'festival', 'jogos', 'other'];
 
 export default function SubmitEvent() {
   const { t } = useTranslation();

@@ -16,7 +16,7 @@ const c = {
   teal: '#0DAA8A',
 };
 
-const EVENT_TYPES = ['roda', 'workshop', 'batizado', 'festival', 'other'];
+const EVENT_TYPES = ['roda', 'workshop', 'batizado', 'festival', 'jogos', 'other'];
 
 function SplashIntro({ onEnter, userName }) {
   const [phase, setPhase] = useState(0);

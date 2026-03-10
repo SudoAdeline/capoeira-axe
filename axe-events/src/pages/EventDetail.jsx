@@ -19,6 +19,7 @@ const TYPE_COLORS = {
   workshop: '#0DAA8A',
   batizado: '#8B5FA8',
   festival: '#D4A843',
+  jogos: '#2B7DE8',
   other: '#8B7355',
 };
 
