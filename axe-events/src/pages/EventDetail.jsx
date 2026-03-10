@@ -223,9 +223,11 @@ export default function EventDetail() {
           background: c.card, border: `1px solid ${c.border}`,
           borderRadius: 12, padding: '14px 16px',
         }}>
-          <div style={{ fontSize: '0.7rem', color: c.muted, marginBottom: 4 }}>{t('event.time')}</div>
-          <div style={{ fontSize: '0.88rem', color: c.text, fontWeight: 500 }}>
-            {startDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
+          <div style={{ fontSize: '0.7rem', color: c.muted, marginBottom: 4 }}>{t('event.schedule')}</div>
+          <div style={{ fontSize: '0.82rem', color: c.muted }}>
+            {event.schedule?.length > 0
+              ? event.schedule[0].time + ' — ' + event.schedule[0].description
+              : t('event.details')}
           </div>
         </div>
 

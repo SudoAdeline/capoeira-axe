@@ -279,15 +279,15 @@ export default function SubmitEvent() {
           </div>
         </div>
 
-        {/* Dates */}
+        {/* Dates (date only — times go in the program/schedule) */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, ...fieldStyle }}>
           <div>
             <label style={labelStyle}>{t('submit.startDate')} *</label>
-            <input type="datetime-local" required value={form.start_date} onChange={set('start_date')} style={inputStyle} />
+            <input type="date" required value={form.start_date} onChange={set('start_date')} style={inputStyle} />
           </div>
           <div>
             <label style={labelStyle}>{t('submit.endDate')}</label>
-            <input type="datetime-local" value={form.end_date} onChange={set('end_date')} style={inputStyle} />
+            <input type="date" value={form.end_date} onChange={set('end_date')} style={inputStyle} />
           </div>
         </div>
 
