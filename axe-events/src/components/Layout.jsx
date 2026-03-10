@@ -231,6 +231,10 @@ export default function Layout({ children }) {
                         color: c.gold, fontWeight: 500,
                       }}>{t('profile.organizerPending')}</div>
                     )}
+                    <Link to="/delete-account" style={{
+                      display: 'block', padding: '8px 12px', borderRadius: 6,
+                      fontSize: '0.78rem', color: c.muted, textDecoration: 'none',
+                    }}>{t('deleteAccount.title')}</Link>
                     <button
                       onClick={signOut}
                       style={{
