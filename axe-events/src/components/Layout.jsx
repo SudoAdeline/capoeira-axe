@@ -109,17 +109,18 @@ export default function Layout({ children }) {
 
           {/* Desktop Nav */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            {/* Nav links — hidden on small screens */}
-            <div className="desktop-nav" style={{
-              display: 'flex', alignItems: 'center', gap: 4,
+            {/* Nav links */}
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 2,
             }}>
               {navLinks.filter(l => l.show).map(l => (
                 <Link key={l.to} to={l.to} style={{
-                  padding: '6px 12px', borderRadius: 8,
-                  fontSize: '0.85rem', fontWeight: 500,
+                  padding: '6px 10px', borderRadius: 8,
+                  fontSize: '0.78rem', fontWeight: 500,
                   color: location.pathname === l.to ? c.text : c.muted,
                   background: location.pathname === l.to ? `${c.accent}12` : 'none',
                   transition: 'all 0.2s',
+                  whiteSpace: 'nowrap',
                 }}>{l.label}</Link>
               ))}
             </div>
@@ -213,15 +214,6 @@ export default function Layout({ children }) {
                         </button>
                       )}
                     </div>
-                    {/* Mobile nav links */}
-                    <div className="mobile-nav-items">
-                      {navLinks.filter(l => l.show).map(l => (
-                        <Link key={l.to} to={l.to} style={{
-                          display: 'block', padding: '8px 12px', borderRadius: 6,
-                          fontSize: '0.85rem', color: c.text,
-                        }}>{l.label}</Link>
-                      ))}
-                    </div>
                     {/* Organizer status badge */}
                     {profile?.organizer_status === 'approved' && (
                       <div style={{
@@ -283,12 +275,6 @@ export default function Layout({ children }) {
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
 
       <style>{`
-        @media (max-width: 640px) {
-          .desktop-nav { display: none !important; }
-        }
-        @media (min-width: 641px) {
-          .mobile-nav-items { display: none !important; }
-        }
         @keyframes floatCircle {
           0%, 100% { transform: translateY(0px) scale(1); }
           50% { transform: translateY(-20px) scale(1.03); }
