@@ -89,17 +89,7 @@ export default function EventDetail() {
     }
   };
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: event.title,
-        text: `${event.title} — ${event.city || ''}`,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-    }
-  };
+  const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(`${event.title}${event.city ? ' — ' + event.city : ''}\n${window.location.href}`)}`;
 
   const sendReminder = async () => {
     if (!reminderMsg.trim() || rsvps.length === 0) return;
@@ -712,17 +702,19 @@ export default function EventDetail() {
             textDecoration: 'none',
           }}
         >{t('event.addToCalendar')}</a>
-        <button
-          onClick={handleShare}
+        <a
+          href={whatsappShareUrl}
+          target="_blank" rel="noopener noreferrer"
           style={{
             flex: 1, padding: '14px',
-            background: `${c.accent}0A`,
-            border: `1px solid ${c.accent}22`,
+            background: '#25D3660A',
+            border: '1px solid #25D36622',
             borderRadius: 12,
-            color: c.accent, fontWeight: 600,
+            color: '#25D366', fontWeight: 600,
             fontSize: '0.9rem', cursor: 'pointer',
+            textAlign: 'center', textDecoration: 'none',
           }}
-        >{t('event.share')}</button>
+        >{t('event.shareWhatsapp')}</a>
       </div>
     </div>
   );

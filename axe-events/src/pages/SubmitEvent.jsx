@@ -111,13 +111,13 @@ export default function SubmitEvent() {
     fetchEvent();
   }, [editId, user]);
 
-  if (!user || (!isApprovedOrganizer && !isAdmin)) {
+  if (!user) {
     return (
       <div style={{
         textAlign: 'center', padding: '60px 20px',
         color: c.muted, fontSize: '0.9rem',
       }}>
-        {!user ? t('submit.loginRequired') : t('submit.organizerRequired')}
+        {t('submit.loginRequired')}
       </div>
     );
   }

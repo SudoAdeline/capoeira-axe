@@ -37,7 +37,7 @@ export default function Layout({ children }) {
 
   const navLinks = [
     { to: '/', label: t('nav.home'), show: true },
-    { to: '/submit', label: t('nav.submit'), show: !!user && (isApprovedOrganizer || isAdmin) },
+    { to: '/submit', label: t('nav.submit'), show: !!user },
     { to: '/my-events', label: t('nav.myEvents'), show: !!user },
     { to: '/admin', label: t('nav.admin'), show: isAdmin },
   ];

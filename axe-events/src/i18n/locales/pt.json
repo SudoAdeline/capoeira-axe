@@ -78,7 +78,8 @@
     "dayLocations": "Locais",
     "whatsapp": "WhatsApp",
     "phone": "Telefone",
-    "additionalInfo": "Informações Adicionais"
+    "additionalInfo": "Informações Adicionais",
+    "shareWhatsapp": "Compartilhar no WhatsApp"
   },
   "submit": {
     "title": "Enviar um Evento",

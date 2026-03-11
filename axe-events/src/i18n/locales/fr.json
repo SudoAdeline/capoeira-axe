@@ -78,7 +78,8 @@
     "dayLocations": "Lieux",
     "whatsapp": "WhatsApp",
     "phone": "Téléphone",
-    "additionalInfo": "Infos supplémentaires"
+    "additionalInfo": "Infos supplémentaires",
+    "shareWhatsapp": "Partager sur WhatsApp"
   },
   "submit": {
     "title": "Soumettre un Événement",

@@ -78,7 +78,8 @@
     "dayLocations": "Veranstaltungsorte",
     "whatsapp": "WhatsApp",
     "phone": "Telefon",
-    "additionalInfo": "Zusätzliche Infos"
+    "additionalInfo": "Zusätzliche Infos",
+    "shareWhatsapp": "Auf WhatsApp teilen"
   },
   "submit": {
     "title": "Event einreichen",
