@@ -36,6 +36,7 @@ export default function EventDetail() {
   const [reminderMsg, setReminderMsg] = useState('');
   const [reminderSending, setReminderSending] = useState(false);
   const [reminderSent, setReminderSent] = useState(false);
+  const [claiming, setClaiming] = useState(false);
 
   useEffect(() => {
     fetchEvent();
@@ -235,6 +236,20 @@ export default function EventDetail() {
           }}>{t('admin.edit')}</Link>
         )}
       </div>
+
+      {/* Shared by community badge */}
+      {event.is_organizer === false && (
+        <div style={{
+          display: 'inline-block', marginBottom: 16,
+          padding: '6px 14px', borderRadius: 8,
+          background: `${c.gold}0C`, border: `1px solid ${c.gold}22`,
+          fontSize: '0.78rem', fontWeight: 600, color: c.gold,
+        }}>
+          {event.shared_by_name
+            ? t('event.sharedBy', { name: event.shared_by_name })
+            : t('event.communityShared')}
+        </div>
+      )}
 
       <div style={{
         display: 'grid', gridTemplateColumns: '1fr 1fr',
@@ -545,8 +560,8 @@ export default function EventDetail() {
         )}
       </div>
 
-      {/* Attendee list — visible only to event creator */}
-      {user && event.submitted_by === user.id && rsvps.length > 0 && (() => {
+      {/* Attendee list — visible only to event organizer (not community sharers) */}
+      {user && event.submitted_by === user.id && event.is_organizer !== false && rsvps.length > 0 && (() => {
         const going = rsvps.filter(r => r.status === 'going');
         const interested = rsvps.filter(r => r.status === 'interested');
         return (
@@ -621,8 +636,8 @@ export default function EventDetail() {
         );
       })()}
 
-      {/* Send Reminder — visible only to event creator */}
-      {user && event.submitted_by === user.id && rsvps.length > 0 && (
+      {/* Send Reminder — visible only to event organizer */}
+      {user && event.submitted_by === user.id && event.is_organizer !== false && rsvps.length > 0 && (
         <div style={sectionCard}>
           {!showReminder ? (
             <button
@@ -682,6 +697,36 @@ export default function EventDetail() {
             </div>
           )}
         </div>
+      )}
+
+      {/* Claim this event — for community-shared events */}
+      {event.is_organizer === false && user && event.submitted_by !== user.id && !event.claim_status && (
+        <button
+          onClick={async () => {
+            setClaiming(true);
+            await supabase.from('events').update({
+              claimed_by: user.id,
+              claim_status: 'pending',
+            }).eq('id', event.id);
+            setEvent(prev => ({ ...prev, claimed_by: user.id, claim_status: 'pending' }));
+            setClaiming(false);
+          }}
+          disabled={claiming}
+          style={{
+            width: '100%', padding: '14px', marginBottom: 16,
+            background: `${c.gold}0C`, border: `1.5px solid ${c.gold}33`,
+            borderRadius: 12, color: c.gold, fontWeight: 700,
+            fontSize: '0.9rem', cursor: claiming ? 'wait' : 'pointer',
+          }}
+        >{claiming ? t('common.loading') : t('event.claimEvent')}</button>
+      )}
+      {event.claim_status === 'pending' && user && event.claimed_by === user.id && (
+        <div style={{
+          width: '100%', padding: '12px', marginBottom: 16,
+          background: `${c.gold}0C`, border: `1px solid ${c.gold}22`,
+          borderRadius: 12, color: c.gold, fontWeight: 600,
+          fontSize: '0.82rem', textAlign: 'center',
+        }}>{t('event.claimPending')}</div>
       )}
 
       <div style={{ display: 'flex', gap: 10 }}>

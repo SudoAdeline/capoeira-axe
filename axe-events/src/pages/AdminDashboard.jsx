@@ -27,6 +27,7 @@ export default function AdminDashboard() {
   const [pendingEvents, setPendingEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
   const [orgRequests, setOrgRequests] = useState([]);
+  const [claimRequests, setClaimRequests] = useState([]);
   const [stats, setStats] = useState({ total: 0, rsvps: 0, thisMonth: 0 });
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -57,6 +58,13 @@ export default function AdminDashboard() {
       .eq('organizer_status', 'pending')
       .order('created_at', { ascending: false });
     setOrgRequests(orgReqs || []);
+
+    const { data: claims } = await supabase
+      .from('events')
+      .select('*, claimer:profiles!claimed_by(name, capoeira_group)')
+      .eq('claim_status', 'pending')
+      .order('created_at', { ascending: false });
+    setClaimRequests(claims || []);
 
     const { count: totalEvents } = await supabase
       .from('events')
@@ -90,6 +98,22 @@ export default function AdminDashboard() {
 
   const deleteEvent = async (eventId) => {
     await supabase.from('events').delete().eq('id', eventId);
+    fetchData();
+  };
+
+  const handleClaim = async (eventId, approve) => {
+    if (approve) {
+      const claim = claimRequests.find(c => c.id === eventId);
+      await supabase.from('events').update({
+        claim_status: 'approved',
+        submitted_by: claim.claimed_by,
+        is_organizer: true,
+        shared_by_name: null,
+        claimed_by: null,
+      }).eq('id', eventId);
+    } else {
+      await supabase.from('events').update({ claim_status: 'rejected' }).eq('id', eventId);
+    }
     fetchData();
   };
 
@@ -158,7 +182,7 @@ export default function AdminDashboard() {
           {t('admin.allEvents')}
         </button>
         <button onClick={() => setTab('organizers')} style={tabStyle(tab === 'organizers')}>
-          {t('admin.organizerRequests')} {orgRequests.length > 0 && `(${orgRequests.length})`}
+          {t('admin.organizerRequests')} {(orgRequests.length + claimRequests.length) > 0 && `(${orgRequests.length + claimRequests.length})`}
         </button>
         <button onClick={() => setTab('stats')} style={tabStyle(tab === 'stats')}>
           {t('admin.stats')}
@@ -274,41 +298,86 @@ export default function AdminDashboard() {
           </div>
         </div>
       ) : tab === 'organizers' ? (
-        orgRequests.length === 0 ? (
-          <div style={{
-            textAlign: 'center', padding: '40px 20px',
-            color: c.muted, background: c.card,
-            borderRadius: 14, border: `1px solid ${c.border}`,
-          }}>{t('admin.noOrgRequests')}</div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {orgRequests.map(p => (
-              <div key={p.id} style={{
-                background: c.card, border: `1px solid ${c.border}`,
-                borderRadius: 12, padding: '14px 16px',
-                display: 'flex', alignItems: 'center', gap: 12,
-                flexWrap: 'wrap',
-              }}>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600, color: c.text }}>
-                    {p.name || 'Unknown'}
-                  </div>
-                  {p.capoeira_group && (
-                    <div style={{ fontSize: '0.75rem', color: c.muted }}>{p.capoeira_group}</div>
-                  )}
-                </div>
-                <div style={{ display: 'flex', gap: 6 }}>
-                  <button onClick={() => updateOrganizerStatus(p.id, 'approved')} style={actionBtn('#0DAA8A')}>
-                    {t('admin.approveOrganizer')}
-                  </button>
-                  <button onClick={() => updateOrganizerStatus(p.id, 'rejected')} style={actionBtn('#E8652B')}>
-                    {t('admin.rejectOrganizer')}
-                  </button>
-                </div>
+        <div>
+          {/* Organizer Requests */}
+          {orgRequests.length > 0 && (
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: c.muted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
+                {t('admin.organizerRequests')}
               </div>
-            ))}
-          </div>
-        )
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {orgRequests.map(p => (
+                  <div key={p.id} style={{
+                    background: c.card, border: `1px solid ${c.border}`,
+                    borderRadius: 12, padding: '14px 16px',
+                    display: 'flex', alignItems: 'center', gap: 12,
+                    flexWrap: 'wrap',
+                  }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: '0.9rem', fontWeight: 600, color: c.text }}>
+                        {p.name || 'Unknown'}
+                      </div>
+                      {p.capoeira_group && (
+                        <div style={{ fontSize: '0.75rem', color: c.muted }}>{p.capoeira_group}</div>
+                      )}
+                    </div>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button onClick={() => updateOrganizerStatus(p.id, 'approved')} style={actionBtn('#0DAA8A')}>
+                        {t('admin.approveOrganizer')}
+                      </button>
+                      <button onClick={() => updateOrganizerStatus(p.id, 'rejected')} style={actionBtn('#E8652B')}>
+                        {t('admin.rejectOrganizer')}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Ownership Claims */}
+          {claimRequests.length > 0 && (
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: c.muted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
+                {t('admin.claimRequests')}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {claimRequests.map(ev => (
+                  <div key={ev.id} style={{
+                    background: c.card, border: `1px solid ${c.border}`,
+                    borderRadius: 12, padding: '14px 16px',
+                    display: 'flex', alignItems: 'center', gap: 12,
+                    flexWrap: 'wrap',
+                  }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: '0.9rem', fontWeight: 600, color: c.text }}>{ev.title}</div>
+                      <div style={{ fontSize: '0.75rem', color: c.muted }}>
+                        {t('event.claimEvent')}: <strong>{ev.claimer?.name || 'Unknown'}</strong>
+                        {ev.claimer?.capoeira_group && ` (${ev.claimer.capoeira_group})`}
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button onClick={() => handleClaim(ev.id, true)} style={actionBtn('#0DAA8A')}>
+                        {t('admin.approveClaim')}
+                      </button>
+                      <button onClick={() => handleClaim(ev.id, false)} style={actionBtn('#E8652B')}>
+                        {t('admin.rejectClaim')}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {orgRequests.length === 0 && claimRequests.length === 0 && (
+            <div style={{
+              textAlign: 'center', padding: '40px 20px',
+              color: c.muted, background: c.card,
+              borderRadius: 14, border: `1px solid ${c.border}`,
+            }}>{t('admin.noOrgRequests')}</div>
+          )}
+        </div>
       ) : (
         <div style={{
           display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',

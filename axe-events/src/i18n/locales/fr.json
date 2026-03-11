@@ -79,7 +79,12 @@
     "whatsapp": "WhatsApp",
     "phone": "Téléphone",
     "additionalInfo": "Infos supplémentaires",
-    "shareWhatsapp": "Partager sur WhatsApp"
+    "shareWhatsapp": "Partager sur WhatsApp",
+    "sharedBy": "Partagé par {{name}}",
+    "communityShared": "Partagé par la communauté",
+    "claimEvent": "Revendiquer cet événement",
+    "claimPending": "Revendication en attente",
+    "claimApproved": "Propriété transférée"
   },
   "submit": {
     "title": "Soumettre un Événement",
@@ -130,7 +135,10 @@
     "additionalInfo": "Infos supplémentaires (optionnel)",
     "posterUpload": "Affiche de l'événement (optionnel)",
     "choosePoster": "Choisir une image d'affiche",
-    "saveDraft": "Enregistrer le brouillon"
+    "saveDraft": "Enregistrer le brouillon",
+    "areYouOrganizer": "Êtes-vous l'organisateur de cet événement ?",
+    "organizerYes": "Oui, j'organise cet événement",
+    "organizerNo": "Non, je partage pour la communauté"
   },
   "myEvents": {
     "title": "Mes Événements",
@@ -164,7 +172,10 @@
     "organizerRequests": "Demandes organisateur",
     "approveOrganizer": "Approuver",
     "rejectOrganizer": "Refuser",
-    "noOrgRequests": "Aucune demande d'organisateur."
+    "noOrgRequests": "Aucune demande d'organisateur.",
+    "claimRequests": "Revendications de propriété",
+    "approveClaim": "Transférer la propriété",
+    "rejectClaim": "Rejeter la revendication"
   },
   "privacy": {
     "title": "Politique de Confidentialité",

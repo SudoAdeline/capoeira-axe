@@ -79,7 +79,12 @@
     "whatsapp": "WhatsApp",
     "phone": "Telefone",
     "additionalInfo": "Informações Adicionais",
-    "shareWhatsapp": "Compartilhar no WhatsApp"
+    "shareWhatsapp": "Compartilhar no WhatsApp",
+    "sharedBy": "Compartilhado por {{name}}",
+    "communityShared": "Compartilhado pela comunidade",
+    "claimEvent": "Reivindicar este evento",
+    "claimPending": "Reivindicação pendente",
+    "claimApproved": "Propriedade transferida"
   },
   "submit": {
     "title": "Enviar um Evento",
@@ -130,7 +135,10 @@
     "additionalInfo": "Informações Adicionais (opcional)",
     "posterUpload": "Cartaz do Evento (opcional)",
     "choosePoster": "Escolher imagem do cartaz",
-    "saveDraft": "Salvar Rascunho"
+    "saveDraft": "Salvar Rascunho",
+    "areYouOrganizer": "Você é o organizador deste evento?",
+    "organizerYes": "Sim, estou organizando",
+    "organizerNo": "Não, compartilhando pela comunidade"
   },
   "myEvents": {
     "title": "Meus Eventos",
@@ -164,7 +172,10 @@
     "organizerRequests": "Pedidos de Organizador",
     "approveOrganizer": "Aprovar",
     "rejectOrganizer": "Rejeitar",
-    "noOrgRequests": "Nenhum pedido de organizador."
+    "noOrgRequests": "Nenhum pedido de organizador.",
+    "claimRequests": "Reivindicações de Propriedade",
+    "approveClaim": "Transferir Propriedade",
+    "rejectClaim": "Rejeitar Reivindicação"
   },
   "privacy": {
     "title": "Política de Privacidade",

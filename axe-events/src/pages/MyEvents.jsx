@@ -135,13 +135,23 @@ export default function MyEvents() {
                     <h3 style={{
                       fontSize: '0.95rem', fontWeight: 600, color: c.text, margin: 0,
                     }}>{ev.title}</h3>
-                    <span style={{
-                      fontSize: '0.7rem', fontWeight: 700,
-                      color: statusColor, textTransform: 'uppercase',
-                      background: `${statusColor}0C`,
-                      padding: '3px 10px', borderRadius: 4,
-                      letterSpacing: '0.05em',
-                    }}>{t(`myEvents.${ev.status}`)}</span>
+                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                      {ev.is_organizer === false && (
+                        <span style={{
+                          fontSize: '0.65rem', fontWeight: 600,
+                          color: c.gold, background: `${c.gold}0C`,
+                          padding: '3px 8px', borderRadius: 4,
+                          fontStyle: 'italic',
+                        }}>{t('event.communityShared')}</span>
+                      )}
+                      <span style={{
+                        fontSize: '0.7rem', fontWeight: 700,
+                        color: statusColor, textTransform: 'uppercase',
+                        background: `${statusColor}0C`,
+                        padding: '3px 10px', borderRadius: 4,
+                        letterSpacing: '0.05em',
+                      }}>{t(`myEvents.${ev.status}`)}</span>
+                    </div>
                   </div>
                   <div style={{
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',

@@ -114,6 +114,14 @@ export default function EventCard({ event }) {
           </div>
         )}
 
+        {/* Community shared tag */}
+        {event.is_organizer === false && (
+          <div style={{
+            fontSize: '0.68rem', color: c.gold, marginTop: 4,
+            fontWeight: 600, fontStyle: 'italic',
+          }}>{t('event.communityShared')}</div>
+        )}
+
         {/* Featured guests preview */}
         {event.guests?.length > 0 && (
           <div style={{

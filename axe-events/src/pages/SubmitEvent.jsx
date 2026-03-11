@@ -18,7 +18,7 @@ const EVENT_TYPES = ['roda', 'workshop', 'batizado', 'festival', 'jogos', 'other
 
 export default function SubmitEvent() {
   const { t } = useTranslation();
-  const { user, isApprovedOrganizer, isAdmin } = useAuth();
+  const { user, profile, isApprovedOrganizer, isAdmin } = useAuth();
   const navigate = useNavigate();
   const { id: editId } = useParams();
   const isEditing = !!editId;
@@ -30,6 +30,7 @@ export default function SubmitEvent() {
   const [posterFile, setPosterFile] = useState(null);
   const [posterPreview, setPosterPreview] = useState('');
   const [existingPoster, setExistingPoster] = useState('');
+  const [isEventOrganizer, setIsEventOrganizer] = useState(true);
 
   // Core form
   const [form, setForm] = useState({
@@ -98,6 +99,7 @@ export default function SubmitEvent() {
         });
         if (data.additional_info) setForm(f => ({ ...f, additional_info: data.additional_info }));
         if (data.image_url) setExistingPoster(data.image_url);
+        if (data.is_organizer === false) setIsEventOrganizer(false);
         setSelectedTypes((data.event_type || '').split(',').filter(Boolean));
         if (data.day_locations?.length > 0) {
           setIsMultiDay(true);
@@ -214,6 +216,8 @@ export default function SubmitEvent() {
     location_address: form.location_address || null,
     price_info: form.price_info || null,
     additional_info: form.additional_info || null,
+    is_organizer: isEventOrganizer,
+    shared_by_name: !isEventOrganizer ? (profile?.name || user.email) : null,
   });
 
   const handleSaveDraft = async () => {
@@ -350,6 +354,32 @@ export default function SubmitEvent() {
         <div style={fieldStyle}>
           <label style={labelStyle}>{t('submit.eventTitle')} *</label>
           <input type="text" required value={form.title} onChange={set('title')} style={inputStyle} />
+        </div>
+
+        {/* Are you the organizer? */}
+        <div style={{
+          ...fieldStyle, padding: '14px 16px', background: c.card,
+          border: `1px solid ${c.border}`, borderRadius: 12,
+        }}>
+          <div style={{ fontSize: '0.82rem', fontWeight: 600, color: c.text, marginBottom: 10 }}>
+            {t('submit.areYouOrganizer')}
+          </div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button type="button" onClick={() => setIsEventOrganizer(true)} style={{
+              flex: 1, padding: '10px 12px', borderRadius: 8,
+              border: `1.5px solid ${isEventOrganizer ? c.accent : c.border}`,
+              background: isEventOrganizer ? `${c.accent}0C` : c.bg,
+              color: isEventOrganizer ? c.accent : c.muted,
+              fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer',
+            }}>{t('submit.organizerYes')}</button>
+            <button type="button" onClick={() => setIsEventOrganizer(false)} style={{
+              flex: 1, padding: '10px 12px', borderRadius: 8,
+              border: `1.5px solid ${!isEventOrganizer ? c.gold : c.border}`,
+              background: !isEventOrganizer ? `${c.gold}0C` : c.bg,
+              color: !isEventOrganizer ? c.gold : c.muted,
+              fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer',
+            }}>{t('submit.organizerNo')}</button>
+          </div>
         </div>
 
         {/* Description */}

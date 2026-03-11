@@ -79,7 +79,12 @@
     "whatsapp": "WhatsApp",
     "phone": "Phone",
     "additionalInfo": "Additional Info",
-    "shareWhatsapp": "Share on WhatsApp"
+    "shareWhatsapp": "Share on WhatsApp",
+    "sharedBy": "Shared by {{name}}",
+    "communityShared": "Shared by community",
+    "claimEvent": "Claim this event",
+    "claimPending": "Ownership claim pending",
+    "claimApproved": "Ownership transferred"
   },
   "submit": {
     "title": "Submit an Event",
@@ -130,7 +135,10 @@
     "additionalInfo": "Additional Info (optional)",
     "posterUpload": "Event Poster (optional)",
     "choosePoster": "Choose poster image",
-    "saveDraft": "Save Draft"
+    "saveDraft": "Save Draft",
+    "areYouOrganizer": "Are you the organizer of this event?",
+    "organizerYes": "Yes, I'm organizing this",
+    "organizerNo": "No, sharing for the community"
   },
   "myEvents": {
     "title": "My Events",
@@ -164,7 +172,10 @@
     "organizerRequests": "Organizer Requests",
     "approveOrganizer": "Approve",
     "rejectOrganizer": "Reject",
-    "noOrgRequests": "No organizer requests."
+    "noOrgRequests": "No organizer requests.",
+    "claimRequests": "Ownership Claims",
+    "approveClaim": "Transfer Ownership",
+    "rejectClaim": "Reject Claim"
   },
   "privacy": {
     "title": "Privacy Policy",

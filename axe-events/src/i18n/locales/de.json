@@ -79,7 +79,12 @@
     "whatsapp": "WhatsApp",
     "phone": "Telefon",
     "additionalInfo": "Zusätzliche Infos",
-    "shareWhatsapp": "Auf WhatsApp teilen"
+    "shareWhatsapp": "Auf WhatsApp teilen",
+    "sharedBy": "Geteilt von {{name}}",
+    "communityShared": "Von der Community geteilt",
+    "claimEvent": "Dieses Event beanspruchen",
+    "claimPending": "Beanspruchung ausstehend",
+    "claimApproved": "Eigentum übertragen"
   },
   "submit": {
     "title": "Event einreichen",
@@ -130,7 +135,10 @@
     "additionalInfo": "Zusätzliche Infos (optional)",
     "posterUpload": "Eventposter (optional)",
     "choosePoster": "Posterbild auswählen",
-    "saveDraft": "Entwurf speichern"
+    "saveDraft": "Entwurf speichern",
+    "areYouOrganizer": "Bist du der Veranstalter dieses Events?",
+    "organizerYes": "Ja, ich organisiere das",
+    "organizerNo": "Nein, ich teile es für die Community"
   },
   "myEvents": {
     "title": "Meine Events",
@@ -164,7 +172,10 @@
     "organizerRequests": "Organisator-Anfragen",
     "approveOrganizer": "Genehmigen",
     "rejectOrganizer": "Ablehnen",
-    "noOrgRequests": "Keine Organisator-Anfragen."
+    "noOrgRequests": "Keine Organisator-Anfragen.",
+    "claimRequests": "Eigentumsbeanspruchungen",
+    "approveClaim": "Eigentum übertragen",
+    "rejectClaim": "Beanspruchung ablehnen"
   },
   "privacy": {
     "title": "Datenschutzerklärung",
