@@ -90,11 +90,11 @@ export default function EventDetail() {
     }
   };
 
-  const shareText = `${event.title}${event.city ? ' — ' + event.city : ''}\n${window.location.href}`;
   const handleShare = async () => {
+    const shareText = `${event?.title || ''}${event?.city ? ' — ' + event.city : ''}\n${window.location.href}`;
     if (navigator.share) {
       try {
-        await navigator.share({ title: event.title, text: shareText, url: window.location.href });
+        await navigator.share({ title: event?.title || '', text: shareText, url: window.location.href });
       } catch {}
     } else {
       navigator.clipboard.writeText(window.location.href);
