@@ -8,6 +8,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Privacy from './pages/Privacy';
 import DeleteAccount from './pages/DeleteAccount';
 import InstallPrompt from './components/InstallPrompt';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   return (

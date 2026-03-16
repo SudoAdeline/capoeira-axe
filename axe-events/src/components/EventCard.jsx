@@ -34,7 +34,7 @@ export default function EventCard({ event }) {
         border: `1px solid ${c.border}`,
         borderLeft: `4px solid ${typeColor}`,
         borderRadius: 12,
-        padding: '16px 18px',
+        padding: '14px 16px',
         transition: 'transform 0.2s, box-shadow 0.2s',
         cursor: 'pointer',
         boxShadow: '0 1px 6px rgba(139,115,85,0.05)',

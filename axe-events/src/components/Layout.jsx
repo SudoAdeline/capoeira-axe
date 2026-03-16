@@ -28,12 +28,17 @@ export default function Layout({ children }) {
   const location = useLocation();
   const [showLogin, setShowLogin] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showMobileNav, setShowMobileNav] = useState(false);
   const [editingGroup, setEditingGroup] = useState(false);
   const [groupValue, setGroupValue] = useState('');
 
   useEffect(() => {
     if (profile) setGroupValue(profile.capoeira_group || '');
   }, [profile]);
+
+  useEffect(() => {
+    setShowMobileNav(false);
+  }, [location.pathname]);
 
   const navLinks = [
     { to: '/', label: t('nav.home'), show: true },
@@ -43,7 +48,7 @@ export default function Layout({ children }) {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: c.bg, position: 'relative' }}>
+    <div style={{ minHeight: '100vh', background: c.bg, position: 'relative', overflowX: 'hidden', width: '100%' }}>
       {/* Flowing Background */}
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
         <svg viewBox="0 0 1200 800" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.06 }}>
@@ -94,23 +99,23 @@ export default function Layout({ children }) {
           height: 56,
         }}>
           {/* Logo */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
             <span style={{
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: '1.5rem', letterSpacing: '0.06em',
               background: `linear-gradient(135deg, ${c.accent}, ${c.gold})`,
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>AXÉ</span>
-            <span style={{
+            <span className="nav-subtitle" style={{
               fontSize: '0.7rem', color: c.muted, letterSpacing: '0.15em',
               textTransform: 'uppercase', fontWeight: 500,
             }}>{t('app.subtitle')}</span>
           </Link>
 
-          {/* Desktop Nav */}
+          {/* Right side controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            {/* Nav links */}
-            <div style={{
+            {/* Desktop nav links — hidden on mobile */}
+            <div className="desktop-nav" style={{
               display: 'flex', alignItems: 'center', gap: 2,
             }}>
               {navLinks.filter(l => l.show).map(l => (
@@ -143,6 +148,17 @@ export default function Layout({ children }) {
             {/* Notification bell */}
             {user && <NotificationBell userId={user.id} />}
 
+            {/* Mobile hamburger — visible on mobile only */}
+            <button
+              className="mobile-menu-btn"
+              onClick={() => setShowMobileNav(!showMobileNav)}
+              style={{
+                display: 'none', background: 'none', border: 'none',
+                color: c.text, fontSize: '1.3rem', cursor: 'pointer',
+                padding: '4px 6px', lineHeight: 1,
+              }}
+            >{showMobileNav ? '✕' : '☰'}</button>
+
             {/* Auth button */}
             {user ? (
               <div style={{ position: 'relative' }}>
@@ -162,11 +178,13 @@ export default function Layout({ children }) {
                   <div
                     onClick={() => setShowMenu(false)}
                     style={{
-                      position: 'absolute', right: 0, top: 40,
+                      position: 'fixed', right: 12, top: 52,
                       background: c.card, border: `1px solid ${c.border}`,
                       borderRadius: 10, padding: 8, minWidth: 160,
+                      maxWidth: 'calc(100vw - 24px)',
                       boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
                       animation: 'slideDown 0.2s ease',
+                      zIndex: 200,
                     }}
                   >
                     <div style={{
@@ -257,6 +275,37 @@ export default function Layout({ children }) {
         </div>
       </nav>
 
+      {/* Mobile nav dropdown */}
+      {showMobileNav && (
+        <div style={{
+          position: 'sticky', top: 56, zIndex: 99,
+          background: 'rgba(255,251,245,0.97)', backdropFilter: 'blur(12px)',
+          borderBottom: `1px solid ${c.border}`,
+          padding: '8px 16px',
+          animation: 'slideDown 0.2s ease',
+        }}>
+          <div style={{
+            maxWidth: 960, margin: '0 auto',
+            display: 'flex', flexDirection: 'column', gap: 2,
+          }}>
+            {navLinks.filter(l => l.show).map(l => (
+              <Link
+                key={l.to}
+                to={l.to}
+                onClick={() => setShowMobileNav(false)}
+                style={{
+                  padding: '10px 12px', borderRadius: 8,
+                  fontSize: '0.85rem', fontWeight: 500,
+                  color: location.pathname === l.to ? c.text : c.muted,
+                  background: location.pathname === l.to ? `${c.accent}12` : 'transparent',
+                  textDecoration: 'none',
+                }}
+              >{l.label}</Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Main content */}
       <main style={{ maxWidth: 960, margin: '0 auto', padding: '20px 16px 80px', position: 'relative', zIndex: 1 }}>
         {children}
@@ -278,6 +327,15 @@ export default function Layout({ children }) {
         @keyframes floatCircle {
           0%, 100% { transform: translateY(0px) scale(1); }
           50% { transform: translateY(-20px) scale(1.03); }
+        }
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 600px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+          .nav-subtitle { display: none !important; }
         }
       `}</style>
     </div>

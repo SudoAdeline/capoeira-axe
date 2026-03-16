@@ -31,17 +31,19 @@ export default function CalendarView({ events, onDateClick }) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const today = new Date();
 
-  const eventDays = useMemo(() => {
+  const { eventDays, totalEvents } = useMemo(() => {
     const map = {};
+    let count = 0;
     events.forEach(ev => {
       const d = new Date(ev.start_date);
       if (d.getFullYear() === year && d.getMonth() === month) {
         const day = d.getDate();
         if (!map[day]) map[day] = [];
         if (!map[day].includes(ev.event_type)) map[day].push(ev.event_type);
+        count++;
       }
     });
-    return map;
+    return { eventDays: map, totalEvents: count };
   }, [events, year, month]);
 
   const prevMonth = () => setCurrentDate(new Date(year, month - 1, 1));
@@ -57,7 +59,7 @@ export default function CalendarView({ events, onDateClick }) {
   const isToday = (day) =>
     day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
 
-  const eventCount = Object.keys(eventDays).length;
+  const eventCount = totalEvents;
 
   return (
     <div style={{
@@ -68,6 +70,8 @@ export default function CalendarView({ events, onDateClick }) {
       marginBottom: 24,
       boxShadow: '0 2px 12px rgba(139,115,85,0.06)',
       overflow: 'hidden',
+      width: '100%',
+      maxWidth: '100%',
     }}>
       {/* Top accent line */}
       <div style={{
@@ -75,7 +79,7 @@ export default function CalendarView({ events, onDateClick }) {
         background: `linear-gradient(90deg, ${c.accent}, ${c.gold}, ${c.accent})`,
       }} />
 
-      <div style={{ padding: '16px 16px 14px' }}>
+      <div style={{ padding: '12px 10px 10px' }}>
         {/* Header */}
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -141,8 +145,8 @@ export default function CalendarView({ events, onDateClick }) {
                     onClick={() => hasEvents && onDateClick?.(new Date(year, month, day))}
                     style={{
                       textAlign: 'center',
-                      padding: '8px 0 6px',
-                      borderRadius: 10,
+                      padding: '6px 0 4px',
+                      borderRadius: 8,
                       cursor: hasEvents ? 'pointer' : 'default',
                       background: isToday(day)
                         ? `linear-gradient(135deg, ${c.accent}15, ${c.gold}10)`
@@ -160,7 +164,7 @@ export default function CalendarView({ events, onDateClick }) {
                     }}
                   >
                     <div style={{
-                      fontSize: '0.84rem',
+                      fontSize: '0.78rem',
                       color: day ? (isToday(day) ? c.accent : hasEvents ? c.text : c.muted) : 'transparent',
                       fontWeight: isToday(day) ? 800 : hasEvents ? 600 : 400,
                     }}>{day || ''}</div>
@@ -184,8 +188,8 @@ export default function CalendarView({ events, onDateClick }) {
 
             {/* Legend */}
             <div style={{
-              display: 'flex', flexWrap: 'wrap', gap: 14,
-              marginTop: 14, justifyContent: 'center',
+              display: 'flex', flexWrap: 'wrap', gap: '8px 12px',
+              marginTop: 12, justifyContent: 'center',
             }}>
               {Object.entries(TYPE_COLORS).map(([type, color]) => (
                 <div key={type} style={{
