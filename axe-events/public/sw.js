@@ -1,4 +1,4 @@
-const CACHE_NAME = 'axe-events-v1';
+const CACHE_NAME = 'axe-events-v2';
 const APP_SHELL = ['./', './index.html', './manifest.json', './logo.svg'];
 
 self.addEventListener('install', (e) => {
@@ -20,8 +20,9 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
-  // Skip Supabase API calls
+  // Skip Supabase API calls and non-http(s) requests
   if (url.hostname.includes('supabase')) return;
+  if (!url.protocol.startsWith('http')) return;
 
   e.respondWith(
     fetch(e.request)
@@ -32,6 +33,10 @@ self.addEventListener('fetch', (e) => {
         }
         return res;
       })
-      .catch(() => caches.match(e.request))
+      .catch(() =>
+        caches.match(e.request).then((cached) =>
+          cached || new Response('Offline', { status: 503, statusText: 'Offline' })
+        )
+      )
   );
 });

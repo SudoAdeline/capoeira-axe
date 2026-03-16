@@ -25,9 +25,16 @@
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
   <script>
+    // Capture install prompt BEFORE React mounts — event fires early on Android
+    window.__deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      window.__deferredInstallPrompt = e;
+    });
+
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').catch(function() {});
       });
     }
   </script>

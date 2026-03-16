@@ -10,6 +10,18 @@ const c = {
   gold: '#D4A843',
 };
 
+const DISMISS_KEY = 'axe_events_install_dismissed';
+const DISMISS_DAYS = 7;
+
+function isDismissed() {
+  const val = localStorage.getItem(DISMISS_KEY);
+  if (!val) return false;
+  const dismissedAt = parseInt(val, 10);
+  if (isNaN(dismissedAt)) return false;
+  const daysSince = (Date.now() - dismissedAt) / (1000 * 60 * 60 * 24);
+  return daysSince < DISMISS_DAYS;
+}
+
 export default function InstallPrompt() {
   const { t } = useTranslation();
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -19,21 +31,27 @@ export default function InstallPrompt() {
   const ua = navigator.userAgent;
   const isIOS = /iPad|iPhone|iPod/.test(ua);
   const isSafari = isIOS || (/Safari/.test(ua) && !/Chrome/.test(ua));
-  const isFirefox = /Firefox/.test(ua);
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches
     || navigator.standalone === true;
 
   useEffect(() => {
-    if (isStandalone || localStorage.getItem('axe_events_install_dismissed')) return;
+    if (isStandalone || isDismissed()) return;
 
+    // Pick up the prompt captured globally in index.html (fires before React mounts)
+    if (window.__deferredInstallPrompt) {
+      setDeferredPrompt(window.__deferredInstallPrompt);
+    }
+
+    // Also listen for late-firing prompts
     const handler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
+      window.__deferredInstallPrompt = e;
     };
     window.addEventListener('beforeinstallprompt', handler);
 
     const timer = setTimeout(() => {
-      if (!localStorage.getItem('axe_events_install_dismissed')) {
+      if (!isDismissed()) {
         setShowModal(true);
       }
     }, 3000);
@@ -44,13 +62,13 @@ export default function InstallPrompt() {
     };
   }, [isStandalone]);
 
-  if (isStandalone || dismissed || localStorage.getItem('axe_events_install_dismissed')) return null;
+  if (isStandalone || dismissed || isDismissed()) return null;
   if (!showModal) return null;
 
   const dismiss = () => {
     setDismissed(true);
     setShowModal(false);
-    localStorage.setItem('axe_events_install_dismissed', '1');
+    localStorage.setItem(DISMISS_KEY, String(Date.now()));
   };
 
   const handleInstall = async () => {
@@ -59,6 +77,7 @@ export default function InstallPrompt() {
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') dismiss();
       setDeferredPrompt(null);
+      window.__deferredInstallPrompt = null;
     }
   };
 
