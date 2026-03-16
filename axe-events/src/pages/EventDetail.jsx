@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
+const toHref = (url) =>
+  url && !/^https?:\/\//i.test(url) ? 'https://' + url : url;
+
 const c = {
   bg: '#FFFBF5',
   card: '#FFFFFF',
@@ -482,7 +485,7 @@ export default function EventDetail() {
           )}
           {event.registration_url && !regClosed && (
             <a
-              href={event.registration_url}
+              href={toHref(event.registration_url)}
               target="_blank" rel="noopener noreferrer"
               style={{
                 display: 'inline-block', padding: '12px 24px',
@@ -506,7 +509,7 @@ export default function EventDetail() {
             }}>{event.contact_email}</a>
           )}
           {event.contact_url && (
-            <a href={event.contact_url} target="_blank" rel="noopener noreferrer" style={{
+            <a href={toHref(event.contact_url)} target="_blank" rel="noopener noreferrer" style={{
               fontSize: '0.78rem', color: typeColor, display: 'block', marginTop: 2,
             }}>{event.contact_url}</a>
           )}

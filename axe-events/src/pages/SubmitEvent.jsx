@@ -197,6 +197,14 @@ export default function SubmitEvent() {
     return publicUrl;
   };
 
+  const normalizeUrl = (url) => {
+    if (!url) return null;
+    const trimmed = url.trim();
+    if (!trimmed) return null;
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    return 'https://' + trimmed;
+  };
+
   const buildPayload = () => ({
     ...form,
     event_type: selectedTypes.join(','),
@@ -204,7 +212,8 @@ export default function SubmitEvent() {
     end_date: form.end_date ? new Date(form.end_date).toISOString() : null,
     registration_deadline: form.registration_deadline
       ? new Date(form.registration_deadline).toISOString() : null,
-    registration_url: form.registration_url || null,
+    registration_url: normalizeUrl(form.registration_url),
+    contact_url: normalizeUrl(form.contact_url),
     contact_phone: form.contact_phone || null,
     day_locations: isMultiDay && dayLocations.some(d => d.venue || d.date)
       ? dayLocations : null,
@@ -587,7 +596,7 @@ export default function SubmitEvent() {
           </div>
           <div>
             <label style={labelStyle}>{t('submit.contactUrl')}</label>
-            <input type="url" value={form.contact_url} onChange={set('contact_url')} style={inputStyle} />
+            <input type="text" value={form.contact_url} onChange={set('contact_url')} style={inputStyle} placeholder="https://..." />
           </div>
         </div>
         <div style={fieldStyle}>
@@ -623,7 +632,7 @@ export default function SubmitEvent() {
           </div>
           <div>
             <label style={labelStyle}>{t('submit.regUrl')}</label>
-            <input type="url" value={form.registration_url} onChange={set('registration_url')} style={inputStyle} />
+            <input type="text" value={form.registration_url} onChange={set('registration_url')} style={inputStyle} placeholder="https://..." />
           </div>
         </div>
 
