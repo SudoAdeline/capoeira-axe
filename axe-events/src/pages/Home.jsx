@@ -182,7 +182,7 @@ export default function Home() {
   const filtered = useMemo(() => {
     return events.filter(ev => {
       if (filterType && !ev.event_type?.split(',').includes(filterType)) return false;
-      if (filterCity && ev.city !== filterCity) return false;
+      if (filterCity && !ev.city?.toLowerCase().includes(filterCity.toLowerCase())) return false;
       if (search) {
         const q = search.toLowerCase();
         if (!ev.title.toLowerCase().includes(q) &&
@@ -249,10 +249,12 @@ export default function Home() {
         marginBottom: 20,
       }}>
         <input
-          type="text"
+          type="search"
+          enterKeyHint="search"
           placeholder={t('home.search')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') e.target.blur(); }}
           style={{
             ...inputStyle, width: '100%', flex: 'none',
             padding: '12px 18px', fontSize: '0.88rem',
@@ -299,16 +301,23 @@ export default function Home() {
       {/* City filter + selected date */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
         {cities.length > 0 && (
-          <select
-            value={filterCity}
-            onChange={(e) => setFilterCity(e.target.value)}
-            style={{ ...inputStyle, flex: 0, minWidth: 140 }}
-          >
-            <option value="">{t('home.filterCity')}</option>
-            {cities.map(city => (
-              <option key={city} value={city}>{city}</option>
-            ))}
-          </select>
+          <div style={{ position: 'relative', flex: 0, minWidth: 140 }}>
+            <input
+              type="search"
+              enterKeyHint="search"
+              placeholder={t('home.filterCity')}
+              value={filterCity}
+              onChange={(e) => setFilterCity(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') e.target.blur(); }}
+              list="city-options"
+              style={inputStyle}
+            />
+            <datalist id="city-options">
+              {cities.map(city => (
+                <option key={city} value={city} />
+              ))}
+            </datalist>
+          </div>
         )}
         {selectedDate && (
           <button
@@ -333,9 +342,18 @@ export default function Home() {
             fontSize: '1.1rem', letterSpacing: '0.08em',
             color: c.gold, marginBottom: 12,
           }}>{t('home.featured')}</h2>
-          <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 4 }}>
+          <div style={{
+            display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 4,
+            WebkitOverflowScrolling: 'touch',
+            scrollSnapType: 'x mandatory',
+            margin: '0 -16px', padding: '0 16px 4px',
+          }}>
             {featured.map(ev => (
-              <div key={ev.id} style={{ minWidth: 300, flex: '0 0 auto' }}>
+              <div key={ev.id} style={{
+                minWidth: 'min(300px, calc(100vw - 48px))',
+                flex: '0 0 auto',
+                scrollSnapAlign: 'start',
+              }}>
                 <EventCard event={ev} />
               </div>
             ))}
