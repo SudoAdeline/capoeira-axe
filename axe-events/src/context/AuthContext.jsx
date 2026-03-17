@@ -37,13 +37,14 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email, password, name, capoeiraGroup, isOrganizer) => {
+  const signUp = async (email, password, name, apelido, capoeiraGroup, isOrganizer) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
     if (data.user) {
       await supabase.from('profiles').upsert({
         id: data.user.id,
-        name,
+        name: name || null,
+        apelido: apelido || null,
         role: 'user',
         capoeira_group: capoeiraGroup || null,
         organizer_status: isOrganizer ? 'pending' : null,

@@ -27,6 +27,7 @@ export default function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const ua = navigator.userAgent;
   const isIOS = /iPad|iPhone|iPod/.test(ua);
@@ -62,6 +63,24 @@ export default function InstallPrompt() {
     };
   }, [isStandalone]);
 
+  if (showToast) {
+    return (
+      <div style={{
+        position: 'fixed', bottom: 32, left: '50%', transform: 'translateX(-50%)',
+        zIndex: 10000, background: c.card, border: `1px solid ${c.gold}44`,
+        borderRadius: 14, padding: '14px 24px',
+        boxShadow: `0 8px 32px rgba(0,0,0,0.4), 0 0 20px ${c.gold}15`,
+        display: 'flex', alignItems: 'center', gap: 10,
+        animation: 'fadeUp 0.3s ease both',
+      }}>
+        <span style={{ fontSize: '1.2rem' }}>&#10003;</span>
+        <span style={{ color: c.text, fontSize: '0.9rem', fontWeight: 600 }}>
+          {t('install.success', 'App successfully installed!')}
+        </span>
+      </div>
+    );
+  }
+
   if (isStandalone || dismissed || isDismissed()) return null;
   if (!showModal) return null;
 
@@ -75,7 +94,11 @@ export default function InstallPrompt() {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') dismiss();
+      if (outcome === 'accepted') {
+        dismiss();
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3500);
+      }
       setDeferredPrompt(null);
       window.__deferredInstallPrompt = null;
     }
