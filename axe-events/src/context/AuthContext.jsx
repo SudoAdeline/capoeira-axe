@@ -49,6 +49,16 @@ export function AuthProvider({ children }) {
         capoeira_group: capoeiraGroup || null,
         organizer_status: isOrganizer ? 'pending' : null,
       });
+      if (isOrganizer) {
+        fetch('/api/notify-admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'organizer_request',
+            details: { name, apelido, capoeira_group: capoeiraGroup, email },
+          }),
+        }).catch(() => {});
+      }
     }
     return data;
   };
@@ -104,6 +114,19 @@ export function AuthProvider({ children }) {
       .eq('id', user.id);
     if (!error) {
       setProfile(prev => ({ ...prev, organizer_status: 'pending' }));
+      fetch('/api/notify-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'organizer_request',
+          details: {
+            name: profile?.name,
+            apelido: profile?.apelido,
+            capoeira_group: profile?.capoeira_group,
+            email: user.email,
+          },
+        }),
+      }).catch(() => {});
     }
     return { error };
   };

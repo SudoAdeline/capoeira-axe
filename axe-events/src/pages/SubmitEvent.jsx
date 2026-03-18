@@ -274,7 +274,26 @@ export default function SubmitEvent() {
       }
 
       if (err) setError(err.message);
-      else setSuccess(true);
+      else {
+        setSuccess(true);
+        if (!isEditing && payload.status === 'pending') {
+          fetch('/api/notify-admin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'event_pending',
+              details: {
+                title: payload.title,
+                event_type: payload.event_type,
+                start_date: payload.start_date,
+                city: payload.city,
+                country: payload.country,
+                submitted_by_name: profile?.name || profile?.apelido || 'Unknown',
+              },
+            }),
+          }).catch(() => {});
+        }
+      }
     } catch (err) {
       setError(err.message);
     }

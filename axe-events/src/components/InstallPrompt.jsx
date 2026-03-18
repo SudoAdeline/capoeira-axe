@@ -32,6 +32,10 @@ export default function InstallPrompt() {
   const ua = navigator.userAgent;
   const isIOS = /iPad|iPhone|iPod/.test(ua);
   const isSafari = isIOS || (/Safari/.test(ua) && !/Chrome/.test(ua));
+  const isFirefox = /Firefox/.test(ua);
+  const isChrome = /Chrome/.test(ua) && !/Edg/.test(ua);
+  const isEdge = /Edg/.test(ua);
+  const isSamsung = /SamsungBrowser/.test(ua);
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches
     || navigator.standalone === true;
 
@@ -108,6 +112,21 @@ export default function InstallPrompt() {
     if (isIOS || isSafari) {
       return [t('install.iosStep1'), t('install.iosStep2'), t('install.iosStep3')];
     }
+    if (isFirefox) {
+      return [
+        t('install.firefoxStep1', 'Tap the <strong>⋮ menu</strong> (top right)'),
+        t('install.firefoxStep2', 'Tap <strong>"Install"</strong> or <strong>"Add to Home Screen"</strong>'),
+        t('install.firefoxStep3', 'Confirm and open from your home screen'),
+      ];
+    }
+    if (isEdge) {
+      return [
+        t('install.edgeStep1', 'Click the <strong>⋯ menu</strong> (top right)'),
+        t('install.edgeStep2', 'Click <strong>"Apps" → "Install this site as an app"</strong>'),
+        t('install.edgeStep3', 'Click <strong>Install</strong> to confirm'),
+      ];
+    }
+    // Chrome, Samsung, and others
     return [t('install.androidStep1'), t('install.androidStep2'), t('install.androidStep3')];
   };
 
