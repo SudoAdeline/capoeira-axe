@@ -2,6 +2,15 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
 const AuthContext = createContext(null);
+const ADMIN_ID = '56001556-51c3-4119-bef8-164ff9c7808c';
+
+const notifyAdmin = (message, senderId) => {
+  supabase.from('notifications').insert({
+    user_id: ADMIN_ID,
+    sender_id: senderId || null,
+    message,
+  }).then(() => {}).catch(() => {});
+};
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -50,14 +59,7 @@ export function AuthProvider({ children }) {
         organizer_status: isOrganizer ? 'pending' : null,
       });
       if (isOrganizer) {
-        fetch('/api/notify-admin', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: 'organizer_request',
-            details: { name, apelido, capoeira_group: capoeiraGroup, email },
-          }),
-        }).catch(() => {});
+        notifyAdmin(`New organizer request: ${name || apelido || email} (${capoeiraGroup || 'no group'})`, data.user.id);
       }
     }
     return data;
@@ -114,19 +116,7 @@ export function AuthProvider({ children }) {
       .eq('id', user.id);
     if (!error) {
       setProfile(prev => ({ ...prev, organizer_status: 'pending' }));
-      fetch('/api/notify-admin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'organizer_request',
-          details: {
-            name: profile?.name,
-            apelido: profile?.apelido,
-            capoeira_group: profile?.capoeira_group,
-            email: user.email,
-          },
-        }),
-      }).catch(() => {});
+      notifyAdmin(`Organizer request: ${profile?.name || profile?.apelido || user.email} (${profile?.capoeira_group || 'no group'})`, user.id);
     }
     return { error };
   };

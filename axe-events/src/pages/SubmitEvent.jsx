@@ -277,20 +277,11 @@ export default function SubmitEvent() {
       else {
         setSuccess(true);
         if (!isEditing && payload.status === 'pending') {
-          fetch('/api/notify-admin', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              type: 'event_pending',
-              details: {
-                title: payload.title,
-                event_type: payload.event_type,
-                start_date: payload.start_date,
-                city: payload.city,
-                country: payload.country,
-                submitted_by_name: profile?.name || profile?.apelido || 'Unknown',
-              },
-            }),
+          const ADMIN_ID = '56001556-51c3-4119-bef8-164ff9c7808c';
+          supabase.from('notifications').insert({
+            user_id: ADMIN_ID,
+            sender_id: user.id,
+            message: `New event pending approval: "${payload.title}" in ${payload.city || 'unknown city'}`,
           }).catch(() => {});
         }
       }
