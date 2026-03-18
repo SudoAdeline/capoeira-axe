@@ -707,11 +707,21 @@ export default function EventDetail() {
         <button
           onClick={async () => {
             setClaiming(true);
-            await supabase.from('events').update({
+            const { error: claimErr } = await supabase.from('events').update({
               claimed_by: user.id,
               claim_status: 'pending',
             }).eq('id', event.id);
-            setEvent(prev => ({ ...prev, claimed_by: user.id, claim_status: 'pending' }));
+            if (!claimErr) {
+              setEvent(prev => ({ ...prev, claimed_by: user.id, claim_status: 'pending' }));
+              // Notify admin
+              const ADMIN_ID = '56001556-51c3-4119-bef8-164ff9c7808c';
+              supabase.from('notifications').insert({
+                user_id: ADMIN_ID,
+                sender_id: user.id,
+                event_id: event.id,
+                message: `Event claim request: "${event.title}"`,
+              }).catch(() => {});
+            }
             setClaiming(false);
           }}
           disabled={claiming}
