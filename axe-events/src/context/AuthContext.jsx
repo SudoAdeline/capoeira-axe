@@ -47,10 +47,23 @@ export function AuthProvider({ children }) {
   }, []);
 
   const signUp = async (email, password, name, apelido, capoeiraGroup, isOrganizer) => {
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    // Pass profile data as user metadata so the DB trigger can use it
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name: name || null,
+          apelido: apelido || null,
+          capoeira_group: capoeiraGroup || null,
+          is_organizer: isOrganizer || false,
+        },
+      },
+    });
     if (error) throw error;
+    // Also try direct upsert in case session is active
     if (data.user) {
-      await supabase.from('profiles').upsert({
+      const { error: upsertErr } = await supabase.from('profiles').upsert({
         id: data.user.id,
         name: name || null,
         apelido: apelido || null,
@@ -58,6 +71,8 @@ export function AuthProvider({ children }) {
         capoeira_group: capoeiraGroup || null,
         organizer_status: isOrganizer ? 'pending' : null,
       });
+      // If upsert failed (no session yet), the DB trigger will handle it
+      if (upsertErr) console.log('Profile upsert deferred to trigger:', upsertErr.message);
       if (isOrganizer) {
         notifyAdmin(`New organizer request: ${name || apelido || email} (${capoeiraGroup || 'no group'})`, data.user.id);
       }
