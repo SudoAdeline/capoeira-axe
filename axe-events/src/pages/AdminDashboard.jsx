@@ -134,13 +134,15 @@ export default function AdminDashboard() {
   }
 
   const tabStyle = (active) => ({
-    flex: 1, padding: '10px',
+    flex: '1 1 auto', padding: '8px 6px',
     background: active ? `${c.accent}0C` : 'transparent',
     border: 'none',
     borderBottom: active ? `2px solid ${c.accent}` : `2px solid transparent`,
     color: active ? c.text : c.muted,
-    fontWeight: 600, fontSize: '0.82rem',
+    fontWeight: 600, fontSize: '0.72rem',
     cursor: 'pointer',
+    whiteSpace: 'nowrap',
+    minWidth: 0,
   });
 
   const actionBtn = (color) => ({
@@ -174,6 +176,9 @@ export default function AdminDashboard() {
         display: 'flex',
         borderBottom: `1px solid ${c.border}`,
         marginBottom: 20,
+        overflowX: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        scrollbarWidth: 'none',
       }}>
         <button onClick={() => setTab('queue')} style={tabStyle(tab === 'queue')}>
           {t('admin.queue')} {pendingEvents.length > 0 && `(${pendingEvents.length})`}
@@ -254,26 +259,28 @@ export default function AdminDashboard() {
               return (
                 <div key={ev.id} style={{
                   background: c.card, border: `1px solid ${c.border}`,
-                  borderRadius: 12, padding: '12px 16px',
-                  display: 'flex', alignItems: 'center', gap: 12,
-                  flexWrap: 'wrap',
+                  borderRadius: 12, padding: '12px 14px',
                 }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{
-                      fontSize: '0.9rem', fontWeight: 600, color: c.text,
-                      whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                    }}>{ev.title}</div>
-                    <div style={{ fontSize: '0.72rem', color: c.muted }}>
-                      {ev.event_type} &middot; {new Date(ev.start_date).toLocaleDateString()}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{
+                        fontSize: '0.85rem', fontWeight: 600, color: c.text,
+                        overflow: 'hidden', textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}>{ev.title}</div>
+                      <div style={{ fontSize: '0.72rem', color: c.muted }}>
+                        {ev.event_type} &middot; {new Date(ev.start_date).toLocaleDateString()}
+                      </div>
                     </div>
+                    <span style={{
+                      fontSize: '0.65rem', fontWeight: 700,
+                      color: statusColor, textTransform: 'uppercase',
+                      background: `${statusColor}0C`,
+                      padding: '3px 8px', borderRadius: 4,
+                      flexShrink: 0,
+                    }}>{ev.status}</span>
                   </div>
-                  <span style={{
-                    fontSize: '0.65rem', fontWeight: 700,
-                    color: statusColor, textTransform: 'uppercase',
-                    background: `${statusColor}0C`,
-                    padding: '3px 8px', borderRadius: 4,
-                  }}>{ev.status}</span>
-                  <div style={{ display: 'flex', gap: 6 }}>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {ev.status !== 'approved' && (
                       <button onClick={() => updateStatus(ev.id, 'approved')} style={actionBtn('#0DAA8A')}>
                         {t('admin.approve')}
@@ -309,19 +316,20 @@ export default function AdminDashboard() {
                 {orgRequests.map(p => (
                   <div key={p.id} style={{
                     background: c.card, border: `1px solid ${c.border}`,
-                    borderRadius: 12, padding: '14px 16px',
-                    display: 'flex', alignItems: 'center', gap: 12,
-                    flexWrap: 'wrap',
+                    borderRadius: 12, padding: '12px 14px',
                   }}>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '0.9rem', fontWeight: 600, color: c.text }}>
-                        {p.name || 'Unknown'}
+                    <div style={{ marginBottom: 8 }}>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 600, color: c.text }}>
+                        {p.name || p.apelido || 'Unknown'}
                       </div>
+                      {p.apelido && p.name && (
+                        <div style={{ fontSize: '0.72rem', color: c.muted }}>Apelido: {p.apelido}</div>
+                      )}
                       {p.capoeira_group && (
-                        <div style={{ fontSize: '0.75rem', color: c.muted }}>{p.capoeira_group}</div>
+                        <div style={{ fontSize: '0.72rem', color: c.muted }}>{p.capoeira_group}</div>
                       )}
                     </div>
-                    <div style={{ display: 'flex', gap: 6 }}>
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                       <button onClick={() => updateOrganizerStatus(p.id, 'approved')} style={actionBtn('#0DAA8A')}>
                         {t('admin.approveOrganizer')}
                       </button>
@@ -345,18 +353,16 @@ export default function AdminDashboard() {
                 {claimRequests.map(ev => (
                   <div key={ev.id} style={{
                     background: c.card, border: `1px solid ${c.border}`,
-                    borderRadius: 12, padding: '14px 16px',
-                    display: 'flex', alignItems: 'center', gap: 12,
-                    flexWrap: 'wrap',
+                    borderRadius: 12, padding: '12px 14px',
                   }}>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '0.9rem', fontWeight: 600, color: c.text }}>{ev.title}</div>
-                      <div style={{ fontSize: '0.75rem', color: c.muted }}>
+                    <div style={{ marginBottom: 8 }}>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 600, color: c.text }}>{ev.title}</div>
+                      <div style={{ fontSize: '0.72rem', color: c.muted }}>
                         {t('event.claimEvent')}: <strong>{ev.claimer?.name || 'Unknown'}</strong>
                         {ev.claimer?.capoeira_group && ` (${ev.claimer.capoeira_group})`}
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: 6 }}>
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                       <button onClick={() => handleClaim(ev.id, true)} style={actionBtn('#0DAA8A')}>
                         {t('admin.approveClaim')}
                       </button>
