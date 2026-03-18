@@ -7,6 +7,7 @@ import MyEvents from './pages/MyEvents';
 import AdminDashboard from './pages/AdminDashboard';
 import Privacy from './pages/Privacy';
 import DeleteAccount from './pages/DeleteAccount';
+import Install from './pages/Install';
 import InstallPrompt from './components/InstallPrompt';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/edit/:id" element={<SubmitEvent />} />
         <Route path="/my-events" element={<MyEvents />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/install" element={<Install />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/delete-account" element={<DeleteAccount />} />
       </Routes>
